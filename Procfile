@@ -1,0 +1,1 @@
+web target/universal/stage/bin/csra-lab-mgnt-system -Dhttp.port=$PORT
