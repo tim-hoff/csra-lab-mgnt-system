@@ -18,7 +18,7 @@ public class DashboardController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(dashboard.render("Your new application is ready."));
+        return ok(dashboard.render());
     }
 
 }
