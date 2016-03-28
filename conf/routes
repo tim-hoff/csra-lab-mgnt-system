@@ -8,7 +8,9 @@ GET     /                           controllers.HomeController.index
 # Dashboard page, getting some base styling out of the way
 GET     /dashboard                  controllers.DashboardController.index
 
+GET 		/noscript										controllers.ExampleController.noscript
 
+GET 		/script										controllers.ExampleController.script
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
