@@ -10,5 +10,9 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   "mysql" % "mysql-connector-java" % "5.1.38",
-  javaWs
-)
+  javaWs,
+  javaJpa,
+  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final"
+ )
+
+PlayKeys.externalizeResources := false
