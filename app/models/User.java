@@ -52,6 +52,22 @@ public class User {
     public void delete() {
         JPA.em().remove(this);
     }
+    public static class Users {
+
+        private final List<User> list;
+
+        public Users (List<User> list) {
+            this.list = list;
+        }
+
+        public List<User> getList() {
+            return list;
+        }
+
+        public int getSize() {
+            return list.size();
+        }
+    }
 }
 
 

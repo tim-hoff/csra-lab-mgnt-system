@@ -1,20 +1,15 @@
-@(user: User)
+@(user: User.Users)
 @*
 * This template is called from the `index` template. This template
 * handles the rendering of the page header and body tags. It takes
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@main("View User"){
+@main("View Users"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
     <h1 class="sub-header">User Details</h1>
-    <h2>User ID: @user.user_id</h2>
-   <h2>First name: @user.first_name</h2>
-   <h2>Last name: @user.last_name</h2>
-   <h2>Email: @user.email</h2>
-   <h2>Note: @user.note</h2>
-   <h2>Active: @user.active</h2>
+  
   </div>
 </div>
 <div class="row">
