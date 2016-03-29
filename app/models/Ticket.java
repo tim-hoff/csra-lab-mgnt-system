@@ -17,9 +17,6 @@ public class Ticket {
     @Constraints.Required
     public String name;
 
-    // public User assigned_to;
-    // public User created_for;
-
     public String description;
 
     @Formats.DateTime(pattern="yyyy-MM-dd")

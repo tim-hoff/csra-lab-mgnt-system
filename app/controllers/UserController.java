@@ -9,14 +9,14 @@ import views.html.*;
 
 import models.*;
 
-public class TicketController extends Controller {
+public class UserController extends Controller {
 @Transactional
-public Result view(Integer id) {
-		return ok(ticket.render(Ticket.findById(id)));
+public Result view(String id) {
+		return ok(user.render(User.findById(id)));
 	}
 
 @Transactional
 public Result index() {
-		return ok(ticket.render(Ticket.findById(1)));
+		return ok(user.render(User.findById("tch031")));
 	}
 }

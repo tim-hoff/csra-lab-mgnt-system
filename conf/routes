@@ -12,6 +12,8 @@ GET 		/script											controllers.ExampleController.script
 GET 		/ticket/:id									controllers.TicketController.view(id:Integer)
 GET 		/tickets										controllers.TicketController.index
 GET 		/ticket											controllers.TicketController.index
+GET 		/user											controllers.UserController.index
+GET 		/user/:id									controllers.UserController.view(id:String)
 
 # An example controller showing how to use dependency injection
 GET     /count											controllers.CountController.count
