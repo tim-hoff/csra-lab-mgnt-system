@@ -4,6 +4,7 @@ import javax.inject.*;
 import play.*;
 import play.mvc.*;
 
+import views.html.*;
 import services.Counter;
 
 /**
@@ -28,8 +29,15 @@ public class CountController extends Controller {
      * <code>GET</code> requests with a path of <code>/count</code>
      * requests by an entry in the <code>routes</code> config file.
      */
+    public String theCount(){
+        return Integer.toString(counter.nextCount());
+    }
     public Result count() {
-        return ok(Integer.toString(counter.nextCount()));
+        return ok(theCount());
+    }
+
+    public Result index(){
+        return ok(count.render(theCount()));
     }
 
 }
