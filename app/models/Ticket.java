@@ -25,7 +25,7 @@ public class Ticket {
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date last_updated;
 
-
+    @Constraints.Required
     @Column(name="priority", columnDefinition="ENUM('Low', 'Normal', 'High')")
     public String priority;
 
@@ -34,7 +34,8 @@ public class Ticket {
         Normal,
         High
     }
-
+    
+    @Constraints.Required
     @Column(name="state", columnDefinition="ENUM('Pending', 'Resolved')")
     public String state;
 

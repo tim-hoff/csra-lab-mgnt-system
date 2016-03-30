@@ -26,6 +26,7 @@ public class User {
 
     public boolean active;
 
+    @Constraints.Required
     @Column(name="role", columnDefinition="ENUM('Admin', 'Student')")
     public String role;
 

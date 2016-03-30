@@ -9,12 +9,15 @@ GET     /														controllers.HomeController.index
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
+GET 		/item											controllers.InventoryController.index
+GET 		/item/:id										controllers.InventoryController.view(id:Integer)
+GET 		/items											controllers.InventoryController.index
+GET 		/ticket											controllers.TicketController.index
 GET 		/ticket/:id									controllers.TicketController.view(id:Integer)
 GET 		/tickets										controllers.TicketController.index
-GET 		/ticket											controllers.TicketController.index
 GET 		/user												controllers.UserController.index
-GET 		/users											controllers.UserController.index
 GET 		/user/:id										controllers.UserController.view(id:String)
+GET 		/users											controllers.UserController.index
 
 # An example controller showing how to use dependency injection
 GET     /count											controllers.CountController.count

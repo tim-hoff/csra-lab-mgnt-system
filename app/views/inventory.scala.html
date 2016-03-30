@@ -1,21 +1,20 @@
-@(ticket: Ticket)
+@(item: Inventory)
 @*
 * This template is called from the `index` template. This template
 * handles the rendering of the page header and body tags. It takes
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@main("View Ticket"){
+@main("View Item"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
-    <h1 class="sub-header">Ticket Details</h1>
-    <h4>Name: @ticket.name</h4>
-    <h4>ID: @ticket.ticketID()</h4>
-    <h4>Description: @ticket.description</h4>
-    <h4>Date Created: @ticket.date_created</h4>
-    <h4>Last Updated: @ticket.last_updated</h4>    
-    <h4>Priority: @ticket.priority</h4>
-    <h4>State: @ticket.state</h4>
+    <h1 class="sub-header">Item Details</h1>
+    <h4>Item ID: @item.item_id</h4>
+    <h4>Model No.: @item.model_number</h4>
+    <h4>Serial No.: @item.serial_number</h4>
+    <h4>Available: @item.available</h4>
+    <h4>Retired: @item.retired</h4>
+    <h4>Type: @item.item_type</h4>
   </div>
 </div>
 <div class="row">
