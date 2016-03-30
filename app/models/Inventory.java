@@ -39,6 +39,7 @@ public class Inventory {
     public void delete() {
         JPA.em().remove(this);
     }
+
    
     public static Inventorys items() {
             List<Inventory> data = JPA.em()

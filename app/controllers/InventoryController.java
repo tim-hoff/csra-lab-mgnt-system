@@ -5,18 +5,18 @@ import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
-import views.html.*;
+import views.html.inventory.*;
 
 import models.*;
 
 public class InventoryController extends Controller {
-@Transactional
-public Result view(Integer id) {
-		return ok(inventory.render(Inventory.findById(id)));
+	@Transactional
+	public Result index() {
+		return ok(index.render());
 	}
 
-@Transactional
-public Result index() {
-		return ok(inventorys.render());
+	@Transactional
+	public Result show(Integer id) {
+		return ok(show.render(Inventory.findById(id)));
 	}
 }

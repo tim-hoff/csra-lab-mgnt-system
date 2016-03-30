@@ -5,18 +5,18 @@ import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
-import views.html.*;
+import views.html.user.*;
 
 import models.*;
 
 public class UserController extends Controller {
-@Transactional
-public Result view(String id) {
-		return ok(user.render(User.findById(id)));
+	@Transactional
+	public Result index() {
+		return ok(index.render());
 	}
 
-@Transactional
-public Result index() {
-		return ok(users.render());
+	@Transactional
+	public Result show(String id) {
+		return ok(show.render(User.findById(id)));
 	}
 }
