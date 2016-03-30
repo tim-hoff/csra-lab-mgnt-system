@@ -17,6 +17,6 @@ public Result view(Integer id) {
 
 @Transactional
 public Result index() {
-		return ok(ticket.render(Ticket.findById(1)));
+		return ok(tickets.render());
 	}
 }
