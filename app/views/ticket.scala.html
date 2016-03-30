@@ -5,17 +5,17 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@main("Trouble Tickets"){
+@main("View Ticket"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
     <h1 class="sub-header">Ticket Details</h1>
-    <h2>Name: @ticket.name</h2>
-    <h2>ID: @ticket.ticketID()</h2>
-    <h2>Description: @ticket.description</h2>
-    <h2>Date Created: @ticket.date_created</h2>
-    <h2>Last Updated: @ticket.last_updated</h2>    
-    <h2>Priority: @ticket.priority</h2>
-    <h2>State: @ticket.state</h2>
+    <h4>Name: @ticket.name</h4>
+    <h4>ID: @ticket.ticketID()</h4>
+    <h4>Description: @ticket.description</h4>
+    <h4>Date Created: @ticket.date_created</h4>
+    <h4>Last Updated: @ticket.last_updated</h4>    
+    <h4>Priority: @ticket.priority</h4>
+    <h4>State: @ticket.state</h4>
   </div>
 </div>
 <div class="row">
