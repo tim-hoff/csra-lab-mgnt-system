@@ -20,7 +20,10 @@
       <tbody>
         @for(item <- Inventory.items.getList) {
         <tr>
-          <td><a href="@routes.InventoryController.view(item.item_id)">@item.item_id</a></td>
+          <td>
+            <!-- TODO: add a method to get a formatted id to the inventory model -->
+            <a href="@routes.InventoryController.view(item.item_id)">00@item.item_id</a>
+          </td>
           <td>
             @item.model_number
           </td>
