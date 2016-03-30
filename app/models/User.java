@@ -26,24 +26,13 @@ public class User {
 
     public boolean active;
 
-    // @Enumerated
-    // public State state;
+    @Column(name="role", columnDefinition="ENUM('Admin', 'Student')")
+    public String role;
 
-    // public static enum State {
-    //     Pending,
-    //     Resolved
-    // }
-
-    // @Enumerated
-    // public Priority priority;
-
-
-
-    // public static enum Priority {
-    //     Low,
-    //     Normal,
-    //     High
-    // }
+    public static enum Role {
+        Admin,
+        Student
+    }
  
     public static User findById(String id) {
         return JPA.em().find(User.class, id);
@@ -51,6 +40,22 @@ public class User {
 
     public void delete() {
         JPA.em().remove(this);
+    }
+    public static class Users {
+
+        private final List<User> list;
+
+        public Users (List<User> list) {
+            this.list = list;
+        }
+
+        public List<User> getList() {
+            return list;
+        }
+
+        public int getSize() {
+            return list.size();
+        }
     }
 }
 
