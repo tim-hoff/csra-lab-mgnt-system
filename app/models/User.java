@@ -41,6 +41,14 @@ public class User {
     public void delete() {
         JPA.em().remove(this);
     }
+   
+    public static Users users() {
+            List<User> data = JPA.em()
+            .createQuery("SELECT c FROM User c", User.class)
+            .getResultList();
+        return new Users (data);
+    }
+
     public static class Users {
 
         private final List<User> list;

@@ -17,6 +17,6 @@ public Result view(String id) {
 
 @Transactional
 public Result index() {
-		return ok(user.render(User.findById("tch031")));
+		return ok(users.render());
 	}
 }
