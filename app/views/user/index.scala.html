@@ -29,7 +29,7 @@
             @user.last_name
           </td>
           <td>
-            @user.email
+            <a href=@("mailto:"+user.email) target="_top">@user.email</a>
           </td>
           <td>
             @user.note
