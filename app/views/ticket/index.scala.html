@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(ticket <- Ticket.tickets.getList) {
+        @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
             <a href="@routes.TicketController.show(ticket.ticketID)"> @ticket.name</a>
