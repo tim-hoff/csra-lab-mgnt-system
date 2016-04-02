@@ -15,6 +15,7 @@
           <th>Available</th>
           <th>Retired</th>
           <th>Type</th>
+          <th>Rented By</th>
         </tr>
       </thead>
       <tbody>
@@ -38,6 +39,13 @@
           </td>
           <td>
             @item.item_type
+          </td>
+          <td>
+            @if(item.rented_by != null) {
+            <a href="@routes.UserController.show(item.rented_by.user_id)">
+              @item.rented_by.user_id
+            </a>
+            }
           </td>
         </tr>
         }

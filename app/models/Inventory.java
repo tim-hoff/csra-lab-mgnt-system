@@ -40,6 +40,9 @@ public class Inventory {
         JPA.em().remove(this);
     }
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_rented_by")
+    public User rented_by;
    
     public static Inventorys items() {
             List<Inventory> data = JPA.em()
