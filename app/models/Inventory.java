@@ -43,6 +43,12 @@ public class Inventory {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_rented_by")
     public User rented_by;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd")
+    public Date taken_date;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd")
+    public Date return_date;
    
     public static Inventorys items() {
             List<Inventory> data = JPA.em()

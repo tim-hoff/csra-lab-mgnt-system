@@ -16,6 +16,8 @@
           <th>Retired</th>
           <th>Type</th>
           <th>Rented By</th>
+          <th>Date Checked Out</th>
+          <th>Date Due</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +48,12 @@
               @item.rented_by.user_id
             </a>
             }
+          </td>
+          <td>
+            @item.taken_date
+          </td>
+          <td>
+            @item.return_date
           </td>
         </tr>
         }
