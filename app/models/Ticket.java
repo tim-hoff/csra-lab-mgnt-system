@@ -55,29 +55,13 @@ public class Ticket {
         JPA.em().remove(this);
     }
 
-     public static Tickets tickets() {
-            List<Ticket> data = JPA.em()
-            .createQuery("SELECT c FROM Ticket c", Ticket.class)
-            .getResultList();
-        return new Tickets (data);
-    }
+    public static List<Ticket> tickets() {
+       List<Ticket> data = JPA.em()
+       .createQuery("SELECT c FROM Ticket c", Ticket.class)
+       .getResultList();
+       return data;
+   }
 
-    public static class Tickets {
-
-        private final List<Ticket> list;
-
-        public Tickets (List<Ticket> list) {
-            this.list = list;
-        }
-
-        public List<Ticket> getList() {
-            return list;
-        }
-
-        public int getSize() {
-            return list.size();
-        }
-    }
 }
 
 
