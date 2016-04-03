@@ -11,12 +11,12 @@ GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
 
 GET 		/items											controllers.InventoryController.index
-# GET 		/items/new									controllers.InventoryController.create
-# POST 		/items											controllers.InventoryController.save
+GET 		/items/new									controllers.InventoryController.create
+POST 		/items											controllers.InventoryController.save
 GET 		/items/:id									controllers.InventoryController.show(id:Integer)
 GET 		/items/:id/edit							controllers.InventoryController.edit(id:Integer)
 PUT			/items/:id 									controllers.InventoryController.update(id:Integer)
-#  DELETE 	/items/:id 									controllers.InventoryController.delete(id:Integer)
+DELETE 	/items/:id 									controllers.InventoryController.delete(id:Integer)
 
 GET 		/ticket											controllers.TicketController.index
 GET 		/ticket/:id									controllers.TicketController.show(id:Integer)

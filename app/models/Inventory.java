@@ -31,7 +31,7 @@ public class Inventory {
         macbook,
         iphone
     }
- 
+    
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);
     }
@@ -39,6 +39,10 @@ public class Inventory {
     public void update(Integer id) {
         this.item_id = id;
         JPA.em().merge(this);
+    }
+
+    public void save() {
+        JPA.em().persist(this);
     }
 
     public void delete() {
@@ -54,11 +58,11 @@ public class Inventory {
 
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date return_date;
-   
+    
     public static List<Inventory> items() {
-            List<Inventory> data = JPA.em()
-            .createQuery("SELECT c FROM Inventory c", Inventory.class)
-            .getResultList();
+        List<Inventory> data = JPA.em()
+        .createQuery("SELECT c FROM Inventory c", Inventory.class)
+        .getResultList();
         return data;
     }
 
