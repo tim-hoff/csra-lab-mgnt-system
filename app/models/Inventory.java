@@ -31,39 +31,41 @@ public class Inventory {
         macbook,
         iphone
     }
- 
+    
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);
+    }
+
+    public void update(Integer id) {
+        this.item_id = id;
+        JPA.em().merge(this);
+    }
+
+    public void save() {
+        JPA.em().persist(this);
     }
 
     public void delete() {
         JPA.em().remove(this);
     }
 
-   
-    public static Inventorys items() {
-            List<Inventory> data = JPA.em()
-            .createQuery("SELECT c FROM Inventory c", Inventory.class)
-            .getResultList();
-        return new Inventorys (data);
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_rented_by")
+    public User rented_by;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd")
+    public Date taken_date;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd")
+    public Date return_date;
+    
+    public static List<Inventory> items() {
+        List<Inventory> data = JPA.em()
+        .createQuery("SELECT c FROM Inventory c", Inventory.class)
+        .getResultList();
+        return data;
     }
 
-    public static class Inventorys {
-
-        private final List<Inventory> list;
-
-        public Inventorys (List<Inventory> list) {
-            this.list = list;
-        }
-
-        public List<Inventory> getList() {
-            return list;
-        }
-
-        public int getSize() {
-            return list.size();
-        }
-    }
 }
 
 

@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(user <- User.users()) {
+        @for(user <- User.users) {
         <tr>
           <td><a href="@routes.UserController.show(user.user_id)">@user.user_id</a></td>
           <td>

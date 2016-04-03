@@ -15,10 +15,13 @@
           <th>Available</th>
           <th>Retired</th>
           <th>Type</th>
+          <th>Rented By</th>
+          <th>Date Checked Out</th>
+          <th>Date Due</th>
         </tr>
       </thead>
       <tbody>
-        @for(item <- Inventory.items.getList) {
+        @for(item <- Inventory.items) {
         <tr>
           <td>
             <!-- TODO: add a method to get a formatted id to the inventory model -->
@@ -39,6 +42,19 @@
           <td>
             @item.item_type
           </td>
+          <td>
+            @if(item.rented_by != null) {
+            <a href="@routes.UserController.show(item.rented_by.user_id)">
+              @item.rented_by.user_id
+            </a>
+            }
+          </td>
+          <td>
+            @item.taken_date
+          </td>
+          <td>
+            @item.return_date
+          </td>
         </tr>
         }
       </tbody>
@@ -49,7 +65,7 @@
   <div class="col-md-10">
     <div class="row">
       <div class="col-md-2 col-md-offset-2 pull-right">
-        <button type="button" class="btn btn-primary btn-lg btn-block ">New User</button>
+          <a href="@routes.InventoryController.create()" class="btn btn-primary btn-lg">New Item</a>
       </div>
     </div>
   </div>

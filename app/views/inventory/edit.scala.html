@@ -1,0 +1,38 @@
+@(id: Integer, invForm:Form[Inventory])
+@import helper._
+@import helpers.BootstrapHelper._
+@main("Edit Item"){
+@form(routes.InventoryController.update(id)){
+<fieldset>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <h1 class="sub-header">Edit Item</h1>
+      @inputText(invForm("item_id"), '_label -> "Item name")
+      @inputText(invForm("model_number"), '_label -> "Model Number")
+      @inputText(invForm("serial_number"), '_label -> "Serial Number")
+      @checkbox(invForm("available"), '_label -> "available")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
+      @inputText(invForm("item_type"), '_label -> "item_type")
+      @checkbox(invForm("retired"), '_label -> "retired")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
+      <!-- @textarea(invForm("rented_by"), '_label -> "rented_by")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)-->
+      @inputText(invForm("rented_by.user_id"), '_label -> "rented_by")
+    </div>
+  </div>
+  </fieldset>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2 pull-right">
+          <a href="@routes.InventoryController.show(id)" class="btn btn-primary">Cancel</a>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+        <div class="col-md-2 col-md-offset-2 pull-left">
+          @form(routes.InventoryController.delete(id)){
+          <button type="submit" class="btn btn-primary btn-warning">Delete</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+}
+},
