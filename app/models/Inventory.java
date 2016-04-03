@@ -36,6 +36,11 @@ public class Inventory {
         return JPA.em().find(Inventory.class, id);
     }
 
+    public void update(Integer id) {
+        this.item_id = id;
+        JPA.em().merge(this);
+    }
+
     public void delete() {
         JPA.em().remove(this);
     }
@@ -50,29 +55,13 @@ public class Inventory {
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date return_date;
    
-    public static Inventorys items() {
+    public static List<Inventory> items() {
             List<Inventory> data = JPA.em()
             .createQuery("SELECT c FROM Inventory c", Inventory.class)
             .getResultList();
-        return new Inventorys (data);
+        return data;
     }
 
-    public static class Inventorys {
-
-        private final List<Inventory> list;
-
-        public Inventorys (List<Inventory> list) {
-            this.list = list;
-        }
-
-        public List<Inventory> getList() {
-            return list;
-        }
-
-        public int getSize() {
-            return list.size();
-        }
-    }
 }
 
 
