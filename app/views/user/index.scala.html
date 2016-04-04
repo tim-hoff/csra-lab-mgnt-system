@@ -1,6 +1,8 @@
 @*
 * show users
 *@
+@import helper._
+@import helpers.BootstrapHelper._
 @main("View Users"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
@@ -16,6 +18,7 @@
           <th>Note</th>
           <th>Active</th>
           <th>Role</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -40,6 +43,19 @@
           <td>
             @user.role
           </td>
+          <td>
+          <div class="btn-group btn-sm">
+            @form(routes.UserController.show(user.user_id)){
+              <button type="submit" class="btn btn-success">Show</button>
+            }
+            @form(routes.UserController.show(user.user_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+            }
+            @form(routes.UserController.delete(user.user_id)){
+              <button type="submit" class="btn btn-danger">Delete</button>
+            }
+            </div>
+          </td>
         </tr>
         }
       </tbody>
@@ -50,7 +66,7 @@
   <div class="col-md-10">
     <div class="row">
       <div class="col-md-2 col-md-offset-2 pull-right">
-          <a href="@routes.UserController.create()" class="btn btn-primary btn-lg">New User</a>
+        <a href="@routes.UserController.create()" class="btn btn-primary btn-lg">New User</a>
       </div>
     </div>
   </div>
