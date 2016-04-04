@@ -43,6 +43,8 @@ public class Inventory {
 
     public void save() {
         JPA.em().persist(this);
+        JPA.em().flush();
+        JPA.em().getTransaction().commit();
     }
 
     public void delete() {

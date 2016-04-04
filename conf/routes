@@ -24,7 +24,8 @@ GET 		/tickets										controllers.TicketController.index
 GET 		/user												controllers.UserController.index
 GET 		/user/:id										controllers.UserController.show(id:String)
 GET 		/users											controllers.UserController.index
-
+GET 		/users/new									controllers.UserController.create
+POST 		/users											controllers.UserController.save
 # An example controller showing how to use dependency injection
 GET     /count											controllers.CountController.count
 GET 		/counter										controllers.CountController.index
