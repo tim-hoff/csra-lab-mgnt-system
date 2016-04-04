@@ -28,10 +28,5 @@ GET 		/users/new									controllers.UserController.create
 POST 		/users											controllers.UserController.save
 GET 		/users/:id/delete 					controllers.UserController.delete(id:String)
 
-# An example controller showing how to use dependency injection
-GET     /count											controllers.CountController.count
-GET 		/counter										controllers.CountController.index
-GET     /message										controllers.AsyncController.message
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file								controllers.Assets.versioned(path="/public", file: Asset)
