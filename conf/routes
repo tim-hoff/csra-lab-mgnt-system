@@ -27,12 +27,9 @@ GET 		/users/:id									controllers.UserController.show(id:String)
 GET 		/users/new									controllers.UserController.create
 POST 		/users											controllers.UserController.save
 GET 		/users/:id/delete 					controllers.UserController.delete(id:String)
-
 GET 		/history											controllers.HistoryController.index
 GET 		/history/:id									controllers.HistoryController.show(id:Integer)
 GET 		/histories											controllers.HistoryController.index
-
-# An example controller showing how to use dependency injection
 GET     /count											controllers.CountController.count
 GET 		/counter										controllers.CountController.index
 GET     /message										controllers.AsyncController.message
