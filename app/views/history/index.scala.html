@@ -1,0 +1,39 @@
+@*
+* show histories
+*@
+@main("View History"){
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <h1 class="sub-header">History</h1>
+    
+    <table id="data-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Taken Date</th>
+          <th>Return Date</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(history <- History.histories) {
+        <tr>
+          <td>
+            <a href="@routes.HistoryController.show(history.item_id)"> @history.item_id</a>
+          </td>
+          <td>
+            @history.taken_date
+          </td>
+          <td>
+            @history.return_date
+          </td>
+          <td>
+            @history.last_updated
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+},
