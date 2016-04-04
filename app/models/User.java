@@ -11,6 +11,7 @@ import play.db.jpa.*;
 @Entity 
 public class User {
     @Id
+    @Constraints.Required
     public String user_id;
     
     @Constraints.Required
@@ -26,7 +27,6 @@ public class User {
 
     public boolean active;
 
-    @Constraints.Required
     @Column(name="role", columnDefinition="ENUM('Admin', 'Student')")
     public String role;
 
@@ -42,6 +42,13 @@ public class User {
     public void delete() {
         JPA.em().remove(this);
     }
+
+    public void save() {
+        JPA.em().persist(this);
+        JPA.em().flush();
+        JPA.em().getTransaction().commit();
+    }
+
 
     public static List<User> users(){
       List<User> data = JPA.em()

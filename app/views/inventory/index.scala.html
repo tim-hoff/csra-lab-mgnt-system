@@ -1,6 +1,8 @@
 @*
 * show tickets
 *@
+@import helper._
+@import helpers.BootstrapHelper._
 @main("View Items"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
@@ -18,6 +20,7 @@
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +57,19 @@
           </td>
           <td>
             @item.return_date
+          </td>
+          <td>
+            <div class="btn-group btn-sm">
+            @form(routes.InventoryController.show(item.item_id)){
+              <button type="submit" class="btn btn-success">Show</button>
+            }
+            @form(routes.InventoryController.edit(item.item_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+            }
+            @form(routes.InventoryController.delete(item.item_id)){
+              <button type="submit" class="btn btn-danger">Delete</button>
+            }
+            </div>
           </td>
         </tr>
         }

@@ -12,18 +12,21 @@ GET 		/script											controllers.ExampleController.script
 
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
-POST 		/items											controllers.InventoryController.save
+POST 		/items/save									controllers.InventoryController.save
 GET 		/items/:id									controllers.InventoryController.show(id:Integer)
 GET 		/items/:id/edit							controllers.InventoryController.edit(id:Integer)
-PUT			/items/:id 									controllers.InventoryController.update(id:Integer)
-DELETE 	/items/:id 									controllers.InventoryController.delete(id:Integer)
+POST		/items/:id/update 					controllers.InventoryController.update(id:Integer)
+GET 		/items/:id/delete						controllers.InventoryController.delete(id:Integer)
 
 GET 		/ticket											controllers.TicketController.index
 GET 		/ticket/:id									controllers.TicketController.show(id:Integer)
 GET 		/tickets										controllers.TicketController.index
-GET 		/user												controllers.UserController.index
-GET 		/user/:id										controllers.UserController.show(id:String)
+
 GET 		/users											controllers.UserController.index
+GET 		/users/:id									controllers.UserController.show(id:String)
+GET 		/users/new									controllers.UserController.create
+POST 		/users											controllers.UserController.save
+GET 		/users/:id/delete 					controllers.UserController.delete(id:String)
 
 # An example controller showing how to use dependency injection
 GET     /count											controllers.CountController.count

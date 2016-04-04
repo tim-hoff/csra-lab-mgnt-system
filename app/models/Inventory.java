@@ -23,7 +23,6 @@ public class Inventory {
 
     public boolean available;
 
-    @Constraints.Required
     @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone')")
     public String item_type;
 
