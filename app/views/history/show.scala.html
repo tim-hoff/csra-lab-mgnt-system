@@ -1,0 +1,27 @@
+@(history: History)
+@*
+* This template is called from the `index` template. This template
+* handles the rendering of the page header and body tags. It takes
+* two arguments, a `String` for the title of the page and an `Html`
+* object to insert into the body of the page.
+*@
+@main("View History"){
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <h1 class="sub-header">History Details</h1>
+    <h4>ID: @history.item_id</h4>
+    <h4>Taken Date: @history.taken_date</h4>
+    <h4>Return Date: @history.return_date</h4>
+    <h4>Last Updated: @history.last_updated</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-2 col-md-offset-2 pull-right">
+        <button type="button" class="btn btn-primary btn-lg btn-block ">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+},

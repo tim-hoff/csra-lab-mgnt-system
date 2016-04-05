@@ -31,6 +31,10 @@ GET 		/users/:id									controllers.UserController.show(id:String)
 GET 		/users/new									controllers.UserController.create
 POST 		/users											controllers.UserController.save
 GET 		/users/:id/delete 					controllers.UserController.delete(id:String)
+GET 		/history											controllers.HistoryController.index
+GET 		/history/:id									controllers.HistoryController.show(id:Integer)
+GET 		/histories											controllers.HistoryController.index
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file								controllers.Assets.versioned(path="/public", file: Asset)
