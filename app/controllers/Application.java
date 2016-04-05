@@ -1,7 +1,7 @@
 package controllers;
 
 import views.html.*;
-import modules.SecurityModule;
+import modules.*;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.client.IndirectClient;
 import org.pac4j.core.exception.TechnicalException;

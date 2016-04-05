@@ -1,8 +1,11 @@
+package modules;
+
 import com.google.inject.AbstractModule;
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;
+import controllers.DemoHttpActionAdapter;
 import org.pac4j.play.ApplicationLogoutController;
 import org.pac4j.play.CallbackController;
 import org.pac4j.play.cas.logout.PlayCacheLogoutHandler;
@@ -42,6 +45,7 @@ public class SecurityModule extends AbstractModule {
 
 
         final Config config = new Config(clients);
+        config.setHttpActionAdapter(new DemoHttpActionAdapter());
         bind(Config.class).toInstance(config);
 
         // set profile timeout to 2h instead of the 1h default
