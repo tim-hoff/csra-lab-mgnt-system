@@ -1,0 +1,40 @@
+New log file opened at Tue Apr 05 12:03:36 CDT 2016 by 464@WenMenglandeMacBook-Pro.local
+Taking next connection to: 49219
+New client attempting to connect on port: 49221-49219
+  Address = /192.168.0.100:49219
+This client on port 49221 has uuid 8ce81b92-3546-4f80-830b-9395316d798d configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-8ce81b92-3546-4f80-830b-9395316d798d
+Taking next connection to: 49219
+New client attempting to connect on port: 49255-49219
+  Address = /192.168.0.100:49219
+Handshake exception on socket: 49255
+sbt.impl.ipc.HandshakeException: Unable to perform handshake
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
+	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
+	... 2 more
+Taking next connection to: 49219
+New client attempting to connect on port: 49256-49219
+  Address = /192.168.0.100:49219
+This client on port 49256 has uuid 71e2eda2-abdb-4b09-b06a-9d82377b85c4 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: activator-8ce81b92-3546-4f80-830b-9395316d798d, play-fork-run-71e2eda2-abdb-4b09-b06a-9d82377b85c4
+Taking next connection to: 49219
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 49219
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 49219
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 49219
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 49219
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 49219

@@ -7,8 +7,14 @@ GET     /														controllers.HomeController.index
 
 # Dashboard page, getting some base styling out of the way
 GET     /dashboard									controllers.DashboardController.index
+GET     /login									controllers.LoginController.login
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
+GET         /cas/index.html                   controllers.Application.casIndex()
+GET         /protected/index.html             controllers.Application.protectedIndex()
+GET         /callback                         @org.pac4j.play.CallbackController.callback()
+POST        /callback                         @org.pac4j.play.CallbackController.callback()
+GET         /logout                           @org.pac4j.play.ApplicationLogoutController.logout()
 
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
