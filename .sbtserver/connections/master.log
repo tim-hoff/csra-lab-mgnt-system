@@ -1,31 +1,7 @@
-New log file opened at Tue Apr 05 16:22:03 CDT 2016 by 2868@MSI
-Taking next connection to: 52633
-New client attempting to connect on port: 52634-52633
-  Address = /192.168.0.118:52633
-This client on port 52634 has uuid 25310d62-0c04-4cf8-80b2-f6f60a90d12b configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
-Connected Clients: activator-25310d62-0c04-4cf8-80b2-f6f60a90d12b
-Taking next connection to: 52633
-New client attempting to connect on port: 52635-52633
-  Address = /192.168.0.118:52633
-Handshake exception on socket: 52635
-sbt.impl.ipc.HandshakeException: Unable to perform handshake
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
-	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
-	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
-Caused by: java.net.SocketException: Software caused connection abort: recv failed
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.socketRead(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.io.BufferedInputStream.fill(Unknown Source)
-	at java.io.BufferedInputStream.read(Unknown Source)
-	at java.io.DataInputStream.readInt(Unknown Source)
-	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
-	... 2 more
-Taking next connection to: 52633
-New client attempting to connect on port: 52636-52633
-  Address = /192.168.0.118:52633
-This client on port 52636 has uuid 2da0e580-77a1-41b0-85b4-208d4c9f9753 configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
-Connected Clients: activator-25310d62-0c04-4cf8-80b2-f6f60a90d12b, activator-2da0e580-77a1-41b0-85b4-208d4c9f9753
-Taking next connection to: 52633
+New log file opened at Tue Apr 05 16:25:04 CDT 2016 by 244@MSI
+Taking next connection to: 52714
+New client attempting to connect on port: 52715-52714
+  Address = /192.168.0.118:52714
+This client on port 52715 has uuid aceee75b-2864-49f1-a510-099d61eee37a configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-aceee75b-2864-49f1-a510-099d61eee37a
+Taking next connection to: 52714
