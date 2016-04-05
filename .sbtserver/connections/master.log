@@ -1,7 +1,31 @@
-New log file opened at Tue Apr 05 16:25:04 CDT 2016 by 244@MSI
-Taking next connection to: 52714
-New client attempting to connect on port: 52715-52714
-  Address = /192.168.0.118:52714
-This client on port 52715 has uuid aceee75b-2864-49f1-a510-099d61eee37a configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
-Connected Clients: activator-aceee75b-2864-49f1-a510-099d61eee37a
-Taking next connection to: 52714
+New log file opened at Tue Apr 05 16:44:30 CDT 2016 by 10120@MSI
+Taking next connection to: 53017
+New client attempting to connect on port: 53018-53017
+  Address = /192.168.0.118:53017
+This client on port 53018 has uuid 8e16e7a8-f3eb-411c-bd0c-fdc4c4d4068f configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-8e16e7a8-f3eb-411c-bd0c-fdc4c4d4068f
+Taking next connection to: 53017
+New client attempting to connect on port: 53019-53017
+  Address = /192.168.0.118:53017
+Handshake exception on socket: 53019
+sbt.impl.ipc.HandshakeException: Unable to perform handshake
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
+	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
+Caused by: java.net.SocketException: Software caused connection abort: recv failed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.io.BufferedInputStream.fill(Unknown Source)
+	at java.io.BufferedInputStream.read(Unknown Source)
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
+	... 2 more
+Taking next connection to: 53017
+New client attempting to connect on port: 53020-53017
+  Address = /192.168.0.118:53017
+This client on port 53020 has uuid 7730b35d-3120-4e28-94fe-2b624a250744 configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-8e16e7a8-f3eb-411c-bd0c-fdc4c4d4068f, activator-7730b35d-3120-4e28-94fe-2b624a250744
+Taking next connection to: 53017
