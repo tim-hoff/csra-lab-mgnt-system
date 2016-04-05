@@ -9,6 +9,10 @@ GET     /														controllers.HomeController.index
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
+GET         /login                  controllers.Application.casIndex()
+GET         /callback                         @org.pac4j.play.CallbackController.callback()
+POST        /callback                         @org.pac4j.play.CallbackController.callback()
+GET         /logout                           @org.pac4j.play.ApplicationLogoutController.logout()
 
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create

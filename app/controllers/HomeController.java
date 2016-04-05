@@ -3,13 +3,15 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
+
 import views.html.*;
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class HomeController extends Controller {
+public class HomeController extends Controller 
+{
 
     /**
      * An action that renders an HTML page with a welcome message.

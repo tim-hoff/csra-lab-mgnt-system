@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final",
   "org.pac4j" % "play-pac4j" % "2.2.0-SNAPSHOT",
   "org.pac4j" % "pac4j-http" % "1.8.6",
+  "org.pac4j" % "pac4j-jwt" % "1.8.6",
   "org.pac4j" % "pac4j-cas" % "1.8.6",
   "org.pac4j" % "pac4j-oauth" % "1.8.6",
   "com.typesafe.play" % "play-cache_2.11" % "2.4.0"
@@ -27,3 +28,10 @@ resolvers ++= Seq( Resolver.mavenLocal,
                 "Pablo repo" at "https://raw.github.com/fernandezpablo85/scribe-java/mvn-repo/")
 
 routesGenerator := InjectedRoutesGenerator
+
+
+fork in run := true
+
+fork in run := true
+
+fork in run := true
