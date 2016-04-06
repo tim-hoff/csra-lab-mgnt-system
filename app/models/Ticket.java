@@ -17,6 +17,10 @@ public class Ticket {
     @Constraints.Required
     public String name;
 
+    public String assigned_to;
+
+    public String created_for;
+
     public String description;
 
     @Formats.DateTime(pattern="yyyy-MM-dd")
@@ -25,23 +29,26 @@ public class Ticket {
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date last_updated;
 
-    @Constraints.Required
     @Column(name="priority", columnDefinition="ENUM('Low', 'Normal', 'High')")
     public String priority;
+    
+    @Column(name="state", columnDefinition="ENUM('Pending', 'Resolved')")
+    public String state;
 
     public static enum Priority {
         Low,
         Normal,
         High
     }
-    
-    @Constraints.Required
-    @Column(name="state", columnDefinition="ENUM('Pending', 'Resolved')")
-    public String state;
 
     public static enum State {
         Pending,
         Resolved
+    }
+
+    public void update(Integer id) {
+        this.ticketID = id;
+        JPA.em().merge(this);
     }
 
     public static Ticket findById(Integer id) {
@@ -51,16 +58,20 @@ public class Ticket {
     	return Integer.toString(ticketID);
     };
 
+    public void save() {
+        JPA.em().persist(this);
+    }
+
     public void delete() {
         JPA.em().remove(this);
     }
 
     public static List<Ticket> tickets() {
-       List<Ticket> data = JPA.em()
-       .createQuery("SELECT c FROM Ticket c", Ticket.class)
-       .getResultList();
-       return data;
-   }
+     List<Ticket> data = JPA.em()
+     .createQuery("SELECT c FROM Ticket c", Ticket.class)
+     .getResultList();
+     return data;
+ }
 
 }
 
