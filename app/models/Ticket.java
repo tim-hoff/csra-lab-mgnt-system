@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import play.data.format.*;
 import play.data.validation.*;
-    import play.data.validation.Constraints.Required;
+import play.data.validation.Constraints.Required;
 
 import play.db.jpa.*;
 
@@ -17,7 +17,6 @@ import org.hibernate.annotations.Index;
 @Entity 
 @Table(name = "Ticket")
 public class Ticket {
-
     @Id
     @Column(name="ticketID", nullable=false)
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -77,12 +76,11 @@ public class Ticket {
     }
 
     public static List<Ticket> tickets() {
-     List<Ticket> data = JPA.em()
-     .createQuery("SELECT c FROM Ticket c", Ticket.class)
-     .getResultList();
-     return data;
- }
-
+       List<Ticket> data = JPA.em()
+       .createQuery("SELECT c FROM Ticket c", Ticket.class)
+       .getResultList();
+       return data;
+   }
 }
 
 
