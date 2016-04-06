@@ -22,9 +22,9 @@ POST 		/ticket/save								controllers.TicketController.save
 GET 		/tickets/new								controllers.TicketController.create
 GET 		/tickets										controllers.TicketController.index
 GET 		/tickets/:id								controllers.TicketController.show(id:Integer)
-GET 		/tickets/:id/edit							controllers.TicketController.edit(id:Integer)
-POST		/tickets/:id/update 					controllers.TicketController.update(id:Integer)
-GET 		/tickets/:id/delete						controllers.TicketController.delete(id:Integer)
+GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
+POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
+GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 
 GET 		/user/new										controllers.UserController.create
 POST 		/user/save									controllers.UserController.save

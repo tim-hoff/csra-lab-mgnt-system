@@ -13,8 +13,6 @@ import play.db.jpa.*;
 @Entity 
 public class User {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name="user_id", nullable=false)
     public String user_id;
     
