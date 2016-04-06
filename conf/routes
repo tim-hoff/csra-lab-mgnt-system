@@ -26,11 +26,13 @@ GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 
-GET 		/user/new										controllers.UserController.create
-POST 		/user/save									controllers.UserController.save
-GET 		/users											controllers.UserController.index
-GET 		/users/:id									controllers.UserController.show(id:String)
-GET 		/user/:id/delete 					controllers.UserController.delete(id:String)
+POST 		/user/save								controllers.UserController.save
+GET 		/users/new								controllers.UserController.create
+GET 		/users										controllers.UserController.index
+GET 		/users/:id								controllers.UserController.show(id:String)
+GET 		/users/:id/edit						controllers.UserController.edit(id:String)
+POST		/users/:id/update 				controllers.UserController.update(id:String)
+GET 		/users/:id/delete					controllers.UserController.delete(id:String)
 
 GET 		/history										controllers.HistoryController.index
 GET 		/history/:id								controllers.HistoryController.show(id:Integer)

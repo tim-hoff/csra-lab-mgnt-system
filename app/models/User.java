@@ -47,7 +47,11 @@ public class User {
 
     public void save() {
         JPA.em().persist(this);
+    }
 
+    public void update(String id) {
+        this.user_id = id;
+        JPA.em().merge(this);
     }
 
     public static List<User> users(){

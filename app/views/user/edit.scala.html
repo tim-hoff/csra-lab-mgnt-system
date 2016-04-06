@@ -1,0 +1,36 @@
+@(id: String, userForm:Form[User])
+@import helper._
+@import helpers.BootstrapHelper._
+@main("Edit User"){
+@form(routes.UserController.update(id)){
+<fieldset>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <h1 class="sub-header">Create User</h1>
+      @inputText(userForm("user_id"), '_label -> "user_id")
+      @inputText(userForm("first_name"), '_label -> "first_name")
+      @inputText(userForm("last_name"), '_label -> "last_name")
+      @checkbox(userForm("active"), '_label -> "active")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
+      @inputText(userForm("email"), '_label -> "email")
+      @textarea(userForm("note"), '_label -> "note")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
+      @inputText(userForm("role"), '_label -> "role")
+    </div>
+  </div>
+</fieldset>
+<div class="row">
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-2 col-md-offset-2 pull-right">
+        <a href="@routes.UserController.show(id)" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+      <div class="col-md-2 col-md-offset-2 pull-left">
+        @form(routes.UserController.delete(id)){
+        <button type="submit" class="btn btn-primary btn-warning">Delete</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+}
+},
