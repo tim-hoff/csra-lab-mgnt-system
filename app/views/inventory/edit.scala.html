@@ -7,13 +7,13 @@
   <div class="row">
     <div class="col-md-offset-2 col-md-8">
       <h1 class="sub-header">Edit Item</h1>
-      @inputText(invForm("item_id"), '_label -> "Item name")
-      @inputText(invForm("model_number"), '_label -> "Model Number")
-      @inputText(invForm("serial_number"), '_label -> "Serial Number")
+      @inputText(invForm("item_id"), '_label -> "item_id")
+      @inputText(invForm("model_number"), '_label -> "model_number")
+      @inputText(invForm("serial_number"), '_label -> "serial_number")
       @checkbox(invForm("available"), '_label -> "available")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
       @inputText(invForm("item_type"), '_label -> "item_type")
       @checkbox(invForm("retired"), '_label -> "retired")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
-      @inputText(invForm("rented_by.user_id"), '_label -> "rented_by")
+      @inputText(invForm("rented_by.user_id"), '_label -> "rented_by.user_id")
     </div>
   </div>
   </fieldset>
