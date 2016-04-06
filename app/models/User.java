@@ -11,16 +11,13 @@ import play.db.jpa.*;
 @Entity 
 public class User {
     @Id
-    @Constraints.Required
+    @GeneratedValue
     public String user_id;
     
-    @Constraints.Required
     public String first_name;
     
-    @Constraints.Required
     public String last_name;
 
-    @Constraints.Required
     public String email;
 
     public String note;

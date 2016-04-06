@@ -1,16 +1,20 @@
 @(ticket: Ticket)
-@*
-* This template is called from the `index` template. This template
-* handles the rendering of the page header and body tags. It takes
-* two arguments, a `String` for the title of the page and an `Html`
-* object to insert into the body of the page.
-*@
 @main("View Ticket"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
     <h1 class="sub-header">Ticket Details</h1>
-    <h4>ID: @ticket.ticketID()</h4>
+    <h4>ID: @ticket.ticket_id</h4>
     <h4>Name: @ticket.name</h4>
+    <h4>Assigned to
+    <a href="@routes.UserController.show(ticket.assigned_to)">
+      @ticket.assigned_to
+    </a>
+    </h4>
+    <h4>Created for
+    <a href="@routes.UserController.show(ticket.created_for)">
+      @ticket.created_for
+    </a>
+    </h4>
     <h4>Description: @ticket.description</h4>
     <h4>Date Created: @ticket.date_created</h4>
     <h4>Last Updated: @ticket.last_updated</h4>
