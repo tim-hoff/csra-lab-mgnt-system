@@ -23,9 +23,9 @@ GET 		/tickets/new								controllers.TicketController.create
 GET 		/tickets										controllers.TicketController.index
 GET 		/tickets/:id								controllers.TicketController.show(id:Integer)
 
-GET 		/users											controllers.UserController.index
 GET 		/user/new										controllers.UserController.create
 POST 		/user/save									controllers.UserController.save
+GET 		/users											controllers.UserController.index
 GET 		/users/:id									controllers.UserController.show(id:String)
 GET 		/user/:id/delete 					controllers.UserController.delete(id:String)
 
