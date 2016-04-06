@@ -26,12 +26,13 @@ public class UserController extends Controller {
 		return ok(create.render(userForm));
 	}
 
-  @Transactional
-  public Result delete(String id) {
-      User.findById(id).delete();
-      flash("success", "User item has been deleted");
-      return ok(index.render());
-  }
+	@Transactional
+	public Result delete(String id) {
+		User.findById(id).delete();
+		flash("success", "User item has been deleted");
+		return ok(index.render());
+	}
+
 	@Transactional 
 	public Result save() {
 		Form<User> userForm = form(User.class).bindFromRequest();
@@ -40,6 +41,25 @@ public class UserController extends Controller {
 		} 
 		userForm.get().save();
 		flash("success", "User " + userForm.get().user_id +" has been created");
-			return ok(index.render());
+		return ok(index.render());
+	}
+
+	@Transactional(readOnly=true)
+	public Result edit(String id) {
+		Form<User> userForm = form(User.class).fill(
+			User.findById(id));
+		return ok(edit.render(id, userForm));
+	}
+
+	@Transactional
+	public Result update(String id) {
+		Form<User> userForm = form(User.class).bindFromRequest();
+		if(userForm.hasErrors()) {
+			return badRequest(edit.render(id, userForm));
+		} else {
+			userForm.get().update(id);
+			flash("success", "User " + id + " has been updated");
+			return ok(show.render(User.findById(id)));
 		}
+	}
 }

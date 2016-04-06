@@ -1,6 +1,8 @@
 @*
-* show tickets
+* index tickets
 *@
+@import helper._
+@import helpers.BootstrapHelper._
 @main("View Tickets"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
@@ -10,17 +12,34 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Assigned to</th>
+          <th>Created for</th>
+          <th>Description</th>
           <th>Date Created</th>
           <th>Last Updated</th>
           <th>Priority</th>
           <th>State</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
-            <a href="@routes.TicketController.show(ticket.ticketID)"> @ticket.name</a>
+            @ticket.name
+          </td>
+          <td>
+            <a href="@routes.UserController.show(ticket.assigned_to)">
+              @ticket.assigned_to
+            </a>
+          </td>
+          <td>
+            <a href="@routes.UserController.show(ticket.created_for)">
+              @ticket.created_for
+            </a>
+          </td>
+          <td>
+            @ticket.description
           </td>
           <td>
             @ticket.date_created
@@ -34,6 +53,19 @@
           <td>
             @ticket.state
           </td>
+          <td>
+            <div class="btn-group btn-sm">
+              @form(routes.TicketController.show(ticket.ticket_id)){
+              <button type="submit" class="btn btn-success">Show</button>
+              }
+              @form(routes.TicketController.edit(ticket.ticket_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+              }
+              @form(routes.TicketController.delete(ticket.ticket_id)){
+              <button type="submit" class="btn btn-danger">Delete</button>
+              }
+            </div>
+          </td>
         </tr>
         }
       </tbody>
@@ -44,7 +76,7 @@
   <div class="col-md-10">
     <div class="row">
       <div class="col-md-2 col-md-offset-2 pull-right">
-        <button type="button" class="btn btn-primary btn-lg btn-block ">New User</button>
+        <a href="@routes.TicketController.create()" class="btn btn-primary btn-lg btn-block">New Ticket</a>
       </div>
     </div>
   </div>

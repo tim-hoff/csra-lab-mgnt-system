@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import play.data.format.*;
 import play.data.validation.*;
 import play.db.jpa.*;
@@ -11,16 +13,15 @@ import play.db.jpa.*;
 @Entity 
 public class User {
     @Id
-    @Constraints.Required
+    @Column(name="user_id", nullable=false)
     public String user_id;
     
-    @Constraints.Required
+    @Column(nullable=false)
     public String first_name;
     
-    @Constraints.Required
+    @Column(nullable=false)
     public String last_name;
 
-    @Constraints.Required
     public String email;
 
     public String note;
@@ -28,13 +29,14 @@ public class User {
     public boolean active;
 
     @Column(name="role", columnDefinition="ENUM('Admin', 'Student')")
-    public String role;
+    @Enumerated(EnumType.STRING)
+    public Role role;
 
     public static enum Role {
         Admin,
         Student
     }
- 
+
     public static User findById(String id) {
         return JPA.em().find(User.class, id);
     }
@@ -45,10 +47,12 @@ public class User {
 
     public void save() {
         JPA.em().persist(this);
-        JPA.em().flush();
-        JPA.em().getTransaction().commit();
     }
 
+    public void update(String id) {
+        this.user_id = id;
+        JPA.em().merge(this);
+    }
 
     public static List<User> users(){
       List<User> data = JPA.em()
