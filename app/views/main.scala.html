@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         
-        <meta name="description" content="Lab Management System CSRA Lab at Louisiana Tech">
+        <meta name="description" content="Lab Management System for CSRA Lab at Louisiana Tech">
         <meta name="author" content="">
         
         @* Here's where we render the page title `String`. *@
@@ -65,8 +65,12 @@
     </body>
     <script>
     $(document).ready(function() {
-    $('#data-table').DataTable();
+        $('#data-table').DataTable({
+            columnDefs: [{"width":"30%", "targets":"action"}]
+        });
+
     });
+
     </script>
     @scripts
 </html>
