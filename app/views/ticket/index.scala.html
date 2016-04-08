@@ -17,6 +17,7 @@
           <th>Description</th>
           <th>Date Created</th>
           <th>Last Updated</th>
+          <th>Category</th>
           <th>Priority</th>
           <th>State</th>
           <th class="action">Actions</th>
@@ -48,6 +49,9 @@
             @ticket.last_updated
           </td>
           <td>
+            @ticket.category
+          </td>
+          <td>
             @ticket.priority
           </td>
           <td>
@@ -61,9 +65,7 @@
               @form(routes.TicketController.edit(ticket.ticket_id)){
               <button type="submit" class="btn btn-warning">Edit</button>
               }
-              @form(routes.TicketController.delete(ticket.ticket_id)){
-              <button type="submit" class="btn btn-danger">Delete</button>
-              }
+              
             </div>
           </td>
         </tr>
