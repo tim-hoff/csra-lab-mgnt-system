@@ -8,13 +8,14 @@
     <div class="col-md-offset-2 col-md-8">
       <h1 class="sub-header">Create Ticket</h1>
       @inputText(ticketForm("name"), '_label -> "name")
-      @inputText(ticketForm("assigned_to"), '_label -> "assigned_to")
-      @inputText(ticketForm("created_for"), '_label -> "created_for")
+      @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
+      @inputText(ticketForm("created_for"), '_label -> "created for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-      @inputText(ticketForm("priority"), '_label -> "priority") 
-      @inputText(ticketForm("state"), '_label -> "state")
+      @select(ticketForm("state"), options(Seq("Pending", "Resolved")), '_label -> "State")(FieldConstructor(views.html.helper.defaultFieldConstructor.f), null)
+      @select(ticketForm("priority"), options(Seq("Low", "Normal", "High")), '_label -> "Priority")(FieldConstructor(views.html.helper.defaultFieldConstructor.f), null)
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-10">
       <div class="row">
