@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -97,8 +98,10 @@ public class Ticket {
    }
 
    public static List<Ticket> filteredTickets(){
-        List<Ticket> list = tickets();
+        List<Ticket> list = tickets().stream().filter(c -> c.category == Category.vm_setup).collect(Collectors.toList());
         return list;
+        //     HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
+
    }
 
 }

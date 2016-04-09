@@ -1,19 +1,116 @@
+@import helper._
+@import helpers.BootstrapHelper._
 @scripts = {
-    <script type="text/javascript">
+<script type="text/javascript">
+	var data = [
+	{
+		value: 300,
+		color:"#F7464A",
+		highlight: "#FF5A5E",
+		label: "Red"
+	},
+	{
+		value: 50,
+		color: "#46BFBD",
+		highlight: "#5AD3D1",
+		label: "Green"
+	},
+	{
+		value: 100,
+		color: "#FDB45C",
+		highlight: "#FFC870",
+		label: "Yellow"
+	}
+	];
 
-    </script>
+	var options = {
+	animateScale : true,
+	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+	}
+
+	var ctx = document.getElementById("myChart").getContext("2d");
+		
+	var myNewChart = new Chart(ctx).Doughnut(data, options);
+
+	document.getElementById('js-legend').innerHTML = myNewChart.generateLegend();
+</script>
 }
 
 @includes = {
-	
+
 <script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+<link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/chart.css")">
 
 }
 
 @content = {
-
-   <h1> Report 1 </h1>
-
+<h1> Report 1 </h1>
+<div>
+	<canvas id="myChart" width="400" height="400"></canvas>
+	<div id="js-legend" class="chart-legend"></div>
+</div>
+<table id="data-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Assigned to</th>
+          <th>Created for</th>
+          <th>Description</th>
+          <th>Date Created</th>
+          <th>Last Updated</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>State</th>
+          <th class="action">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(ticket <- Ticket.filteredTickets) {
+        <tr>
+          <td>
+            <a href="@routes.TicketController.show(ticket.ticket_id)">
+              @ticket.name
+            </a>
+          </td>
+          <td>
+            <a href="@routes.UserController.show(ticket.assigned_to)">
+              @ticket.assigned_to
+            </a>
+          </td>
+          <td>
+            <a href="@routes.UserController.show(ticket.created_for)">
+              @ticket.created_for
+            </a>
+          </td>
+          <td>
+            @ticket.description
+          </td>
+          <td>
+            @ticket.date_created
+          </td>
+          <td>
+            @ticket.last_updated
+          </td>
+          <td>
+            @ticket.category
+          </td>
+          <td>
+            @ticket.priority
+          </td>
+          <td>
+            @ticket.state
+          </td>
+          <td>
+            <div class="btn-group btn-sm">
+              @form(routes.TicketController.edit(ticket.ticket_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+              }
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
 }
 
 @main("Reports 1", scripts, includes)(content)
