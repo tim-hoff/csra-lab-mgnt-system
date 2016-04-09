@@ -42,6 +42,10 @@ public class Ticket {
     @Column(name="priority", columnDefinition="ENUM('Low', 'Normal', 'High')")
     @Enumerated(EnumType.STRING)
     public Priority priority;
+
+    @Column(name="category", columnDefinition="ENUM(damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous') ")
+    @Enumerated(EnumType.STRING)
+    public Category category;
     
     @Column(name="state", columnDefinition="ENUM('Pending', 'Resolved')")
     @Enumerated(EnumType.STRING)
@@ -51,6 +55,16 @@ public class Ticket {
         Low,
         Normal,
         High
+    }
+
+    public static enum Category {
+        damaged_item,
+        lost_item,
+        vm_setup,
+        vm_upgrade,
+        tours,
+        training,
+        miscellaneous
     }
 
     public static enum State {

@@ -27,3 +27,6 @@ resolvers ++= Seq( Resolver.mavenLocal,
                 "Pablo repo" at "https://raw.github.com/fernandezpablo85/scribe-java/mvn-repo/")
 
 routesGenerator := InjectedRoutesGenerator
+
+
+fork in run := true

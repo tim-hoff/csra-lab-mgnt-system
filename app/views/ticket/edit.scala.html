@@ -11,6 +11,7 @@
       @inputText(ticketForm("assigned_to"), '_label -> "assigned_to")
       @inputText(ticketForm("created_for"), '_label -> "created_for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
+      @inputText(ticketForm("category"), '_label -> "category")
       @inputText(ticketForm("priority"), '_label -> "priority")
       @inputText(ticketForm("state"), '_label -> "state")
     </div>
@@ -22,11 +23,6 @@
       <div class="col-md-2 col-md-offset-2 pull-right">
         <a href="@routes.TicketController.show(id)" class="btn btn-primary">Cancel</a>
         <button type="submit" class="btn btn-default">Submit</button>
-      </div>
-      <div class="col-md-2 col-md-offset-2 pull-left">
-        @form(routes.TicketController.delete(id)){
-        <button type="submit" class="btn btn-primary btn-warning">Delete</button>
-        }
       </div>
     </div>
   </div>

@@ -60,14 +60,8 @@
           </td>
           <td>
             <div class="btn-group btn-sm">
-            @form(routes.InventoryController.show(item.item_id)){
-              <button type="submit" class="btn btn-success">Show</button>
-            }
             @form(routes.InventoryController.edit(item.item_id)){
               <button type="submit" class="btn btn-warning">Edit</button>
-            }
-            @form(routes.InventoryController.delete(item.item_id)){
-              <button type="submit" class="btn btn-danger">Delete</button>
             }
             </div>
           </td>
