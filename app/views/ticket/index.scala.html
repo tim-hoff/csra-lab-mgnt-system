@@ -27,7 +27,9 @@
         @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
-            @ticket.name
+            <a href="@routes.TicketController.show(ticket.ticket_id)">
+              @ticket.name
+            </a>
           </td>
           <td>
             <a href="@routes.UserController.show(ticket.assigned_to)">
@@ -62,7 +64,6 @@
               @form(routes.TicketController.edit(ticket.ticket_id)){
               <button type="submit" class="btn btn-warning">Edit</button>
               }
-              
             </div>
           </td>
         </tr>

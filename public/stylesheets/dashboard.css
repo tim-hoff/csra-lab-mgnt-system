@@ -92,11 +92,10 @@ body {
 /*
  * Placeholder dashboard ideas
  */
-form {
+form.action {
   float:left;
   padding-right: 1px;
 }
-
 
 .placeholders {
   margin-bottom: 30px;
