@@ -64,4 +64,13 @@ public class TicketController extends Controller {
 		return ok(index.render());
 	}
 
+	@Transactional
+	public Result report1() {
+		return ok(report1.render());
+	}
+
+	//@Transactional
+	//public Result getReport(Integer time) {
+		// test 
+	//}
 }

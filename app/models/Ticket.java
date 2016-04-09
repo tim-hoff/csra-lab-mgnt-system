@@ -81,6 +81,12 @@ public class Ticket {
        .getResultList();
        return data;
    }
+
+   public static List<Ticket> filteredTickets(){
+        List<Ticket> list = tickets();
+        return list;
+   }
+
 }
 
 
