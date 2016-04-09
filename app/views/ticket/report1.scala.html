@@ -4,8 +4,16 @@
     </script>
 }
 
-@main("Reports 1", scripts){
+@includes = {
+	
+<script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+
+}
+
+@content = {
 
    <h1> Report 1 </h1>
 
 }
+
+@main("Reports 1", scripts, includes)(content)
