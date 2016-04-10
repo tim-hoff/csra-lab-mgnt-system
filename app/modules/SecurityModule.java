@@ -2,6 +2,7 @@ package modules;
 
 import com.google.inject.AbstractModule;
 import org.pac4j.cas.client.CasClient;
+import org.pac4j.cas.client.CasClient.CasProtocol;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;
@@ -33,7 +34,8 @@ public class SecurityModule extends AbstractModule {
         final String baseUrl = configuration.getString("baseUrl");
 
         // CAS
-        final CasClient casClient = new CasClient("https://cas.latech.edu:443/cas/login", CasProtocol.CAS20);
+        final CasClient casClient = new CasClient("https://cas.latech.edu:443/cas/login");
+        casClient.setCasProtocol(CasProtocol.CAS20_PROXY);
         casClient.setLogoutHandler(new PlayCacheLogoutHandler());
         //This should grab the ticket
         final CasProxyReceptor casProxyReceptor = new CasProxyReceptor();
