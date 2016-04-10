@@ -6,11 +6,14 @@ import static play.data.Form.*;
 import play.db.jpa.*;
 
 import views.html.ticket.*;
-
+import views.html.ticket.reports.*;
 import models.*;
+
+import org.pac4j.play.java.RequiresAuthentication;
 
 public class TicketController extends Controller {
 	@Transactional
+	//@RequiresAuthentication(clientName = "CasClient")
 	public Result index() {
 		return ok(index.render());
 	}
@@ -64,4 +67,13 @@ public class TicketController extends Controller {
 		return ok(index.render());
 	}
 
+	@Transactional
+	public Result report_1() {
+		return ok(report_1.render());
+	}
+
+	//@Transactional
+	//public Result getReport(Integer time) {
+		// test 
+	//}
 }

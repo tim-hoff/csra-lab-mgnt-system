@@ -11,6 +11,7 @@
       @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
       @inputText(ticketForm("created_for"), '_label -> "created for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
+<<<<<<< HEAD
 
 @*   Calls to future template   
 
@@ -63,6 +64,11 @@
           </script>
         </div>
       </div>
+=======
+      @inputText(ticketForm("category"), '_label -> "category")
+      @inputText(ticketForm("priority"), '_label -> "priority") 
+      @inputText(ticketForm("state"), '_label -> "state")
+>>>>>>> a6e0a9b75c8ada01af0e1aeaac59e761467196b9
     </div>
   </div>
 
