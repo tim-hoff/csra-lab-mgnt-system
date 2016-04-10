@@ -11,64 +11,12 @@
       @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
       @inputText(ticketForm("created_for"), '_label -> "created for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-<<<<<<< HEAD
-
-@*   Calls to future template   
-
-     @select(ticketForm("state"),  options = Seq("Pending" ->"Pending", "Resolved" -> "Resolved"), '_label -> "State")(FieldConstructor(views.html.helper.inputtFieldConstructor.f), null)
-      @select(ticketForm("priority"), options = Seq("Low", "Normal", "High"), '_label -> "Priority")(inputFieldConstructor(views.html.helper.defaultFieldConstructor.f), null) 
-*@
-
-
-
-
-     <div class="form-group">
-        <label class="col-lg-2 control-label" for="state">State</label>
-        <div class="col-lg-10">
-          <select class="form-control" id="state" value=value name="state">
-            <option>Pending</option>
-            <option>Resolved</option>
-          </select>
-          <script>
-           var val = "Pending";
-          var sel = document.getElementById('state');
-          var opts = state.options;
-           for(var opt, j = 0; opt = opts[j]; j++) {
-            if(opt.value == val) {
-              sel.selectedIndex = j;
-             break;
-            }
-           }
-          </script>
-        </div>
-      </div>
-
-     <div class="form-group">
-        <label class="col-lg-2 control-label" for="priority">Priority</label>
-        <div class="col-lg-10">
-          <select class="form-control" id="priority" value=value name="priority">
-            <option>Low</option>
-            <option>Normal</option>
-            <option>High</option>
-          </select>
-          <script>
-            var val = "Normal";
-            var sel = document.getElementById('priority');
-            var opts = priority.options;
-            for(var opt, j = 0; opt = opts[j]; j++) {
-              if(opt.value == val) {
-                sel.selectedIndex = j;
-                break;
-              }
-            }
-          </script>
-        </div>
-      </div>
-=======
-      @inputText(ticketForm("category"), '_label -> "category")
-      @inputText(ticketForm("priority"), '_label -> "priority") 
-      @inputText(ticketForm("state"), '_label -> "state")
->>>>>>> a6e0a9b75c8ada01af0e1aeaac59e761467196b9
+      @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
+        '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)  
+      @select(ticketForm("state"),  options(Seq("Pending","Resolved")), 
+        '_label -> "State")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+      @select(ticketForm("priority"), options(Seq("Low", "Normal", "High")), 
+        '_label -> "Priority")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null) 
     </div>
   </div>
 
