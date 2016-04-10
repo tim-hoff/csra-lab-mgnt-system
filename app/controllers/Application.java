@@ -11,7 +11,7 @@ import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.java.RequiresAuthentication;
 import org.pac4j.cas.profile.CasProxyProfile;
-
+import org.w3c.dom.Document;
 import javax.inject.Inject;
 import play.mvc.*;
 import play.libs.ws.*;
@@ -37,9 +37,12 @@ public class Application extends UserProfileController<CommonProfile> {
             proxyTicket = proxyProfile.getProxyTicketFor(service);
         }
         
-        String proxyResponse = service+"?ticket=" + proxyTicket;
-        WSRequest request = ws.url(proxyResponse);
-        Promise<WSResponse> responsePromise = request.get();
+        String proxyResponse = service+"&ticket=" + proxyTicket;
+        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
+            return response.asXml();
+        });
+        //WSRequest request = ws.url(proxyResponse);
+        //Promise<WSResponse> responsePromise = request.get();
         //return ok(index.render());
         return ok(casticket.render(proxyResponse));
     }
