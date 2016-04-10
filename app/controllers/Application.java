@@ -40,7 +40,7 @@ public class Application extends UserProfileController<CommonProfile> {
         {
         	return ok(casticket.render("ahhh"));
         }
-        String proxyResponse = service+"&ticket=" + proxyTicket;
+        String proxyResponse = service+"?ticket=" + proxyTicket;
         WSRequest request = ws.url(proxyResponse);
         Promise<WSResponse> responsePromise = request.get();
         //return ok(index.render());
