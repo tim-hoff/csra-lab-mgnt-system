@@ -30,7 +30,6 @@ public class Application extends UserProfileController<CommonProfile> {
         final CommonProfile profile = getUserProfile();
         final String service = "https://csra-lab-mgnt-system.herokuapp.com/dashboard";
         String proxyTicket = null;
-        //return ok(casticket.render(proxyTicket));
         
         if (profile instanceof CasProxyProfile) {
             final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
@@ -42,7 +41,7 @@ public class Application extends UserProfileController<CommonProfile> {
             return response.asXml();
         });
         
-        return ok(casticket.render(proxyResponse));
+        return ok(test.render(profile, service, proxyTicket));
     }
 
 
