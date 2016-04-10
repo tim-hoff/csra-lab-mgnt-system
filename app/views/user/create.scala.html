@@ -13,8 +13,10 @@
       @checkbox(userForm("active"), '_label -> "active")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
       @inputText(userForm("email"), '_label -> "email")
       @textarea(userForm("note"), '_label -> "note")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-      @inputText(userForm("role"), '_label -> "role")
-     
+      @select(userForm("role"), options(Seq("Student", "Admin")), 
+        '_label -> "Role")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null) 
+
+
     </div>
   </div>
   <div class="row">
