@@ -78,6 +78,7 @@ body {
 .main {
   padding: 20px;
 }
+
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;
@@ -88,7 +89,6 @@ body {
   margin-top: 0;
 }
 
-
 /*
  * Placeholder dashboard ideas
  */
@@ -96,6 +96,7 @@ form.action {
   float:left;
   padding-right: 1px;
 }
+
 
 .placeholders {
   margin-bottom: 30px;
