@@ -28,7 +28,7 @@ public class Application extends UserProfileController<CommonProfile> {
     @RequiresAuthentication(clientName = "CasClient")
     public Result casIndex() {
         final CommonProfile profile = getUserProfile();
-        final String service = "https://csra-lab-mgnt-system.herokuapp.com/csra_lab";
+        final String service = "https://csra-lab-mgnt-system.herokuapp.com/callback?client_name=CasClient";
         String proxyTicket = null;
         //return ok(casticket.render(proxyTicket));
         
@@ -36,10 +36,7 @@ public class Application extends UserProfileController<CommonProfile> {
             final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
             proxyTicket = proxyProfile.getProxyTicketFor(service);
         }
-        else
-        {
-        	return ok(casticket.render("ahhh"));
-        }
+        
         String proxyResponse = service+"?ticket=" + proxyTicket;
         WSRequest request = ws.url(proxyResponse);
         Promise<WSResponse> responsePromise = request.get();
