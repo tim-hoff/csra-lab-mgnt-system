@@ -10,6 +10,7 @@ import org.pac4j.play.ApplicationLogoutController;
 import org.pac4j.play.CallbackController;
 import org.pac4j.play.cas.logout.PlayCacheLogoutHandler;
 import org.pac4j.play.store.PlayCacheStore;
+import org.pac4j.cas.client.CasProxyReceptor;
 import play.Configuration;
 import play.Environment;
 
