@@ -12,12 +12,18 @@ import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.java.RequiresAuthentication;
 import org.pac4j.cas.profile.CasProxyProfile;
 
+import javax.inject.Inject;
+import play.mvc.*;
+import play.libs.ws.*;
+import java.util.concurrent.CompletionStage;
 import org.pac4j.play.java.UserProfileController;
 import play.mvc.Result;
 import play.twirl.api.Content;
+import play.libs.F.Function;
+import play.libs.F.Promise;
 
 public class Application extends UserProfileController<CommonProfile> {
-    
+	@Inject WSClient ws;
 
     @RequiresAuthentication(clientName = "CasClient")
     public Result casIndex() {
@@ -35,6 +41,8 @@ public class Application extends UserProfileController<CommonProfile> {
         	return ok(casticket.render("ahhh"));
         }
         String proxyResponse = service+"&ticket=" + proxyTicket;
+        WSRequest request = ws.url(proxyResponse);
+        Promise<WSResponse> responsePromise = request.get();
         //return ok(index.render());
         return ok(casticket.render(proxyResponse));
     }
