@@ -10,7 +10,7 @@ category|count
 demo    | 3
 vm      | 4
 
-![Pie Chart](https://github.com/tim-hoff/csra-lab-mgnt-system/tree/features/report/public/images/piechart.png "Example Pie Chart")
+![Pie Chart](https://raw.githubusercontent.com/tim-hoff/csra-lab-mgnt-system/features/report/public/images/piechart.png "Example Pie Chart")
 
 [Pie Chart Docs](http://www.chartjs.org/docs/#doughnut-pie-chart)
 
@@ -36,7 +36,7 @@ tim       | 4 |  0   | 3  |  2   |  9
 abhaya    | 3 |  1   | 2  |  0   |  6   
 total     | 10|  2   | 5  |  2   |  19
 
-![Bar Chart](https://github.com/tim-hoff/csra-lab-mgnt-system/tree/features/report/public/images/barchart.png "Example Bar Chart")
+![Bar Chart](https://raw.githubusercontent.com/tim-hoff/csra-lab-mgnt-system/features/report/public/images/barchart.png "Example Bar Chart")
 
 [Bar Chart Docs](http://www.chartjs.org/docs/#bar-chart)
 
