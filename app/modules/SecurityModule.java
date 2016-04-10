@@ -54,7 +54,7 @@ public class SecurityModule extends AbstractModule {
         
         //callback
         final CallbackController callbackController = new CallbackController();
-        callbackController.setDefaultUrl("/items");
+        callbackController.setDefaultUrl("https://csra-lab-mgnt-system.herokuapp.com/callback?client_name=CasClient");
         bind(CallbackController.class).toInstance(callbackController);
         // logout
         final ApplicationLogoutController logoutController = new ApplicationLogoutController();
