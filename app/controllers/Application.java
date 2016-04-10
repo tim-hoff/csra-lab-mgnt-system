@@ -22,7 +22,6 @@ public class Application extends UserProfileController<CommonProfile> {
     @RequiresAuthentication(clientName = "CasClient")
     public Result casIndex() {
         final CommonProfile profile = getUserProfile();
-        //final String service = "http://localhost:8080/proxiedService";
         final String service = "https://csra-lab-mgnt-system.herokuapp.com/dashboard";
         String proxyTicket = null;
         if (profile instanceof CasProxyProfile) {
