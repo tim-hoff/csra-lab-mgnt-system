@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -14,87 +15,99 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Index;
 
-@Entity 
+@Entity
 @Table(name = "Ticket")
 public class Ticket {
-    @Id
-    @Column(name="ticketID", nullable=false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    public Integer ticket_id;
+	@Id
+	@Column(name = "ticketID", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer ticket_id;
 
-    @Column(name="name", nullable=false)
-    public String name;
+	@Column(name = "name", nullable = false)
+	public String name;
 
-    public String assigned_to;
+	public String assigned_to;
 
-    public String created_for;
+	public String created_for;
 
-    public String description;
+	public String description;
 
-    @Generated(GenerationTime.ALWAYS) 
-    @Formats.DateTime(pattern="yyyy-MM-dd")
-    public Date date_created;
+	@Generated(GenerationTime.ALWAYS)
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
+	public Date date_created;
 
-    @Generated(GenerationTime.ALWAYS) 
-    @Formats.DateTime(pattern="yyyy-MM-dd")
-    public Date last_updated;
-    
-    @Column(name="priority", columnDefinition="ENUM('Low', 'Normal', 'High')")
-    @Enumerated(EnumType.STRING)
-    public Priority priority;
+	@Generated(GenerationTime.ALWAYS)
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
+	public Date last_updated;
 
-    @Column(name="category", columnDefinition="ENUM(damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous') ")
-    @Enumerated(EnumType.STRING)
-    public Category category;
-    
-    @Column(name="state", columnDefinition="ENUM('Pending', 'Resolved')")
-    @Enumerated(EnumType.STRING)
-    public State state;
+	@Column(name = "priority", columnDefinition = "ENUM('Low', 'Normal', 'High')")
+	@Enumerated(EnumType.STRING)
+	public Priority priority;
 
-    public static enum Priority {
-        Low,
-        Normal,
-        High
-    }
+	@Column(name = "category", columnDefinition = "ENUM(damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous') ")
+	@Enumerated(EnumType.STRING)
+	public Category category;
 
-    public static enum Category {
-        damaged_item,
-        lost_item,
-        vm_setup,
-        vm_upgrade,
-        tours,
-        training,
-        miscellaneous
-    }
+	@Column(name = "state", columnDefinition = "ENUM('Pending', 'Resolved')")
+	@Enumerated(EnumType.STRING)
+	public State state;
 
-    public static enum State {
-        Pending,
-        Resolved
-    }
+	public static enum Priority {
+		Low, Normal, High
+	}
 
-    public void update(Integer id) {
-        this.ticket_id = id;
-        JPA.em().merge(this);
-    }
+	public static enum Category {
+		damaged_item, lost_item, vm_setup, vm_upgrade, tours, training, miscellaneous
+	}
 
-    public static Ticket findById(Integer id) {
-        return JPA.em().find(Ticket.class, id);
-    }
+	public static enum State {
+		Pending, Resolved
+	}
 
-    public void save() {
-        JPA.em().persist(this);
-    }
+	public void update(Integer id) {
+		this.ticket_id = id;
+		JPA.em().merge(this);
+	}
 
-    public void delete() {
-        JPA.em().remove(this);
-    }
+	public static Ticket findById(Integer id) {
+		return JPA.em().find(Ticket.class, id);
+	}
 
-    public static List<Ticket> tickets() {
-       List<Ticket> data = JPA.em()
-       .createQuery("SELECT c FROM Ticket c", Ticket.class)
-       .getResultList();
-       return data;
-   }
+	public void save() {
+		JPA.em().persist(this);
+	}
+
+	public void delete() {
+		JPA.em().remove(this);
+	}
+
+	public static List<Ticket> tickets() {
+		List<Ticket> data = JPA.em().createQuery("SELECT c FROM Ticket c", Ticket.class).getResultList();
+		return data;
+	}
+
+	private static int categoryCount(Category category) {
+		long list = tickets().stream().filter(c -> c.category == category).count();
+
+		return (int) list;
+	}
+
+	public static List<Ticket> filteredTickets() {
+		List<Ticket> list = tickets().stream().filter(c -> c.category == Category.vm_setup)
+				.collect(Collectors.toList());
+		return list;
+		//HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
+		
+	}
+
+	public static HashMap<Category, Integer> categoryHash() {
+		HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
+
+		for (Category category : Category.values()) {
+			  hmap.put(category, categoryCount(category));
+		}
+		
+		return hmap;
+	}
+
 }
-
-

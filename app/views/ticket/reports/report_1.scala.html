@@ -1,0 +1,82 @@
+@import helper._
+@import helpers.BootstrapHelper._
+
+@includes = {
+	<script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+	<link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/chart.css")">
+}
+
+@scripts = {
+	<script type="text/javascript">
+		function ColorLuminance(hex, lum) {
+
+		// validate hex string
+		hex = String(hex).replace(/[^0-9a-f]/gi, '');
+		if (hex.length < 6) {
+			hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+		}
+
+		lum = lum || 0;
+
+		// convert to decimal and change luminosity
+		var rgb = "#", c, i;
+
+		for (i = 0; i < 3; i++) {
+			c = parseInt(hex.substr(i*2,2), 16);
+			c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+			rgb += ("00"+c).substr(c.length);
+		}
+
+		return rgb;
+		}
+
+
+		var c_data = [];
+
+		@for(chash <- Ticket.categoryHash()){
+			var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+			c_data.push({value: @chash._2, color: randomColor, highlight: ColorLuminance(randomColor, 0.2), label: "@chash._1"});
+		}
+
+		var options = {
+		animateScale : true,
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+		}
+
+		var ctx = document.getElementById("myChart").getContext("2d");
+			
+		var myNewChart = new Chart(ctx).Doughnut(c_data, options);
+
+		document.getElementById('js-legend').innerHTML = myNewChart.generateLegend();
+	</script>
+}
+
+@main("Reports 1", scripts, includes){
+	<h1> Report 1 </h1>
+	<div class="col-md-6">
+		<canvas id="myChart" width="400" height="400"></canvas>
+		<div id="js-legend" class="chart-legend"></div>
+	</div>
+	<div class="col-md-6">
+		<table id="data-table-no-filter" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>#</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(chash <- Ticket.categoryHash()) {
+				<tr>
+					<td>
+						@chash._1
+					</td>
+					<td>
+						@chash._2
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
