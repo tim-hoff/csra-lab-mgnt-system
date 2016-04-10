@@ -53,9 +53,9 @@ public class SecurityModule extends AbstractModule {
         config.setSessionStore(store);
         
         //callback
-        //final CallbackController callbackController = new CallbackController();
-        //callbackController.setDefaultUrl();
-        //bind(CallbackController.class).toInstance(callbackController);
+        final CallbackController callbackController = new CallbackController();
+        callbackController.setDefaultUrl("/");
+        bind(CallbackController.class).toInstance(callbackController);
         // logout
         final ApplicationLogoutController logoutController = new ApplicationLogoutController();
         logoutController.setDefaultUrl("https://cas.latech.edu:443/cas/logout");
