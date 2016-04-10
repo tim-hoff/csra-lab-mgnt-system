@@ -33,7 +33,7 @@ public class SecurityModule extends AbstractModule {
         final String baseUrl = configuration.getString("baseUrl");
 
         // CAS
-        final CasClient casClient = new CasClient("https://cas.latech.edu:443/cas/login");
+        final CasClient casClient = new CasClient("https://cas.latech.edu:443/cas/login", CasProtocol.CAS20);
         casClient.setLogoutHandler(new PlayCacheLogoutHandler());
         //This should grab the ticket
         final CasProxyReceptor casProxyReceptor = new CasProxyReceptor();
