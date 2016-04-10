@@ -9,8 +9,12 @@ import views.html.history.*;
 
 import models.*;
 
+import org.pac4j.play.java.RequiresAuthentication;
+
+//
 public class HistoryController extends Controller {
 	@Transactional
+	//@RequiresAuthentication(clientName = "CasClient")
 	public Result index() {
 		return ok(index.render());
 	}

@@ -1,8 +1,6 @@
 logs
 target
 /.idea
-.sbtserver
-project/.sbtserver
 /.idea_modules
 /.classpath
 /.project
@@ -10,3 +8,5 @@ project/.sbtserver
 /RUNNING_PID
 bin
 .cache-main
+.sbtserver
+project/.sbtserver
