@@ -6,7 +6,7 @@ import static play.data.Form.*;
 import play.db.jpa.*;
 
 import views.html.ticket.*;
-
+import views.html.ticket.reports.*;
 import models.*;
 
 public class TicketController extends Controller {
@@ -65,8 +65,8 @@ public class TicketController extends Controller {
 	}
 
 	@Transactional
-	public Result report1() {
-		return ok(report1.render());
+	public Result report_1() {
+		return ok(report_1.render());
 	}
 
 	//@Transactional

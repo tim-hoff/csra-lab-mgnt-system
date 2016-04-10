@@ -25,7 +25,7 @@ GET 		/tickets/:id								controllers.TicketController.show(id:Integer)
 GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
-GET 		/tickets/reports/1					controllers.TicketController.report1
+GET 		/tickets/reports/1					controllers.TicketController.report_1
 
 POST 		/user/save								controllers.UserController.save
 GET 		/users/new								controllers.UserController.create
