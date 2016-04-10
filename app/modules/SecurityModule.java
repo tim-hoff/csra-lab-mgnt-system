@@ -40,7 +40,7 @@ public class SecurityModule extends AbstractModule {
         casProxyReceptor.setCallbackUrl("https://csra-lab-mgnt-system.herokuapp.com/casProxyCallback");
         casClient.setCasProxyReceptor(casProxyReceptor);
         
-        final Clients clients = new Clients("https://csra-lab-mgnt-system.herokuapp.com/login", casClient);  //change to dashboard later
+        final Clients clients = new Clients(baseUrl + "/callback", casClient, casProxyReceptor); 
 
 
         final Config config = new Config(clients);
