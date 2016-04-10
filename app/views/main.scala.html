@@ -71,6 +71,10 @@
     <script>
     $(document).ready(function() {
         $('#data-table').DataTable();
+
+        $('#data-table-no-filter').DataTable( {
+            "dom": 'rt'
+        } );
     });
     </script>
     @scripts

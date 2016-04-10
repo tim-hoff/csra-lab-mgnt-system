@@ -8,3 +8,5 @@ project/.sbtserver
 /.project
 /.settings
 /RUNNING_PID
+bin
+.cache-main
