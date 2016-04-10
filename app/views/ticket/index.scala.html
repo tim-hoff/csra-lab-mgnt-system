@@ -16,6 +16,7 @@
           <th>Description</th>
           <th>Date Created</th>
           <th>Last Updated</th>
+          <th>Category</th>
           <th>Priority</th>
           <th>State</th>
           <th class="action">Actions</th>
@@ -25,7 +26,9 @@
         @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
-            @ticket.name
+            <a href="@routes.TicketController.show(ticket.ticket_id)">
+              @ticket.name
+            </a>
           </td>
           <td>
             <a href="@routes.UserController.show(ticket.assigned_to)">
