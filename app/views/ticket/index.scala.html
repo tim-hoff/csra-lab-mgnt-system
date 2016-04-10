@@ -16,7 +16,6 @@
           <th>Description</th>
           <th>Date Created</th>
           <th>Last Updated</th>
-          <th>Category</th>
           <th>Priority</th>
           <th>State</th>
           <th class="action">Actions</th>
@@ -26,9 +25,7 @@
         @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
-            <a href="@routes.TicketController.show(ticket.ticket_id)">
-              @ticket.name
-            </a>
+            @ticket.name
           </td>
           <td>
             <a href="@routes.UserController.show(ticket.assigned_to)">
@@ -50,9 +47,6 @@
             @ticket.last_updated
           </td>
           <td>
-            @ticket.category
-          </td>
-          <td>
             @ticket.priority
           </td>
           <td>
@@ -62,6 +56,9 @@
             <div class="btn-group btn-sm">
               @form(routes.TicketController.edit(ticket.ticket_id)){
               <button type="submit" class="btn btn-warning">Edit</button>
+              }
+              @form(routes.TicketController.delete(ticket.ticket_id)){
+              <button type="submit" class="btn btn-danger">Delete</button>
               }
             </div>
           </td>

@@ -49,13 +49,12 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/dashboard">Style Guide</a></li>
                         <li><a href="/tickets">Tickets</a></li>
-                        <li><a href="/users">Users</a></li>
-                        <li><a href="/items">Items</a></li>
-                        <li><a href="/history">History</a></li>
-                        <li><a href="/noscript">No Script</a></li>
-                        <li><a href="/script">Script</a></li>
+                        <li><a href="@routes.UserController.index()">Users</a></li>
+                        <li><a href="@routes.InventoryController.index()">Items</a></li>
+                        <li><a href="@routes.HistoryController.index()">History</a></li>
+                        <li><a href="/login">Login </a></li>
+                        <li><a href="/logout?url=">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,8 +67,12 @@
     </body>
     <script>
     $(document).ready(function() {
-        $('#data-table').DataTable();
+        $('#data-table').DataTable({
+            columnDefs: [{"width":"30%", "targets":"action"}]
+        });
+
     });
+
     </script>
     @scripts
 </html>
