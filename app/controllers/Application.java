@@ -41,9 +41,7 @@ public class Application extends UserProfileController<CommonProfile> {
         Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
             return response.asXml();
         });
-        //WSRequest request = ws.url(proxyResponse);
-        //Promise<WSResponse> responsePromise = request.get();
-        //return ok(index.render());
+        
         return ok(casticket.render(proxyResponse));
     }
 
