@@ -34,8 +34,12 @@ public class SecurityModule extends AbstractModule {
         // CAS
         final CasClient casClient = new CasClient("https://cas.latech.edu:443/cas/login");
         casClient.setLogoutHandler(new PlayCacheLogoutHandler());
-
-        final Clients clients = new Clients("https://csra-lab-mgnt-system.herokuapp.com/callback", casClient);  //change to dashboard later
+        //This should grab the ticket
+        final CasProxyReceptor casProxyReceptor = new CasProxyReceptor();
+        casProxyReceptor.setCallbackUrl("https://csra-lab-mgnt-system.herokuapp.com/casProxyCallback")
+        casClient.setCasProxyReceptor(casProxyReceptor);
+        
+        final Clients clients = new Clients("https://csra-lab-mgnt-system.herokuapp.com/login", casClient);  //change to dashboard later
 
 
         final Config config = new Config(clients);
