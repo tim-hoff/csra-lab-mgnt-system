@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
     `email` VARCHAR(30),
     `note` VARCHAR(50),
     `active` BOOLEAN NOT NULL DEFAULT TRUE,
-    `role` ENUM('Admin', 'Student') NOT NULL DEFAULT 'Student',
+    `role` ENUM('Admin', 'Student', 'SuperAdmin') NOT NULL DEFAULT 'Student',
     PRIMARY KEY (`user_id`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
 
@@ -89,7 +89,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO `User` 	(`user_id`, `first_name`, 	`last_name`, 	`email`, 				`note`, 			`active`, `role`) VALUES
 					("box",    'Dr.',			'Box',			'box@latech.edu', 		'likes birds', 		True, 'Admin'),
-					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'Admin'),
+					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'SuperAdmin'),
 					("bjs049", 'Brandon',		'Serpas', 		'bjs049@latech.edu', 	'tech lab worker',	True, 'Admin'),
 					("pdd009", 'Paul',			'Donaubauer', 	'pdd009@latech.edu', 	'system developer',	True, 'Student'),
 					("old003", 'Former',		'User', 		'inactive@jeeves.com', 	'not active', 		False, 'Student'),
