@@ -100,7 +100,7 @@ public class Ticket {
 		
 	}
 
-	public static HashMap<Category, Integer> categoryHash() {
+	public static HashMap<Category, Integer> categoryHash(Integer months) {
 		HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
 
 		for (Category category : Category.values()) {
