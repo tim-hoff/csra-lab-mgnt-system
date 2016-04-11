@@ -5,9 +5,9 @@
 **************************************************@
 
 <div class="form-group@if(elements.hasErrors){ has-error}">
-    <label for="@elements.label" class="col-lg-2 control-label">@elements.label.toString.capitalize</label>
+    <label for="@elements.id" class="col-lg-2 control-label">@elements.label.toString.capitalize</label>
     <div class="col-lg-10">
-        <input type="text" class="form-control" id="@elements.label" name="@elements.label" value="@elements.field.value" placeholder="@elements.label.toString.capitalize">
+        <input type="text" class="form-control" id="@elements.id" name="@elements.id" value="@elements.field.value" placeholder="@elements.label.toString.capitalize">
         @if(elements.args.get('help)){
             <p class="help-block">@elements.args.get('help)</p>
         }

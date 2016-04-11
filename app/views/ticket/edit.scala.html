@@ -8,15 +8,19 @@
     <div class="col-md-offset-2 col-md-8">
       <h1 class="sub-header">Edit Ticket</h1>
       @inputText(ticketForm("name"), '_label -> "name")
-      @inputText(ticketForm("assigned_to"), '_label -> "assigned_to")
-      @inputText(ticketForm("created_for"), '_label -> "created_for")
+      @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
+      @inputText(ticketForm("created_for"), '_label -> "created for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-      @inputText(ticketForm("category"), '_label -> "category")
-      @inputText(ticketForm("priority"), '_label -> "priority")
-      @inputText(ticketForm("state"), '_label -> "state")
-    </div>
-  </div>
+      @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
+        '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+      @select(ticketForm("state"), options(Seq("Pending","Resolved")),
+        '_label -> "State")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+      @select(ticketForm("priority"), options(Seq("Low","Normal","High")),
+        '_label -> "Priority")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+
+
 </fieldset>
+
 <div class="row">
   <div class="col-md-10">
     <div class="row">
