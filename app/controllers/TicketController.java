@@ -68,8 +68,8 @@ public class TicketController extends Controller {
 	}
 
 	@Transactional
-	public Result report_1() {
-		return ok(report_1.render());
+	public Result report_1(Integer id) {
+		return ok(report_1.render(id));
 	}
 
 	//@Transactional

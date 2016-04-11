@@ -7,6 +7,9 @@ import javax.persistence.*;
 import play.data.format.*;
 import play.data.validation.*;
 import play.db.jpa.*;
+import org.hibernate.annotations.Type;
+import org.joda.time.*;
+import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
 
 @Entity 
 public class Inventory {
@@ -21,8 +24,6 @@ public class Inventory {
 
     public boolean retired;
 
-    public boolean available;
-
     @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone')")
     public String item_type;
 
@@ -33,6 +34,11 @@ public class Inventory {
     
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);
+    }
+
+    public boolean available(){
+        if(!retired && (taken_date == null) && (rented_by == null)) { return true; }
+        return false;
     }
 
     public void update(Integer id) {
@@ -53,10 +59,12 @@ public class Inventory {
     public User rented_by;
 
     @Formats.DateTime(pattern="yyyy-MM-dd")
-    public Date taken_date;
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime taken_date;
 
     @Formats.DateTime(pattern="yyyy-MM-dd")
-    public Date return_date;
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime return_date;
     
     public static List<Inventory> items() {
         List<Inventory> data = JPA.em()
