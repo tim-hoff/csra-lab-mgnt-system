@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
 -- Table `LCLSA_tech_lab_management_system`.`Inventory`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
-    `available` BOOLEAN NOT NULL DEFAULT TRUE,
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
@@ -164,18 +163,18 @@ INSERT INTO `Ticket` 	(`name`, `assigned_to`, `created_for`, `description`, `dat
 						('Ticket', "bjs049", "pdd009", 'Sample Description', '2016-03-13 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Normal', 'tours'),
 						('Ticket', "tch031", "pdd009", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'High', 'vm_setup');
 
-INSERT INTO `Inventory` (`available`, `item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
-						(True, null, False, 'MDN00001', 'SN00001', 'iphone'),
-						(True, null, False, 'MDN00002', 'SN00002', 'iphone'),
-						(True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-						(True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook');
+INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
+						(null, False, 'MDN00001', 'SN00001', 'iphone'),
+						(null, False, 'MDN00002', 'SN00002', 'iphone'),
+						(null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
+						(null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook');
 						
-INSERT INTO `Inventory` (`available`, `item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-						(0, "bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-						(0, "tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
+						("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+						("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
 ​
 Delimiter //

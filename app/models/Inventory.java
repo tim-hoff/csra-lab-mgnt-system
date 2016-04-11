@@ -24,8 +24,6 @@ public class Inventory {
 
     public boolean retired;
 
-    public boolean available;
-
     @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone')")
     public String item_type;
 
@@ -36,6 +34,11 @@ public class Inventory {
     
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);
+    }
+
+    public boolean available(){
+        if(!retired && (taken_date == null) && (rented_by == null)) { return true; }
+        return false;
     }
 
     public void update(Integer id) {
