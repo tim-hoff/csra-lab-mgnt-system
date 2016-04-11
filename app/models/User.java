@@ -28,13 +28,14 @@ public class User {
 
     public boolean active;
 
-    @Column(name="role", columnDefinition="ENUM('Admin', 'Student')")
+    @Column(name="role", columnDefinition="ENUM('Admin', 'Student', 'SuperAdmin')")
     @Enumerated(EnumType.STRING)
     public Role role;
 
     public static enum Role {
         Admin,
-        Student
+        Student,
+        SuperAdmin
     }
 
     public static User findById(String id) {
