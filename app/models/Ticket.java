@@ -14,7 +14,10 @@ import play.db.jpa.*;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Index;
-
+import org.hibernate.annotations.Type;
+import org.joda.time.*;
+import org.joda.*;
+import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
 @Entity
 @Table(name = "Ticket")
 public class Ticket {
@@ -34,11 +37,13 @@ public class Ticket {
 
 	@Generated(GenerationTime.ALWAYS)
 	@Formats.DateTime(pattern = "yyyy-MM-dd")
-	public Date date_created;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	public DateTime date_created;
 
 	@Generated(GenerationTime.ALWAYS)
 	@Formats.DateTime(pattern = "yyyy-MM-dd")
-	public Date last_updated;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	public DateTime last_updated;
 
 	@Column(name = "priority", columnDefinition = "ENUM('Low', 'Normal', 'High')")
 	@Enumerated(EnumType.STRING)
@@ -86,25 +91,25 @@ public class Ticket {
 		return data;
 	}
 
-	private static int categoryCount(Category category) {
-		long list = tickets().stream().filter(c -> c.category == category).count();
+	private static int categoryCount(Category category, Integer months) {
+		long list = tickets().stream().filter(c -> c.category == category && isInMonthRange(months, c.date_created))
+		.count();
 
 		return (int) list;
 	}
 
-	public static List<Ticket> filteredTickets() {
-		List<Ticket> list = tickets().stream().filter(c -> c.category == Category.vm_setup)
-				.collect(Collectors.toList());
-		return list;
-		//HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
-		
+	private static boolean isInMonthRange(Integer months, DateTime date){
+		DateTime today = new DateTime();
+		DateTime beginDate = today.minusMonths(months);
+
+		return date.isAfter(beginDate);
 	}
 
 	public static HashMap<Category, Integer> categoryHash(Integer months) {
 		HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
 
 		for (Category category : Category.values()) {
-			  hmap.put(category, categoryCount(category));
+			  hmap.put(category, categoryCount(category, months));
 		}
 		
 		return hmap;
