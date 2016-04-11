@@ -1,5 +1,6 @@
 @import helper._
 @import helpers.BootstrapHelper._
+@(months: Integer)
 
 @includes = {
 	<script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
@@ -33,7 +34,7 @@
 
 		var c_data = [];
 
-		@for(chash <- Ticket.categoryHash()){
+		@for(chash <- Ticket.categoryHash(months)){
 			var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
 			c_data.push({value: @chash._2, color: randomColor, highlight: ColorLuminance(randomColor, 0.2), label: "@chash._1"});
 		}
@@ -50,7 +51,6 @@
 		document.getElementById('js-legend').innerHTML = myNewChart.generateLegend();
 	</script>
 }
-
 @main("Reports 1", scripts, includes){
 	<h1> Report 1 </h1>
 	<div class="col-md-6">
@@ -66,7 +66,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@for(chash <- Ticket.categoryHash()) {
+				@for(chash <- Ticket.categoryHash(months)) {
 				<tr>
 					<td>
 						@chash._1

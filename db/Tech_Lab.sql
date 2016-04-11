@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
     `email` VARCHAR(30),
     `note` VARCHAR(50),
     `active` BOOLEAN NOT NULL DEFAULT TRUE,
-    `role` ENUM('Admin', 'Student') NOT NULL DEFAULT 'Student',
+    `role` ENUM('Admin', 'Student', 'SuperAdmin') NOT NULL DEFAULT 'Student',
     PRIMARY KEY (`user_id`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
 
@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
 -- Table `LCLSA_tech_lab_management_system`.`Inventory`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
-    `available` BOOLEAN NOT NULL DEFAULT TRUE,
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
@@ -90,32 +89,92 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO `User` 	(`user_id`, `first_name`, 	`last_name`, 	`email`, 				`note`, 			`active`, `role`) VALUES
 					("box",    'Dr.',			'Box',			'box@latech.edu', 		'likes birds', 		True, 'Admin'),
-					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'Admin'),
+					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'SuperAdmin'),
 					("bjs049", 'Brandon',		'Serpas', 		'bjs049@latech.edu', 	'tech lab worker',	True, 'Admin'),
 					("pdd009", 'Paul',			'Donaubauer', 	'pdd009@latech.edu', 	'system developer',	True, 'Student'),
 					("old003", 'Former',		'User', 		'inactive@jeeves.com', 	'not active', 		False, 'Student'),
 					("oldadm", 'Former', 		'Admin', 		'formerA@jenkins.com', 	'ask me anything', 	False, 'Admin');
 
 INSERT INTO `Ticket` 	(`name`, `assigned_to`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
-						('Ticket 1', "bjs049", "tch031", 'Sample Description 1', '2016-03-18 22:48:19', '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket 2', "bjs049", "tch031", 'Sample Description 2', '2016-03-17 22:48:19', '2016-03-21 22:48:19', 'Pending', 'Normal', 'vm_setup'),
-						('Ticket 3', "tch031", "tch031", 'Sample Description 3', '2016-03-11 22:48:19', '2016-03-21 22:48:19', 'Pending', 'High', 'lost_item'),
-						('Ticket 4', "bjs049", "bjs049", 'Sample Description 4', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket 5', "bjs049", "pdd009", 'Sample Description 5', '2016-03-13 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Normal', 'tours'),
-						('Ticket 6', "tch031", "pdd009", 'Sample Description 6', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'High', 'vm_setup');
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 40 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 50 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 60 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 70 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 80 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 120 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 140 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 150 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 200 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 210 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),			('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 40 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 50 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 60 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 70 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 80 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 120 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1310 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1140 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1150 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),			('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 410 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 510 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 610 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 710 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 810 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 910 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1120 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1140 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1150 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "tch031", 'Sample Description', '2016-03-17 22:48:19', '2016-03-21 22:48:19', 'Pending', 'Normal', 'vm_setup'),
+						('Ticket', "tch031", "tch031", 'Sample Description', '2016-03-11 22:48:19', '2016-03-21 22:48:19', 'Pending', 'High', 'lost_item'),
+						('Ticket', "bjs049", "bjs049", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Low', 'vm_setup'),
+						('Ticket', "bjs049", "pdd009", 'Sample Description', '2016-03-13 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Normal', 'tours'),
+						('Ticket', "tch031", "pdd009", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'High', 'vm_setup');
 
-INSERT INTO `Inventory` (`available`, `item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
-						(True, null, False, 'MDN00001', 'SN00001', 'iphone'),
-						(True, null, False, 'MDN00002', 'SN00002', 'iphone'),
-						(True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-						(True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (True, null, False, 'MDN00003', 'SN00003', 'macbook');
+INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
+						(null, False, 'MDN00001', 'SN00001', 'iphone'),
+						(null, False, 'MDN00002', 'SN00002', 'iphone'),
+						(null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
+						(null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'macbook');
 						
-INSERT INTO `Inventory` (`available`, `item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-						(0, "bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-						(0, "tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
+						("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+						("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
 ​
 Delimiter //

@@ -1,0 +1,36 @@
+@**
+ * Default field constructor.
+ *
+ * It generates field as following:
+ * {{{
+ * <dl class="error">
+ *   <dt><label for="name">Your name:</label></dt>
+ *   <dd><input type="text" id="name" name="name"></dd>
+ *   <dd class="error">This field is required</dd>
+ *   <dd class="info">Required</dd>
+ * </dl>
+ * }}}
+ *
+ * @param el The field informations.
+ *@
+@(elements: FieldElements)
+
+<div class="form-group@if(elements.hasErrors) { has-error}">
+    <label for="@elements.id" class="col-lg-2 control-label">@elements.label.toString.capitalize</label>
+    <div class="col-lg-10">
+
+    @if(elements.input.toString().contains("class=")) {
+
+        @Html(elements.input.toString().replaceFirst("(class=[\"'])", "$1form-control "))
+
+    } else {
+
+        @Html(elements.input.toString().replaceFirst("(<\\w+ )", "$1class=\"form-control\" "))
+
+    }
+    
+	
+        @if(elements.hasErrors){
+            <div class="help-block"><span class="glyphicon glyphicon-exclamation-sign"></span> @elements.errors.mkString(", ")</div>
+        }
+</div>
