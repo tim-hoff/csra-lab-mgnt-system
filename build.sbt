@@ -19,7 +19,8 @@ libraryDependencies ++= Seq(
   "org.pac4j" % "pac4j-cas" % "1.8.7",
   "org.pac4j" % "pac4j-oauth" % "1.8.7",
   "com.typesafe.play" % "play-cache_2.11" % "2.4.0",
-  "org.jadira.usertype" % "usertype.core" % "5.0.0.GA"
+  "org.jadira.usertype" % "usertype.core" % "5.0.0.GA",
+  "com.typesafe.play" %% "play-mailer" % "3.0.1"
  )
 javacOptions ++= Seq("-g")
 PlayKeys.externalizeResources := false
