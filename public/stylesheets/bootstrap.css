@@ -128,7 +128,7 @@ textarea {
   margin: 0;
 }
 button {
-  overflow: visible;
+  overflow: visible;  
 }
 button,
 select {
@@ -3461,6 +3461,11 @@ fieldset[disabled] .btn-link:focus {
   line-height: 1.5;
   border-radius: 3px;
 }
+.btn-xs-edit > .btn
+{
+  text-align: center;
+}
+
 .btn-block {
   display: block;
   width: 100%;
