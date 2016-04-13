@@ -21,6 +21,7 @@ import play.mvc.Result;
 import play.twirl.api.Content;
 import play.libs.F.Function;
 import play.libs.F.Promise;
+import play.libs.XML;
 
 public class Application extends UserProfileController<CommonProfile> {
 	@Inject WSClient ws;
@@ -40,8 +41,8 @@ public class Application extends UserProfileController<CommonProfile> {
         Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
             return response.asXml();
         });
-        
-        return ok(test.render(profile, service, proxyTicket));
+        String doc = documentPromise.toString();
+        return ok(test.render(profile, service, proxyTicket, doc));
     }
 
 

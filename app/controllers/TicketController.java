@@ -12,8 +12,9 @@ import models.*;
 import org.pac4j.play.java.RequiresAuthentication;
 
 public class TicketController extends Controller {
-	@Transactional
+
 	@RequiresAuthentication(clientName = "CasClient")
+	@Transactional
 	public Result index() {
 		return ok(index.render());
 	}
