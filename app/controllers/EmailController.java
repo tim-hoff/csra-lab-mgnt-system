@@ -33,8 +33,8 @@ public class EmailController extends Controller {
     Form<EmailContent> emailForm = form(EmailContent.class).bindFromRequest();
     final Email emailer = new Email();
       emailer.setSubject(emailForm.get().subject);
-      emailer.setFrom("FROM <csralabmailtest@gmail.com>");
-      emailer.addTo("TO <n2i5p5y6g1c6a4x5@csra-lab.slack.com>");
+      emailer.setFrom("<csralabmailtest@gmail.com>");
+      emailer.addTo("<n2i5p5y6g1c6a4x5@csra-lab.slack.com>");
       emailer.setBodyText(emailForm.get().email + "  " + emailForm.get().body);
     String id = mailer.send(emailer);
     flash("Success");

@@ -11,7 +11,7 @@
       <h1 class="sub-header">Send Email</h1>
       @inputText(emailForm("subject"), '_label -> "Subject")
       @inputText(emailForm("email"), '_label -> "Email")
-      @inputText(emailForm("body"), '_label -> "Description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
+      @textarea(emailForm("body"), '_label -> "Body")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
     </div>
   </div>
 
