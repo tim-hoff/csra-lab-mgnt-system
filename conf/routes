@@ -16,6 +16,9 @@ GET         /casProxyCallback                 @org.pac4j.play.CallbackController
 POST        /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
 GET         /logout                           @org.pac4j.play.ApplicationLogoutController.logout
 
+GET 		/email							controllers.EmailController.index
+POST 		/email/send							controllers.EmailController.sendMail
+
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
 POST 		/items/save									controllers.InventoryController.save
@@ -32,6 +35,7 @@ GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 GET 		/tickets/reports/1/:id			controllers.TicketController.report_1(id:Integer)
+
 
 POST 		/user/save								controllers.UserController.save
 GET 		/users/new								controllers.UserController.create
