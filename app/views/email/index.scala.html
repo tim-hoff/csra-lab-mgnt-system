@@ -1,0 +1,29 @@
+@(emailForm:Form[EmailContent])
+@import helper._
+@import helpers.BootstrapHelper._
+@import java.lang.String
+@main("Send Email"){
+@form(routes.EmailController.sendMail()){
+
+<fieldset>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <h1 class="sub-header">Send Email</h1>
+      @inputText(emailForm("subject"), '_label -> "Subject")
+      @inputText(emailForm("email"), '_label -> "Email")
+      @inputText(emailForm("body"), '_label -> "Description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2 pull-right">
+          <a href="@routes.TicketController.index()" class="btn btn-primary">Back</a>
+          <button type="submit" class="btn btn-default">Send</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+}}
