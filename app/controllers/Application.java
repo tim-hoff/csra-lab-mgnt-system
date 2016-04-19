@@ -13,7 +13,6 @@ import org.pac4j.play.java.RequiresAuthentication;
 import org.pac4j.cas.profile.CasProxyProfile;
 import org.w3c.dom.Document;
 
-import models.User;
 
 import javax.inject.Inject;
 import play.mvc.*;
