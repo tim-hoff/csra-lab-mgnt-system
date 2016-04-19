@@ -11,7 +11,7 @@ import models.*;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
-//
+
 public class HistoryController extends Controller {
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional

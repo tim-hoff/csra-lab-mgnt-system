@@ -75,6 +75,6 @@ public class TicketController extends Controller {
 
 	//@Transactional
 	//public Result getReport(Integer time) {
-		// test 
+		// test
 	//}
 }

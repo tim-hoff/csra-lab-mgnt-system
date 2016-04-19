@@ -13,7 +13,7 @@ import org.pac4j.play.java.RequiresAuthentication;
 
 public class UserController extends Controller {
 	
-	@RequiresAuthentication(clientName = "CasClient")
+	@RequiresAuthentication(clientName = "CasClient") 
 	@Transactional
 	public Result index() {
 		return ok(index.render());

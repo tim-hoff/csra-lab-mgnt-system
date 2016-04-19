@@ -14,7 +14,6 @@ import models.*;
 import org.pac4j.play.java.RequiresAuthentication;
 
 public class InventoryController extends Controller {
-	
 
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
