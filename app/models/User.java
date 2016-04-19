@@ -50,12 +50,11 @@ public class User {
         JPA.em().persist(this);
     }
     //creates a new entry if one does not already exist
-    public void create(String id) {
+    public User(String id) {
     	//check for existing user
     	if(JPA.em().find(User.class, id) == null) {
-    		User newUser = new User();
-    		newUser.user_id = id;
-    		newUser.role = Role.SuperAdmin;
+    		this.user_id = id;
+    		this.role = Role.SuperAdmin;
     	}
     }
     public void update(String id) {
