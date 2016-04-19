@@ -48,7 +48,7 @@ public class Application extends UserProfileController<CommonProfile> {
         });
         
         //create user if user is not in the table
-        new User(profile.getId());
+        //new User(profile.getId());
         return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
     } 
 
