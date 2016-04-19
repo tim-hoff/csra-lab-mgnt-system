@@ -22,6 +22,8 @@ import play.twirl.api.Content;
 import play.libs.F.Function;
 import play.libs.F.Promise;
 import play.libs.XML;
+import play.libs.XPath;
+import play.libs.ws.WSResponse;
 
 public class Application extends UserProfileController<CommonProfile> {
 	@Inject WSClient ws;
@@ -36,13 +38,19 @@ public class Application extends UserProfileController<CommonProfile> {
             final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
             proxyTicket = proxyProfile.getProxyTicketFor(service);
         }
-        
+        Document doc;
         String proxyResponse = service+"&ticket=" + proxyTicket;
-        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
-            return response.asXml();
-        });
-        String doc = documentPromise.toString();
-        return ok(test.render(profile, service, proxyTicket, doc));
+        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(
+                new Function<WSResponse, Document>() {
+                    public Document apply(WSResponse response) {
+                        Document xml = response.asXml();
+                        //String name = XPath.selectText("name", xml);
+                        return xml;
+                    }
+                }
+        );
+        
+        return ok(test.render(profile, service, proxyTicket, profile.getId()));
     }
 
 
