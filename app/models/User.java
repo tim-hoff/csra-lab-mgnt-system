@@ -41,14 +41,7 @@ public class User {
     public static User findById(String id) {
         return JPA.em().find(User.class, id);
     }
-
-    public void delete() {
-        JPA.em().remove(this);
-    }
-
-    public void save() {
-        JPA.em().persist(this);
-    }
+    
     //creates a new entry if one does not already exist
     public User(String id) {
     	//check for existing user
@@ -57,6 +50,15 @@ public class User {
     		this.role = Role.SuperAdmin;
     	}
     }
+    
+    public void delete() {
+        JPA.em().remove(this);
+    }
+
+    public void save() {
+        JPA.em().persist(this);
+    }
+
     public void update(String id) {
         this.user_id = id;
         JPA.em().merge(this);
