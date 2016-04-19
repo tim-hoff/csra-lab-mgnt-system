@@ -44,13 +44,14 @@ public class Application extends UserProfileController<CommonProfile> {
                 new Function<WSResponse, Document>() {
                     public Document apply(WSResponse response) {
                         Document xml = response.asXml();
-                        //String name = XPath.selectText("name", xml);
+                        String name = XPath.selectText("name", xml);
+                        flash("success", "Hello" + name);
                         return xml;
                     }
                 }
         );
         
-        return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
+        return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getDisplayName()));
     } 
 
 
