@@ -42,7 +42,7 @@ public class Application extends UserProfileController<CommonProfile> {
             return response.asXml();
         });
         String doc = documentPromise.toString();
-        return ok(test.render(profile, service, proxyTicket, profile.getFirstName()));
+        return ok(test.render(profile, service, proxyTicket, doc));
     }
 
 
