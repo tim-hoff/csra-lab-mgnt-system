@@ -1,4 +1,4 @@
-@(profile : org.pac4j.core.profile.CommonProfile, service: String, ticket: String, doc: String)
+@(profile : org.pac4j.core.profile.CommonProfile, service: String, ticket: String, id: String, username: String)
 <h1>protected area</h1>
 <a href="@routes.DashboardController.index()">Back</a><br />
 <br /><br />
@@ -6,4 +6,5 @@ profile : @profile<br /><br />
 first name: @profile.getFirstName()
 email: @profile.getEmail()
 Service : @service -> Proxy ticket : @ticket<br />
-documnet: @doc
+id: @id
+username: @username

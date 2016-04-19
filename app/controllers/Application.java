@@ -50,8 +50,8 @@ public class Application extends UserProfileController<CommonProfile> {
                 }
         );
         
-        return ok(test.render(profile, service, proxyTicket, profile.getId()));
-    }
+        return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
+    } 
 
 
 }
