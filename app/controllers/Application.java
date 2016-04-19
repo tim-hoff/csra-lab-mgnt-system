@@ -41,18 +41,12 @@ public class Application extends UserProfileController<CommonProfile> {
             final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
             proxyTicket = proxyProfile.getProxyTicketFor(service);
         }
-        Document doc;
+
         String proxyResponse = service+"&ticket=" + proxyTicket;
-        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(
-                new Function<WSResponse, Document>() {
-                    public Document apply(WSResponse response) {
-                        Document xml = response.asXml();
-                        String name = XPath.selectText("name", xml);
-                        flash("success", "Hello" + name);
-                        return xml;
-                    }
-                }
-        );
+        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
+            return response.asXml();
+        });
+        
         //create user if user is not in the table
         User user = new User(profile.getId());
         return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
