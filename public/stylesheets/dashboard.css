@@ -5,6 +5,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serifsans-serif;
 }
 .grayscale {
   /*-webkit-filter: grayscale(100%); filter: grayscale(100%);*/
@@ -29,6 +30,15 @@ body {
   border: 0;
 }
 
+.navbar-inverse .navbar-brand {
+    color: #FFFFFF;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+.navbar-inverse {
+    background-color: #003087;
+    border-color: #080808;
 /*
  * Sidebar
  */
