@@ -13,6 +13,7 @@ import org.pac4j.play.java.RequiresAuthentication;
 import org.pac4j.cas.profile.CasProxyProfile;
 import org.w3c.dom.Document;
 
+import models.User;
 
 import javax.inject.Inject;
 import play.mvc.*;
@@ -46,9 +47,10 @@ public class Application extends UserProfileController<CommonProfile> {
             return response.asXml();
         });
         
-        //create user if user is not in the table
-        //new User(profile.getId());
-        return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
+       if(User.findById(profile.getId()) == null)
+    	   return ok(casticket.render("user not found"));
+        
+       return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
     } 
 
 

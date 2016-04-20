@@ -41,16 +41,7 @@ public class User {
     public static User findById(String id) {
         return JPA.em().find(User.class, id);
     }
-    
-    //creates a new entry if one does not already exist
-    public User(String id) {
-    	//check for existing user
-    	if(JPA.em().find(User.class, id) == null) {
-    		this.user_id = id;
-    		this.role = Role.SuperAdmin;
-    	}
-    }
-    
+
     public void delete() {
         JPA.em().remove(this);
     }
@@ -71,5 +62,3 @@ public class User {
       return data;
   }
 }
-
-
