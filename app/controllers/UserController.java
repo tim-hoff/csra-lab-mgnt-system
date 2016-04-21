@@ -11,6 +11,7 @@ import models.*;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
+
 public class UserController extends Controller {
 	
 	@RequiresAuthentication(clientName = "CasClient") 

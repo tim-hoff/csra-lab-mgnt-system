@@ -7,18 +7,28 @@ import play.db.jpa.*;
 
 
 
+import org.pac4j.play.java.UserProfileController;
+import org.pac4j.core.profile.CommonProfile;
+import org.jasig.cas.client.authentication.*;
+import org.pac4j.core.profile.UserProfile;
+import org.pac4j.core.profile.ProfileManager;
+import org.pac4j.play.PlayWebContext;
+import org.pac4j.core.credentials.Credentials;
+import org.pac4j.core.client.Client;
+
 import views.html.inventory.*;
 
 import models.*;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
-public class InventoryController extends Controller {
+public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
-	public Result index() {
-		return ok(index.render());
+	public Result index(){
+		CommonProfile profile = getUserProfile();
+		return ok(testname.render(profile.getId()));
 	}
 
 	@Transactional

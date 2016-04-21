@@ -49,8 +49,10 @@ public class Application extends UserProfileController<CommonProfile> {
             return response.asXml();
         });
         
-       if(User.findById(profile.getId()) == null)
-    	   return ok(casticket.render("user not found"));
+       if(User.findById(profile.getId()) == null) {
+        	   return ok(casticket.render("used not found" + getUserProfile()));
+       }
+       
         
        return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
     } 
