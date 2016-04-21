@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.mvc.*;
+import org.pac4j.play.java.RequiresAuthentication;
 
 import views.html.*;
 

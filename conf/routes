@@ -3,13 +3,13 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /														controllers.HomeController.index
+GET     /														controllers.Application.casIndex()
 
 # Dashboard page, getting some base styling out of the way
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
-GET         /login                  controllers.Application.casIndex()
+GET         /home                  controllers.HomeController.index()
 GET         /callback                         @org.pac4j.play.CallbackController.callback()
 POST        /callback                         @org.pac4j.play.CallbackController.callback()
 GET         /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
