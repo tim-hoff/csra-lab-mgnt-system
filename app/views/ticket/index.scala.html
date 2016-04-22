@@ -1,8 +1,11 @@
+@(userProfile: User)
 @*
 * index tickets
 *@
 @import helper._
 @import helpers.BootstrapHelper._
+
+
 @main("View Tickets"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
@@ -23,6 +26,18 @@
         </tr>
       </thead>
       <tbody>
+        if(@userProfile.role == "Admin")
+{
+You're an admin
+}
+        if(@userProfile.role == "SuperAdmin")
+{
+You're an SuperAdmin
+}
+        if(@userProfile.role == "Student")
+{
+You're an Student
+}
         @for(ticket <- Ticket.tickets) {
         <tr>
           <td>
@@ -63,6 +78,7 @@
               @form(routes.TicketController.edit(ticket.ticket_id)){
               <button type="submit" class="btn btn-warning">Edit</button>
               }
+              
             </div>
           </td>
         </tr>

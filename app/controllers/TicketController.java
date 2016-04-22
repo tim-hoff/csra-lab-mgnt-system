@@ -18,29 +18,60 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
 	public Result index() {
-		return ok(index.render());
+		if(checkPrivileges())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
+		return ok(index.render(User.findById(getUserProfile().getId())));
 	}
 
 	@Transactional
 	public Result show(Integer id) {
+		
+		if(checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		return ok(show.render(Ticket.findById(id)));
 	}
 
 	@Transactional
 	public Result create() {
+		if(checkPrivileges())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		Form<Ticket> ticketForm = form(Ticket.class);
 		return ok(create.render(ticketForm));
 	}
 
 	@Transactional
 	public Result delete(Integer id) {
+		if(checkPrivilegesAdmin())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		Ticket.findById(id).delete();
 		flash("success", "Ticket item has been deleted");
-		return ok(index.render());
+		return ok(index.render(User.findById(getUserProfile().getId())));
 	}
 
 	@Transactional(readOnly=true)
 	public Result edit(Integer id) {
+		if(checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		Form<Ticket> ticketForm = form(Ticket.class).fill(
 			Ticket.findById(id));
 		return ok(edit.render(id, ticketForm));
@@ -48,6 +79,12 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result update(Integer id) {
+		if(checkPrivileges())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
 		if(ticketForm.hasErrors()) {
 			return badRequest(edit.render(id, ticketForm));
@@ -60,6 +97,12 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result save() {
+		if(checkPrivileges())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
 
 		if(ticketForm.hasErrors()) {
@@ -67,7 +110,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		}
 		ticketForm.get().save();
 		flash("success", "Ticket " + ticketForm.get().name + " has been created");
-		return ok(index.render());
+		return ok(index.render(User.findById(getUserProfile().getId())));
 	}
 
 	@Transactional
@@ -79,4 +122,28 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	//public Result getReport(Integer time) {
 		// test
 	//}
+	
+	
+	//This function returns false if current user does not possess any roles
+	public boolean checkPrivileges()
+	{
+		CommonProfile profile = getUserProfile();
+		//if you don't have admin role then redirect back to dashboard
+		if((User.findById(profile.getId()).role == null))
+		{
+			return false;
+		}
+		return true;
+	}
+	//This function returns false if current user does not possess the role Admin or SuperAdmin
+	public boolean checkPrivilegesAdmin()
+	{
+		CommonProfile profile = getUserProfile();
+		//if you don't have admin role then redirect back to dashboard
+		if(!(User.findById(profile.getId()).role != User.Role.Admin ||  User.findById(profile.getId()).role != User.Role.SuperAdmin))
+		{
+			return false;
+		}
+		return true;
+	}
 }
