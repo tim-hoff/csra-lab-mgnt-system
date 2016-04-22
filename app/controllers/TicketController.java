@@ -18,7 +18,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
 	public Result index() {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -41,7 +41,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result create() {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -79,7 +79,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result update(Integer id) {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -97,7 +97,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result save() {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());

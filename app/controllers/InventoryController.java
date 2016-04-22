@@ -28,7 +28,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
 	public Result index(){
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -50,7 +50,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(Integer id) {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -74,7 +74,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	}
 	@Transactional
 	public Result save() {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -103,7 +103,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	}
 	@Transactional
 	public Result update(Integer id) {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());

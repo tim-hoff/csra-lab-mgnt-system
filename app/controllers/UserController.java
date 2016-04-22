@@ -66,7 +66,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional 
 	public Result save() {
-		if(checkPrivileges())
+		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
