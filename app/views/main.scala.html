@@ -74,7 +74,13 @@
     </body>
     <script>
     $(document).ready(function() {
-        $('#data-table').DataTable();
+        $('#data-table').DataTable(
+            {
+              "columnDefs": [
+                { "orderable": false, "targets": 0 }
+              ]
+            }
+            );
 
         $('#data-table-no-filter').DataTable( {
             "dom": 'rt'
