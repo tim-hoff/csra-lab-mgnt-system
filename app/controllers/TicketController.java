@@ -9,9 +9,11 @@ import views.html.ticket.*;
 import views.html.ticket.reports.*;
 import models.*;
 
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.java.UserProfileController;
 
-public class TicketController extends Controller {
+public class TicketController extends UserProfileController<CommonProfile> {
 
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional

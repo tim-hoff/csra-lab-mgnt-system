@@ -9,10 +9,12 @@ import views.html.user.*;
 
 import models.*;
 
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.java.UserProfileController;
 
 
-public class UserController extends Controller {
+public class UserController extends UserProfileController<CommonProfile> {
 	
 	@RequiresAuthentication(clientName = "CasClient") 
 	@Transactional

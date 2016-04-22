@@ -1,6 +1,7 @@
 package controllers;
 
 import views.html.*;
+
 import modules.*;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.client.IndirectClient;
@@ -18,12 +19,16 @@ import models.User;
 import javax.inject.Inject;
 import play.mvc.*;
 import play.libs.ws.*;
+
+import static play.data.Form.form;
+
 import java.util.concurrent.CompletionStage;
 import org.pac4j.play.java.UserProfileController;
 import play.mvc.Result;
 import play.twirl.api.Content;
 import play.libs.F.Function;
 import play.libs.F.Promise;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.XML;
 import play.libs.XPath;
@@ -50,11 +55,14 @@ public class Application extends UserProfileController<CommonProfile> {
         });
         
        if(User.findById(profile.getId()) == null) {
-        	   return ok(casticket.render("used not found" + getUserProfile()));
+    	   User newUser = new User();
+    	   newUser.user_id = profile.getId();
+    	   Form<User> userForm = form(User.class).fill(newUser);
+    	   return ok(views.html.user.create.render(userForm));
        }
        
         
-       return ok(test.render(profile, service, proxyTicket, profile.getId(), profile.getUsername()));
+       return ok(index.render());
     } 
 
 
