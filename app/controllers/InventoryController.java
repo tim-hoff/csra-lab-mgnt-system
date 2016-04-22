@@ -1,10 +1,17 @@
 package controllers;
 
+import java.util.*;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
+import org.apache.commons.mail.EmailAttachment;
+import play.Play;
+import play.libs.mailer.MailerClient;
+import play.libs.mailer.Email;
+import javax.inject.Inject;
+import java.io.File;
 
 
 import views.html.inventory.*;
@@ -14,6 +21,13 @@ import models.*;
 import org.pac4j.play.java.RequiresAuthentication;
 
 public class InventoryController extends Controller {
+
+    private final MailerClient mailer;
+
+    @Inject
+    public InventoryController(MailerClient mailer) {
+    this.mailer = mailer;
+    }
 	
 
 	@Transactional
@@ -66,5 +80,26 @@ public class InventoryController extends Controller {
 			flash("success", "Item " + id + " has been updated");
 			return ok(show.render(Inventory.findById(id)));
 		}		
+	}
+	@Transactional
+	public Result mail() {
+		Form<Inventory> invForm = form(Inventory.class);
+		return ok(mail.render(invForm));
+	}
+	@Transactional
+	public Result mailOverdue() {
+		List<User> data = JPA.em()
+        .createQuery("Select u.user_id From Inventory i, User u Where Now() > i.return_date AND i.return_date is not null AND i.rented_by = u.user_id")
+        .getResultList();
+		for (int i = 0; i < data.size(); i++) {
+         final Email emailer = new Email();
+         emailer.setSubject("test");
+         emailer.setFrom("<csralabmailtest@gmail.com>");
+         emailer.addTo("<n2i5p5y6g1c6a4x5@csra-lab.slack.com>");
+         emailer.setBodyText(data.get(i) + "@latech.edu" + "\n\n  TESTTTTT");
+         mailer.send(emailer);
+      }
+		Form<Inventory> invForm = form(Inventory.class);
+		return ok(mail.render(invForm));
 	}
 }

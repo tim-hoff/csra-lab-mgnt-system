@@ -20,6 +20,8 @@ GET 		/email							controllers.EmailController.index
 POST 		/email/send							controllers.EmailController.sendMail
 
 GET 		/items											controllers.InventoryController.index
+GET 		/items/mail 								controllers.InventoryController.mail
+POST 		/items/mail/out								controllers.InventoryController.mailOverdue
 GET 		/items/new									controllers.InventoryController.create
 POST 		/items/save									controllers.InventoryController.save
 GET 		/items/:id									controllers.InventoryController.show(id:Integer)
