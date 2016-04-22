@@ -62,7 +62,7 @@ public class Application extends UserProfileController<CommonProfile> {
        }
        
         
-       return ok(index.render());
+       return ok(views.html.index.render());
     } 
 
 
