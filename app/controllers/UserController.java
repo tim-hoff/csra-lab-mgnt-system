@@ -22,7 +22,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		return ok(index.render());
@@ -33,7 +33,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		return ok(show.render(User.findById(id)));
@@ -44,7 +44,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class);
@@ -56,7 +56,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		User.findById(id).delete();
@@ -69,7 +69,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivileges())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class).bindFromRequest();
@@ -89,7 +89,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class).fill(
@@ -102,7 +102,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class).bindFromRequest();

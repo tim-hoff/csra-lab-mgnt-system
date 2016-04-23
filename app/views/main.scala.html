@@ -4,6 +4,7 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
+@(user: User)
 @(title: String, scripts: Html = Html(""), includes: Html = Html(""))(body: Html)
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +51,13 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/tickets">Tickets</a></li>
-                        <li><a href="@routes.UserController.index()">Users</a></li>
+                        #{if (@user.role = Admin)}
+                            <li><a href="@routes.UserController.index()">Users</a></li>
+                        #{/if}
                         <li><a href="@routes.InventoryController.index()">Items</a></li>
-                        <li><a href="@routes.HistoryController.index()">History</a></li>
+                        #{if (@user.role = Admin)}
+                            <li><a href="@routes.HistoryController.index()">History</a></li>
+                        #{/if}
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
                             <ul class="dropdown-menu">
