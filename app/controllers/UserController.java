@@ -89,7 +89,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/users");
 		}
 		
 		Form<User> userForm = form(User.class).fill(

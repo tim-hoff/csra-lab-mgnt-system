@@ -21,7 +21,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		if(!checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/tickets");
 		}
 		
 		return ok(index.render(User.findById(getUserProfile().getId())));
@@ -33,7 +33,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		if(checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/tickets");
 		}
 		
 		return ok(show.render(Ticket.findById(id)));
@@ -44,7 +44,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		if(!checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/tickets");
 		}
 		
 		Form<Ticket> ticketForm = form(Ticket.class);
@@ -82,7 +82,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		if(!checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/tickets");
 		}
 		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
@@ -100,7 +100,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		if(!checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
-			return redirect("/home");
+			return redirect("/tickets");
 		}
 		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
