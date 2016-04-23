@@ -30,7 +30,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	@Transactional
 	public Result show(Integer id) {
 		
-		if(checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
+		if(checkPrivileges())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
