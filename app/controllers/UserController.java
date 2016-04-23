@@ -21,8 +21,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result index() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		return ok(index.render());
@@ -32,8 +32,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result show(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		return ok(show.render(User.findById(id)));
@@ -43,8 +43,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result create() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class);
@@ -55,8 +55,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result delete(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		User.findById(id).delete();
@@ -68,8 +68,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result save() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class).bindFromRequest();
@@ -88,8 +88,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.Admin) ||
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/users");
 		}
 		
 		Form<User> userForm = form(User.class).fill(
@@ -101,8 +101,8 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result update(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		Form<User> userForm = form(User.class).bindFromRequest();

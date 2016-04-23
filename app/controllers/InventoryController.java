@@ -30,8 +30,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result index(){
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
 		}
 		
 		return ok(index.render());
@@ -41,8 +41,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result show(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		return ok(show.render(Inventory.findById(id)));
@@ -50,10 +50,10 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(Integer id) {
-		if(!checkPrivileges())
+		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(
@@ -65,8 +65,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result create() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		Form<Inventory> invForm = form(Inventory.class);
@@ -76,8 +76,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result save() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		Form<Inventory> invForm = form(Inventory.class).bindFromRequest();
@@ -93,8 +93,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result delete(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		Inventory.findById(id).delete();
@@ -105,8 +105,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result update(Integer id) {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
-			return ok(views.html.index.render());
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
 		}
 		
 		Form<Inventory> invForm = form(Inventory.class).bindFromRequest();

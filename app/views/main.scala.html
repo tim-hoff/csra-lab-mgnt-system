@@ -5,6 +5,7 @@
 * object to insert into the body of the page.
 *@
 @(title: String, scripts: Html = Html(""), includes: Html = Html(""))(body: Html)
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,7 +34,6 @@
         <script src="https://cdn.datatables.net/t/bs/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 
         @includes
-
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
