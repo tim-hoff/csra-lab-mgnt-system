@@ -4,7 +4,7 @@
 *@
 @import helper._
 @import helpers.BootstrapHelper._
-
+@import models.User;
 
 @main("View Tickets"){
 <div class="row">
@@ -26,13 +26,13 @@
         </tr>
       </thead>
       <tbody>
-        @if(userProfile.role=="Admin"){
+        @if(userProfile.role == User.Role.Admin){
 You're an admin
 }
-        @if(userProfile.role=="SuperAdmin"){
+        @if(userProfile.role == User.Role.SuperAdmin){
 You're a SuperAdmin
 }
-        @if(userProfile.role=="Student"){
+        @if(userProfile.role == User.Role.Student){
 You're a Student
 }
         @for(ticket <- Ticket.tickets) {
