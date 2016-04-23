@@ -26,17 +26,14 @@
         </tr>
       </thead>
       <tbody>
-        if(@userProfile.role == "Admin")
-{
+        @if(userProfile.role=="Admin"){
 You're an admin
 }
-        if(@userProfile.role == "SuperAdmin")
-{
-You're an SuperAdmin
+        @if(userProfile.role=="SuperAdmin"){
+You're a SuperAdmin
 }
-        if(@userProfile.role == "Student")
-{
-You're an Student
+        @if(userProfile.role=="Student"){
+You're a Student
 }
         @for(ticket <- Ticket.tickets) {
         <tr>
