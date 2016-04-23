@@ -65,7 +65,7 @@ public class User {
   }
 
   public static List<User> admins(){
-    List<User> data = users().stream().filter(user -> user.role == Role.Admin || user.role == Role.SuperAdmin ).collect(Collectors.toList());
+    List<User> data = users().stream().filter(user -> (user.role == Role.Admin || user.role == Role.SuperAdmin) && user.active == true).collect(Collectors.toList());
     return data;
 }
 
