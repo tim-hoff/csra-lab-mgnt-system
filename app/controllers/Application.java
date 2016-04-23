@@ -67,3 +67,4 @@ public class Application extends UserProfileController<CommonProfile> {
 
 
 }
+//User.findById(getUserProfile().getId())
