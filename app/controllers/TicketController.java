@@ -20,7 +20,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result index() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -32,7 +32,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		
 		if(checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -43,7 +43,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result create() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -55,7 +55,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result delete(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -68,7 +68,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result edit(Integer id) {
 		if(!checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -81,7 +81,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result update(Integer id) {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -99,7 +99,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result save() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -117,7 +117,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	public Result report_1(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		

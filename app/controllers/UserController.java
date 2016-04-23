@@ -21,7 +21,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result index() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -32,7 +32,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result show(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -43,7 +43,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result create() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -55,7 +55,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result delete(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -68,7 +68,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result save() {
 		if(!checkPrivileges())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -88,7 +88,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.Admin) ||
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -101,7 +101,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	public Result update(String id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
