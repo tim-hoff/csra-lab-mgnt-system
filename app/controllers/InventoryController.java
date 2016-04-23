@@ -39,7 +39,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result show(Integer id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -63,7 +63,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result create() {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -91,7 +91,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	}
 	@Transactional
 	public Result delete(Integer id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -135,10 +135,10 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	{
 		CommonProfile profile = getUserProfile();
 		//if you don't have admin role then redirect back to dashboard
-		if(!(User.findById(profile.getId()).role != User.Role.Admin ||  User.findById(profile.getId()).role != User.Role.SuperAdmin))
+		if(User.findById(profile.getId()).role == User.Role.Admin ||  User.findById(profile.getId()).role == User.Role.SuperAdmin)
 		{
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

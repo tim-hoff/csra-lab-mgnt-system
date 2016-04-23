@@ -19,7 +19,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 	@RequiresAuthentication(clientName = "CasClient") 
 	@Transactional
 	public Result index() {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -30,7 +30,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result show(String id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -41,7 +41,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result create() {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -53,7 +53,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result delete(String id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -83,7 +83,10 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(String id) {
-		if(checkPrivilegesAdmin())
+		//Admins cannot edit other admin's account, must be super admin, checked here
+		if(!checkPrivilegesAdmin() || 
+				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.Admin) ||
+				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -96,7 +99,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result update(String id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -128,10 +131,10 @@ public class UserController extends UserProfileController<CommonProfile> {
 	{
 		CommonProfile profile = getUserProfile();
 		//if you don't have admin role then redirect back to dashboard
-		if(!(User.findById(profile.getId()).role != User.Role.Admin ||  User.findById(profile.getId()).role != User.Role.SuperAdmin))
+		if(User.findById(profile.getId()).role == User.Role.Admin ||  User.findById(profile.getId()).role == User.Role.SuperAdmin)
 		{
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

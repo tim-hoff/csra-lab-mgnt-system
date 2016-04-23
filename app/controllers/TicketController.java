@@ -53,7 +53,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result delete(Integer id) {
-		if(checkPrivilegesAdmin())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -66,7 +66,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(Integer id) {
-		if(checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
+		if(!checkPrivilegesAdmin() || Ticket.findById(id).created_for == getUserProfile().getId())
 		{
 			flash("Insufficient Privileges");
 			return ok(views.html.index.render());
@@ -115,6 +115,12 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 	@Transactional
 	public Result report_1(Integer id) {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("Insufficient Privileges");
+			return ok(views.html.index.render());
+		}
+		
 		return ok(report_1.render(id));
 	}
 
@@ -140,10 +146,10 @@ public class TicketController extends UserProfileController<CommonProfile> {
 	{
 		CommonProfile profile = getUserProfile();
 		//if you don't have admin role then redirect back to dashboard
-		if(!(User.findById(profile.getId()).role != User.Role.Admin ||  User.findById(profile.getId()).role != User.Role.SuperAdmin))
+		if(User.findById(profile.getId()).role == User.Role.Admin ||  User.findById(profile.getId()).role == User.Role.SuperAdmin)
 		{
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
