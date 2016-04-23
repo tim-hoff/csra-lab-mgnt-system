@@ -20,7 +20,7 @@ public class HistoryController extends UserProfileController<CommonProfile> {
 	public Result index() {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("success", "Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
@@ -31,7 +31,7 @@ public class HistoryController extends UserProfileController<CommonProfile> {
 	public Result show(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
-			flash("success", "Insufficient Privileges");
+			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
 		
