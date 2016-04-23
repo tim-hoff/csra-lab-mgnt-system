@@ -5,9 +5,6 @@
 * object to insert into the body of the page.
 *@
 @(title: String, scripts: Html = Html(""), includes: Html = Html(""))(body: Html)
-@*
-@(userProfile: user)
-@import models.User;*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,11 +50,8 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/tickets">Tickets</a></li>
-                         @*@if(userProfile.role == User.Role.Admin){*@
                         <li><a href="@routes.UserController.index()">Users</a></li>
-                        @*}*@
                         <li><a href="@routes.InventoryController.index()">Items</a></li>
-                        @* @if(userProfile.role == User.Role.Admin){*@
                         <li><a href="@routes.HistoryController.index()">History</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
@@ -67,7 +61,6 @@
                                 <li><a href="#">Inventory Reports</a></li>
                             </ul>
                         </li>
-                       @* }*@
                         <li><a href="/logout?url=">Logout</a></li>
                     </ul>
                 </div>

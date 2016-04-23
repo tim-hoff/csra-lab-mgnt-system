@@ -50,7 +50,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(Integer id) {
-		if(!checkPrivileges())
+		if(!checkPrivilegesAdmin())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
