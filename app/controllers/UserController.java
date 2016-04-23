@@ -83,7 +83,7 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit(String id) {
-		//Admins cannot edit other admin's account, must be super admin, checked here
+		//Admins cannot edit other admins or SuperAdmins account, must be super admin, checked here
 		if(!checkPrivilegesAdmin() || 
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.Admin) ||
 				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
