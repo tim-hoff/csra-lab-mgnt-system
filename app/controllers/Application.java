@@ -37,33 +37,33 @@ import play.libs.ws.WSResponse;
 public class Application extends UserProfileController<CommonProfile> {
 	@Inject WSClient ws;
 
-    @RequiresAuthentication(clientName = "CasClient")
-    @Transactional
-    public Result casIndex() {
-        final CommonProfile profile = getUserProfile();
-        final String service = "https://csra-lab-mgnt-system.herokuapp.com/dashboard";
-        String proxyTicket = null;
-        
-        if (profile instanceof CasProxyProfile) {
-            final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
-            proxyTicket = proxyProfile.getProxyTicketFor(service);
-        }
+	@RequiresAuthentication(clientName = "CasClient")
+	@Transactional
+	public Result casIndex() {
+		final CommonProfile profile = getUserProfile();
+		final String service = "https://csra-lab-mgnt-system.herokuapp.com/dashboard";
+		String proxyTicket = null;
 
-        String proxyResponse = service+"&ticket=" + proxyTicket;
-        Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
-            return response.asXml();
-        });
-        
-       if(User.findById(profile.getId()) == null) {
-    	   User newUser = new User();
-    	   newUser.user_id = profile.getId();
-    	   Form<User> userForm = form(User.class).fill(newUser);
-    	   return ok(views.html.user.create.render(userForm));
-       }
-       
-        
-       return ok(views.html.index.render());
-    } 
+		if (profile instanceof CasProxyProfile) {
+			final CasProxyProfile proxyProfile = (CasProxyProfile) profile;
+			proxyTicket = proxyProfile.getProxyTicketFor(service);
+		}
+
+		String proxyResponse = service+"&ticket=" + proxyTicket;
+		Promise<Document> documentPromise = WS.url(proxyResponse).get().map(response -> {
+			return response.asXml();
+		});
+
+		if(User.findById(profile.getId()) == null) {
+			User newUser = new User();
+			newUser.user_id = profile.getId();
+			Form<User> userForm = form(User.class).fill(newUser);
+			return ok(views.html.user.create.render(userForm));
+		}
+
+
+		return ok(views.html.index.render());
+	} 
 
 
 }
