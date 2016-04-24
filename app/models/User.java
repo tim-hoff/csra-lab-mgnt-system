@@ -10,6 +10,8 @@ import play.data.format.*;
 import play.data.validation.*;
 import play.db.jpa.*;
 
+import java.util.stream.Collectors;
+
 @Entity 
 public class User {
     @Id
@@ -61,4 +63,27 @@ public class User {
       .getResultList();
       return data;
   }
+<<<<<<< HEAD
 }
+=======
+
+  public static List<User> admins(){
+    List<User> data = users().stream().filter(user -> (user.role == Role.Admin || user.role == Role.SuperAdmin) && user.active == true).collect(Collectors.toList());
+    return data;
+}
+
+public List<Ticket> getTickets(){
+    List<Ticket> data = Ticket.tickets().stream().filter(ticket -> ticket.assigned_to.compareTo(user_id) == 0).collect(Collectors.toList());
+    return data;
+}
+
+public int priorityCount(Ticket.Priority p, int months, Ticket.State state ){
+    long count = getTickets().stream().filter(t -> t.priority == p && t.inRange(months) && t.state.compareTo(state) == 0).count();
+    return (int) count;
+}
+
+
+}
+
+
+>>>>>>> fe4caf22feb3e67fc0e9600d25b5acfa846d7eb7

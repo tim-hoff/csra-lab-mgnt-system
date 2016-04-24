@@ -9,12 +9,19 @@ GET     /														controllers.Application.casIndex()
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
+<<<<<<< HEAD
 GET         /home                  controllers.HomeController.index()
+=======
+GET         /home                  controllers.HomeController.index
+>>>>>>> fe4caf22feb3e67fc0e9600d25b5acfa846d7eb7
 GET         /callback                         @org.pac4j.play.CallbackController.callback()
 POST        /callback                         @org.pac4j.play.CallbackController.callback()
 GET         /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
 POST        /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
 GET         /logout                           @org.pac4j.play.ApplicationLogoutController.logout
+
+GET 		/email							controllers.EmailController.index
+POST 		/email/send							controllers.EmailController.sendMail
 
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
@@ -32,6 +39,8 @@ GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 GET 		/tickets/reports/1/:id			controllers.TicketController.report_1(id:Integer)
+GET 		/tickets/reports/2/:id 			controllers.TicketController.report_2(id:Integer)
+
 
 POST 		/user/save								controllers.UserController.save
 GET 		/users/new								controllers.UserController.create
