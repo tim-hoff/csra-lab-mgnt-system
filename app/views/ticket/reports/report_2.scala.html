@@ -37,8 +37,8 @@
             datasets: [
         {
             label: "Low",
-            fillColor: "rgba(185,230,255,0.5)",
-            strokeColor: "rgba(185,230,255,0.8)",
+            fillColor: "rgba(185,230,255,0.7)",
+            strokeColor: "rgba(185,230,255,1)",
             highlightFill: "rgba(87,162,204,0.75)",
             highlightStroke: "rgba(87,162,204,1)",
            
@@ -46,18 +46,18 @@
         },
         {
             label: "Medium",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
+            fillColor: "rgba(255,255,0,0.5)",
+            strokeColor: "rgba(255,255,0,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
             data: medsActive
         },
         {
             label: "High",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
+            fillColor: "rgba(255,0,0,0.5)",
+            strokeColor: "rgba(255,0,0,0.8)",
+            highlightFill: "rgba(255,0,0,0.75)",
+            highlightStroke: "rgba(255,0,0,,1)",
             data: highsActive
         }
     ]};
@@ -67,8 +67,8 @@
             datasets: [
         {
             label: "Low",
-            fillColor: "rgba(185,230,255,0.5)",
-            strokeColor: "rgba(185,230,255,0.8)",
+            fillColor: "rgba(185,230,255,0.7)",
+            strokeColor: "rgba(185,230,255,1)",
             highlightFill: "rgba(87,162,204,0.75)",
             highlightStroke: "rgba(87,162,204,1)",
            
@@ -76,18 +76,18 @@
         },
         {
             label: "Medium",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
+            fillColor: "rgba(255,255,0,0.5)",
+            strokeColor: "rgba(255,255,0,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
             data: medsResolved
         },
         {
             label: "High",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
+            fillColor: "rgba(255,0,0,0.5)",
+            strokeColor: "rgba(255,0,0,0.8)",
+            highlightFill: "rgba(255,0,0,0.75)",
+            highlightStroke: "rgba(255,0,0,,1)",
             data: highsResolved
         }
     ]};
@@ -117,11 +117,26 @@
 
 @main("Reports 2", scripts, includes){
 	<h1> Ticket by Admin </h2>
+        <p><div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Time Frame
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li ><a href="@routes.TicketController.report_2(1)">30 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(2)">60 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(3)">90 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(12)">1 Year</a></li>
+                <li ><a href="@routes.TicketController.report_2(2000)">All Time</a>
+            </ul>
+        </div></p>
 	<div class="col-md-6">
         <h3> Active Tickets </h3>
  +      <canvas id="myChartActive" width="400" height="400"></canvas>		
         <div id="js-legend" class="chart-legend"></div>
 	</div>
+    <div class="col-md-6">
+        
     <div class="col-md-6">
         <h3> Resolved Tickets </h3>
         <canvas id="myChartResolved" width="400" height="400"></canvas>
