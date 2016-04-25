@@ -20,6 +20,7 @@ import views.html.inventory.*;
 
 import models.*;
 import models.User;
+import org.joda.time.*;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
@@ -34,7 +35,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			return redirect("/home");
 		}
 		
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 
 	@Transactional
@@ -60,6 +61,45 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			Inventory.findById(id));
 		return ok(edit.render(id, invForm));
 	}
+	
+	@Transactional(readOnly=true)
+	public Result checkout(Integer id) {
+		Inventory item = Inventory.findById(id);
+		if(item.available() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.taken_date = new DateTime();
+		item.rented_by = User.findById(getUserProfile().getId());
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		
+		invForm.get().update(id);
+		flash("success", "Inventory item has been checked out");
+
+		return ok(index.render(getUserProfile().getId()));
+	}
+	
+	@Transactional(readOnly=true)
+	public Result checkin(Integer id) {
+		Inventory item = Inventory.findById(id);
+		if(item.rented_by.user_id == getUserProfile().getId() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.return_date = new DateTime();
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		
+		invForm.get().update(id);
+		flash("success", "Inventory item has been returned");
+
+		return ok(index.render(getUserProfile().getId()));
+	}
 
 	@Transactional(readOnly=true)
 	public Result create() {
@@ -72,6 +112,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		Form<Inventory> invForm = form(Inventory.class);
 		return ok(create.render(invForm));
 	}
+	
 	@Transactional
 	public Result save() {
 		if(!checkPrivileges())
@@ -87,8 +128,9 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		invForm.get().save();
 		flash("success", "Inventory " + invForm.get().item_id + " has been created");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
+	
 	@Transactional
 	public Result delete(Integer id) {
 		if(!checkPrivilegesAdmin())
@@ -99,7 +141,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		Inventory.findById(id).delete();
 		flash("success", "Inventory item has been deleted");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result update(Integer id) {
