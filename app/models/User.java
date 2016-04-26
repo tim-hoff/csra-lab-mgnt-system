@@ -74,8 +74,8 @@ public List<Ticket> getTickets(){
     return data;
 }
 
-public int priorityCount(Ticket.Priority p, int months ){
-    long count = getTickets().stream().filter(t -> t.priority == p && t.inRange(months)).count();
+public int priorityCount(Ticket.Priority p, int months, Ticket.State state ){
+    long count = getTickets().stream().filter(t -> t.priority == p && t.inRange(months) && t.state.compareTo(state) == 0).count();
     return (int) count;
 }
 

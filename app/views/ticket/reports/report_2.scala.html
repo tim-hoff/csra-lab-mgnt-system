@@ -9,71 +9,86 @@
 
 @scripts = {
 	<script type="text/javascript">
-        function ColorLuminance(hex, lum) {
-
-        // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-        }
-
-        lum = lum || 0;
-
-        // convert to decimal and change luminosity
-        var rgb = "#", c, i;
-
-        for (i = 0; i < 3; i++) {
-            c = parseInt(hex.substr(i*2,2), 16);
-            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-            rgb += ("00"+c).substr(c.length);
-        }
-
-        return rgb;
-        }
-        
-
         var labels = [];
 
         @for(admin <- User.admins()){
             labels.push("@admin.first_name @admin.last_name");
                         }
 
-        var lows = [];
-        var meds = [];
-        var highs = [];
+         var lowsActive = [];
+         var medsActive = [];
+         var highsActive = [];
+ 
+         @for(admin <- User.admins()){ lowsActive.push("@admin.priorityCount(Ticket.Priority.Low, months, Ticket.State.Pending)"); }
+         @for(admin <- User.admins()){ medsActive.push("@admin.priorityCount(Ticket.Priority.Normal, months, Ticket.State.Pending)"); }
+         @for(admin <- User.admins()){ highsActive.push("@admin.priorityCount(Ticket.Priority.High, months, Ticket.State.Pending)"); }
 
-        @for(admin <- User.admins()){ lows.push("@admin.priorityCount(Ticket.Priority.Low, months)"); }
-        @for(admin <- User.admins()){ meds.push("@admin.priorityCount(Ticket.Priority.Normal, months)"); }
-        @for(admin <- User.admins()){ highs.push("@admin.priorityCount(Ticket.Priority.High, months)"); }
+         var lowsResolved = [];
+         var medsResolved = [];
+         var highsResolved = [];
+  
+         @for(admin <- User.admins()){ lowsResolved.push("@admin.priorityCount(Ticket.Priority.Low, months, Ticket.State.Resolved)"); }
+         @for(admin <- User.admins()){ medsResolved.push("@admin.priorityCount(Ticket.Priority.Normal, months, Ticket.State.Resolved)"); }
+         @for(admin <- User.admins()){ highsResolved.push("@admin.priorityCount(Ticket.Priority.High, months, Ticket.State.Resolved)"); }
 
 
-        var data = {
+        var dataActive = {
             labels: labels,
             datasets: [
         {
             label: "Low",
-            fillColor: "rgba(185,230,255,0.5)",
-            strokeColor: "rgba(185,230,255,0.8)",
+            fillColor: "rgba(185,230,255,0.7)",
+            strokeColor: "rgba(185,230,255,1)",
             highlightFill: "rgba(87,162,204,0.75)",
             highlightStroke: "rgba(87,162,204,1)",
            
-            data: lows
+            data: lowsActive
         },
         {
             label: "Medium",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
+            fillColor: "rgba(255,255,0,0.5)",
+            strokeColor: "rgba(255,255,0,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
-            data: meds
+            data: medsActive
         },
         {
             label: "High",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
-            data: highs
+            fillColor: "rgba(255,0,0,0.5)",
+            strokeColor: "rgba(255,0,0,0.8)",
+            highlightFill: "rgba(255,0,0,0.75)",
+            highlightStroke: "rgba(255,0,0,,1)",
+            data: highsActive
+        }
+    ]};
+
+        var dataResolved = {
+            labels: labels,
+            datasets: [
+        {
+            label: "Low",
+            fillColor: "rgba(185,230,255,0.7)",
+            strokeColor: "rgba(185,230,255,1)",
+            highlightFill: "rgba(87,162,204,0.75)",
+            highlightStroke: "rgba(87,162,204,1)",
+           
+            data: lowsResolved
+        },
+        {
+            label: "Medium",
+            fillColor: "rgba(255,255,0,0.5)",
+            strokeColor: "rgba(255,255,0,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: medsResolved
+        },
+        {
+            label: "High",
+            fillColor: "rgba(255,0,0,0.5)",
+            strokeColor: "rgba(255,0,0,0.8)",
+            highlightFill: "rgba(255,0,0,0.75)",
+            highlightStroke: "rgba(255,0,0,,1)",
+            data: highsResolved
         }
     ]};
         
@@ -91,39 +106,40 @@
         }
 
 
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myBarChart = new Chart(ctx).Bar(data, options);
+    var ctx = document.getElementById("myChartActive").getContext("2d");
+    var myBarChart = new Chart(ctx).Bar(dataActive, options);
+
+    var ctx1 = document.getElementById("myChartResolved").getContext("2d");
+    var myBarChart1 = new Chart(ctx1).Bar(dataResolved, options);
 
 	</script>
 }
 
 @main("Reports 2", scripts, includes){
-	<h1> Report 2 </h2>
+	<h1> Ticket by Admin </h2>
+        <p><div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Time Frame
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li ><a href="@routes.TicketController.report_2(1)">30 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(2)">60 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(3)">90 days</a></li>
+                <li ><a href="@routes.TicketController.report_2(12)">1 Year</a></li>
+                <li ><a href="@routes.TicketController.report_2(2000)">All Time</a>
+            </ul>
+        </div></p>
 	<div class="col-md-6">
-		<canvas id="myChart" width="400" height="400"></canvas>
-		<div id="js-legend" class="chart-legend"></div>
+        <h3> Active Tickets </h3>
+ +      <canvas id="myChartActive" width="400" height="400"></canvas>		
+        <div id="js-legend" class="chart-legend"></div>
 	</div>
+        
     <div class="col-md-6">
-        <table id="data-table-no-filter" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Users</th>
-                    <th>#</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(chash <- Ticket.categoryHash(months)) {
-                <tr>
-                    <td>
-                        @chash._1
-                    </td>
-                    <td>
-                        @chash._2
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+        <h3> Resolved Tickets </h3>
+        <canvas id="myChartResolved" width="400" height="400"></canvas>
+        <div id="js-legend" class="chart-legend"></div>
     </div>
 
 
