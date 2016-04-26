@@ -6,8 +6,9 @@
 
 
 
-
 @main("View Tickets"){
+
+
 
 
 
@@ -17,10 +18,10 @@
 <div class="panel-group" id="accordion">
      @for(ticket <- Ticket.tickets) {
       <div class="panel panel-default">
-        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href=@("#collapse_"+ticket.ticket_id)>
+        <div  class="panel-heading" data-toggle="collapse" data-parent="#accordion" href=@("#collapse_"+ticket.ticket_id)>
           <h4 class="panel-title ">
                   <ul class="list-inline">
-                      <li ><span class="label label-danger">@ticket.priority</span></li>   
+                      <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
                       <li>TicketId: @ticket.name</li>
                   </ul>
                    <ul class="list-inline text-right">
@@ -37,17 +38,19 @@
                   <dd>@ticket.description</dd>
               </dl>
               <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                       Category: @ticket.category
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                       Assigned To: @ticket.assigned_to
                   </div>
-                  <div class="col-md-3">
+
+                  <div class="col-sm-3">
                       Last Updated: @ticket.last_updated
                   </div>
-                  <div class="col-md-3">
-                      Created: @ticket.date_created
+                  <div class="col-sm-3">
+                     Created: @ticket.date_created
+                  
                   </div>
               </div>
           </div>
@@ -90,7 +93,7 @@
 $.fn.pageMe = function(opts){
     var $this = this,
         defaults = {
-            perPage: 7,
+            perPage: 5,
             showPrevNext: false,
             numbersPerPage: 1,
             hidePageNumbers: false
@@ -209,7 +212,10 @@ $.fn.pageMe = function(opts){
 
 $(document).ready(function(){
     
-  $('#accordion').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
+  $('#accordion').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
     
 });
+
+ 
+
 </script>
