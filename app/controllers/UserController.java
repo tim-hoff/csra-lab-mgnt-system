@@ -66,12 +66,6 @@ public class UserController extends UserProfileController<CommonProfile> {
 
 	@Transactional 
 	public Result save() {
-		if(!checkPrivileges())
-		{
-			flash("error", "Insufficient Privileges");
-			return redirect("/home");
-		}
-		
 		Form<User> userForm = form(User.class).bindFromRequest();
 		if(userForm.hasErrors()){
 			return badRequest(create.render(userForm));
