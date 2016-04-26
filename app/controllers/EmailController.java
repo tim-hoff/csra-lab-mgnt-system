@@ -37,7 +37,7 @@ public class EmailController extends Controller {
       emailer.addTo("<n2i5p5y6g1c6a4x5@csra-lab.slack.com>");
       emailer.setBodyText(emailForm.get().email + "  " + emailForm.get().body);
     String id = mailer.send(emailer);
-    flash("Success");
+    flash("Success", "Email sent");
     Form<EmailContent> newEmailForm = form(EmailContent.class);
     return ok(index.render(newEmailForm));
   }
