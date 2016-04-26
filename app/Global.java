@@ -14,26 +14,24 @@ import models.*;
 import java.util.*;
 import play.mvc.*;
 import play.data.*;
-import static play.data.Form.*;
 import play.db.jpa.*;
+import play.db.jpa.JPA;
+import javax.persistence.*;
 import org.apache.commons.mail.EmailAttachment;
 import play.Play;
-import play.libs.mailer.MailerClient;
 import play.libs.mailer.MailerPlugin;
 import play.libs.mailer.Email;
-import javax.inject.Inject;
-import java.io.File;
 
 public class Global extends GlobalSettings {
     
-    List<User> data; 
+    List<User> data;
 
 	@Override
     public void onStart(Application application) {
 
     	Akka.system().scheduler().schedule(
                 Duration.create(0, TimeUnit.SECONDS),
-                Duration.create(60, TimeUnit.SECONDS),
+                Duration.create(24, TimeUnit.HOURS),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -41,7 +39,7 @@ public class Global extends GlobalSettings {
 
                         JPA.withTransaction (() -> { 
                             data = JPA.em()
-                            .createQuery("Select u.user_id From Inventory i, User u Where Now() > i.return_date AND i.return_date is not null AND i.rented_by = u.user_id")
+                            .createQuery("Select u.user_id From Inventory i, User u Where Now() > i.return_date AND i.return_date is not null AND i.rented_by = u.user_id AND (DATEDIFF(current_timestamp, i.last_notified) > -1) AND (DATEDIFF(current_timestamp, i.last_notified) % 3 = 0)")
                             .getResultList();
                         });
 
@@ -50,7 +48,7 @@ public class Global extends GlobalSettings {
 					        emailer.setSubject("test");
 					        emailer.setFrom("<csralabmailtest@gmail.com>");
 					        emailer.addTo("<n2i5p5y6g1c6a4x5@csra-lab.slack.com>");
-					        emailer.setBodyText("<" + data.get(i) + "@latech.edu>" + "\n\n  TESTTTTT");
+					        emailer.setBodyText("<" + data.get(i) + "@latech.edu>" + "\n\n  TEST");
 					        MailerPlugin.send(emailer);
     					}
                     }

@@ -186,11 +186,12 @@ BEFORE Update on `LCLSA_tech_lab_management_system`.`Inventory`
 for each row
 begin
 	if (NEW.item_rented_by is null and OLD.item_rented_by is not null) then
+		set NEW.last_notified = null;
 		update History as H set H.return_date = current_timestamp where (H.item_id = new.item_id) AND (H.return_date is null);
-        update Inventory as I set I.last_notified = null;
 	end if;
 	
 	if (NEW.item_rented_by is not null and OLD.item_rented_by is null) then
+		set NEW.last_notified = NEW.return_date;
 		insert into History(`item_id`,`taken_date`) values (new.item_id, current_timestamp);
 	end if;	
 	
