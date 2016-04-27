@@ -172,6 +172,10 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}		
 	}
 	
+	public CommonProfile userProfile()
+	{
+		return getUserProfile();
+	}
 
 	//This function returns false if current user does not possess any roles
 	public boolean checkPrivileges()

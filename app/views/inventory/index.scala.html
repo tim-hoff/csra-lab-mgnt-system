@@ -93,7 +93,7 @@
                   <button type="submit" class="btn btn-warning">Checkout</button>
                 }
               }
-              @if(item.rented_by != null && item.rented_by.user_id == getUserProfile().getId()) {
+              @if(item.rented_by != null && item.rented_by.user_id == InventoryController.getProfile().getId()) {
                 @form(routes.InventoryController.checkin(item.item_id)){
                   <button type="submit" class="btn btn-warning">Checkin</button>
                 }
