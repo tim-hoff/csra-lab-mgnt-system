@@ -117,7 +117,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		item.return_date = null;
 		item.taken_date = null;
 		
-		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		invForm = form(Inventory.class).fill(item);
 		invForm.get().update(id);
 		
 		flash("success", "Inventory item has been returned");
