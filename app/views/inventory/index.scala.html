@@ -1,3 +1,4 @@
+@(currentUserID :String)
 @*
 * show items
 *@
@@ -87,11 +88,16 @@
             @item.last_notified
           </td>
           <td>
-            <div class="btn-group btn-sm">
-            @form(routes.InventoryController.edit(item.item_id)){
-              <button type="submit" class="btn btn-warning">Edit</button>
+            @if(item.available()){
+              @form(routes.InventoryController.checkout(item.item_id)){
+                <button type="submit" class="btn btn-primary">Checkout</button>
+              }
             }
-            </div>
+            @if(item.rented_by != null && item.rented_by.user_id == currentUserID) {
+              @form(routes.InventoryController.checkin(item.item_id)){
+                <button type="submit" class="btn btn-primary">Checkin</button>
+              }
+            }
           </td>
         </tr>
         }

@@ -22,6 +22,7 @@ import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.play.PlayWebContext;
 import org.pac4j.core.credentials.Credentials;
 import org.pac4j.core.client.Client;
+import org.joda.time.*;
 
 import views.html.inventory.*;
 
@@ -48,7 +49,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			return redirect("/home");
 		}
 		
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 
 	@Transactional
@@ -74,7 +75,56 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			Inventory.findById(id));
 		return ok(edit.render(id, invForm));
 	}
+	
+	@Transactional
+	public Result checkout(Integer id) {
+		Inventory item = Inventory.findById(id);
+		
+		if(item.available() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.taken_date = new DateTime();
+		item.rented_by = User.findById(getUserProfile().getId());
+		item.return_date = new DateTime().plusWeeks(1);
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		
+		invForm.get().update(id);
+		flash("success", "Inventory item has been checked out");
 
+		return ok(index.render(getUserProfile().getId()));
+	}
+	@Transactional
+	public Result checkin(Integer id) {
+		Inventory item = Inventory.findById(id);
+		
+		if(item.rented_by != null && item.rented_by.user_id == getUserProfile().getId() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.return_date = new DateTime();
+		item.rented_by = null;
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		//so two updates need to occur, one to fire off the history table trigger
+		invForm.get().update(id);
+		//second to null both the return date and taken date.
+		item.return_date = null;
+		item.taken_date = null;
+		
+		invForm = form(Inventory.class).fill(item);
+		invForm.get().update(id);
+		
+		flash("success", "Inventory item has been returned");
+
+		return ok(index.render(getUserProfile().getId()));
+	}
+	
 	@Transactional(readOnly=true)
 	public Result create() {
 		if(!checkPrivilegesAdmin())
@@ -101,7 +151,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		invForm.get().save();
 		flash("success", "Inventory " + invForm.get().item_id + " has been created");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result delete(Integer id) {
@@ -113,7 +163,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		Inventory.findById(id).delete();
 		flash("success", "Inventory item has been deleted");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result update(Integer id) {
