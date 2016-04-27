@@ -80,16 +80,26 @@
     $(document).ready(function() {
         $('#data-table').DataTable(
             {
-              "columnDefs": [
-                { "orderable": false, "targets": 0 }
-              ]
+              lengthChange: false,
             }
             );
 
         $('#data-table-no-filter').DataTable( {
             "dom": 'rt'
         } );
-    });
+        
+        $('#data-table-user').DataTable( {
+            "dom": '<"create-user">frtip'
+        } );
+        
+        $('#data-table-item').DataTable( {
+            "dom": '<"create-item">frtip'
+        } );
+        
+         $("div.create-item").html('<div class="col-md-4"><a href="@routes.UserController.create()" class="btn btn-default btn-block">Add Item</a></div>');
+     
+        $("div.create-user").html('<div class="col-md-4"><a href="@routes.UserController.create()" class="btn btn-default btn-block">Create New User</a></div>');
+        });
     </script>
     @scripts
 </html>
