@@ -22,6 +22,7 @@ import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.play.PlayWebContext;
 import org.pac4j.core.credentials.Credentials;
 import org.pac4j.core.client.Client;
+import org.joda.time.*;
 
 import views.html.inventory.*;
 
@@ -78,6 +79,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	@Transactional(readOnly=true)
 	public Result checkout(Integer id) {
 		Inventory item = Inventory.findById(id);
+		
 		if(item.available() && !checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
