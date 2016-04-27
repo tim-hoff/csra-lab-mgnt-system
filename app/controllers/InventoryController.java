@@ -88,6 +88,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		item.taken_date = new DateTime();
 		item.rented_by = User.findById(getUserProfile().getId());
+		item.return_date = new DateTime().plusWeeks(1);
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
 		
