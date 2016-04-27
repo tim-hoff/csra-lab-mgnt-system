@@ -30,10 +30,7 @@ import models.User;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
-<<<<<<< HEAD
 public class InventoryController extends UserProfileController<CommonProfile> {
-=======
-public class InventoryController extends Controller {
 
     private final MailerClient mailer;
 
@@ -41,8 +38,6 @@ public class InventoryController extends Controller {
     public InventoryController(MailerClient mailer) {
     this.mailer = mailer;
     }
-	
->>>>>>> 1c93aa41c3a3ff88fd03533c7e6d26d46ccb83ee
 
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
