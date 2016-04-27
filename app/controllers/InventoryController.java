@@ -76,7 +76,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		return ok(edit.render(id, invForm));
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional
 	public Result checkout(Integer id) {
 		Inventory item = Inventory.findById(id);
 		
@@ -96,7 +96,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 		return ok(index.render(getUserProfile().getId()));
 	}
-	@Transactional(readOnly=true)
+	@Transactional
 	public Result checkin(Integer id) {
 		Inventory item = Inventory.findById(id);
 		
