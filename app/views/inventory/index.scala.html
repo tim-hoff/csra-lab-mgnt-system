@@ -97,13 +97,13 @@
           @if(item.available()){
           <td>
             <div class="btn-group btn-sm">
-            @form(routes.InventoryController.edit(item.item_id)){
+            @form(routes.InventoryController.checkout(item.item_id)){
               <button type="submit" class="btn btn-warning">Checkout</button>
             }
             </div>
           </td>
           }
-          @* @if(item.rented_by.user_id == currentUserID) {
+          @if(item.rented_by != null && item.rented_by.user_id == currentUserID) {
           <td>
             <div class="btn-group btn-sm">
             @form(routes.InventoryController.edit(item.item_id)){
@@ -111,7 +111,7 @@
             }
             </div>
           </td>
-          } *@
+          }
         </tr>
         }
       </tbody>

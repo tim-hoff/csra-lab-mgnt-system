@@ -74,7 +74,27 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			Inventory.findById(id));
 		return ok(edit.render(id, invForm));
 	}
+	
+	@Transactional(readOnly=true)
+	public Result checkout(Integer id) {
+		Inventory item = Inventory.findById(id);
+		if(item.available() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.taken_date = new DateTime();
+		item.rented_by = User.findById(getUserProfile().getId());
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		
+		invForm.get().update(id);
+		flash("success", "Inventory item has been checked out");
 
+		return ok(index.render(getUserProfile().getId()));
+	}
+	
 	@Transactional(readOnly=true)
 	public Result create() {
 		if(!checkPrivilegesAdmin())
