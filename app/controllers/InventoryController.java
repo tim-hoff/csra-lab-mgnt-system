@@ -1,10 +1,17 @@
 package controllers;
 
+import java.util.*;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
+import org.apache.commons.mail.EmailAttachment;
+import play.Play;
+import play.libs.mailer.MailerClient;
+import play.libs.mailer.Email;
+import javax.inject.Inject;
+import java.io.File;
 
 
 import org.pac4j.play.java.UserProfileController;
@@ -23,7 +30,19 @@ import models.User;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
+<<<<<<< HEAD
 public class InventoryController extends UserProfileController<CommonProfile> {
+=======
+public class InventoryController extends Controller {
+
+    private final MailerClient mailer;
+
+    @Inject
+    public InventoryController(MailerClient mailer) {
+    this.mailer = mailer;
+    }
+	
+>>>>>>> 1c93aa41c3a3ff88fd03533c7e6d26d46ccb83ee
 
 	@RequiresAuthentication(clientName = "CasClient")
 	@Transactional
