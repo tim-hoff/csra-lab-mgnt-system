@@ -107,6 +107,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		
 		item.return_date = new DateTime();
+		item.rented_by = null;
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
 		
