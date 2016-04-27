@@ -106,7 +106,7 @@
           @if(item.rented_by != null && item.rented_by.user_id == currentUserID) {
           <td>
             <div class="btn-group btn-sm">
-            @form(routes.InventoryController.edit(item.item_id)){
+            @form(routes.InventoryController.checkin(item.item_id)){
               <button type="submit" class="btn btn-warning">Checkin</button>
             }
             </div>
