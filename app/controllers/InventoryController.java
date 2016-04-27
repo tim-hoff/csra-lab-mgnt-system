@@ -104,6 +104,45 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		return ok(index.render());
 	}
 	@Transactional
+	public Result checkout(Integer item_id) {
+
+		Inventory item = Inventory.findById(id);
+		User usr = User.findById(getUserProfile().getId()); 
+		DateTime rd = new DateTime().plusWeeks(1);
+
+		if(item.available() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.checkout(usr.user_id, rd);
+		
+		flash("success", "Inventory item has been checked out");
+
+		return ok(index.render());
+	}
+
+	@Transactional
+	public Result checkin(Integer item_id) {
+
+		Inventory item = Inventory.findById(id);
+		User usr = User.findById(getUserProfile().getId()); 
+
+		if !(item.rented_by.user_id == usr.user_id && (checkPrivileges() || checkPrivilegesAdmin()))
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		item.checkin();
+		
+		flash("success", "Inventory item has been checked in");
+
+		return ok(index.render());
+	}
+
+	@Transactional
 	public Result delete(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
@@ -133,6 +172,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}		
 	}
 	
+
 	//This function returns false if current user does not possess any roles
 	public boolean checkPrivileges()
 	{

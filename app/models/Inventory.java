@@ -77,6 +77,17 @@ public class Inventory {
         return data;
     }
 
+    public void checkin() {
+        rented_by = null;
+        save();
+    }
+
+    public void checkout(String user_id, DateTime rd) {
+        User usr = User.findById(user_id);
+        return_date = rd;
+        rented_by = usr;
+        save();
+    }
 }
 
 

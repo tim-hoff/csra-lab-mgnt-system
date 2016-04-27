@@ -28,6 +28,8 @@ GET 		/items/:id									controllers.InventoryController.show(id:Integer)
 GET 		/items/:id/edit							controllers.InventoryController.edit(id:Integer)
 POST		/items/:id/update 					controllers.InventoryController.update(id:Integer)
 GET 		/items/:id/delete						controllers.InventoryController.delete(id:Integer)
+GET			/items/:id/checkout						controllers.InventoryController.checkout(id:Integer)
+GET			/items/:id/checkin						controllers.InventoryController.checkin(id:Integer)
 
 POST 		/ticket/save								controllers.TicketController.save
 GET 		/tickets/new								controllers.TicketController.create
