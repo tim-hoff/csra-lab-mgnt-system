@@ -48,7 +48,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			return redirect("/home");
 		}
 		
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 
 	@Transactional
@@ -101,7 +101,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		invForm.get().save();
 		flash("success", "Inventory " + invForm.get().item_id + " has been created");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result delete(Integer id) {
@@ -113,7 +113,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		Inventory.findById(id).delete();
 		flash("success", "Inventory item has been deleted");
-		return ok(index.render());
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result update(Integer id) {
