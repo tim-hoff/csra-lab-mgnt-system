@@ -3,13 +3,15 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /														controllers.HomeController.index
+GET     /														controllers.Application.casIndex()
 
 # Dashboard page, getting some base styling out of the way
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
-GET         /login                  controllers.Application.casIndex()
+
+GET         /home                  controllers.HomeController.index
+
 GET         /callback                         @org.pac4j.play.CallbackController.callback()
 POST        /callback                         @org.pac4j.play.CallbackController.callback()
 GET         /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
@@ -35,6 +37,7 @@ GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 GET 		/tickets/reports/1/:id			controllers.TicketController.report_1(id:Integer)
+GET 		/tickets/reports/2/:id 			controllers.TicketController.report_2(id:Integer)
 
 
 POST 		/user/save								controllers.UserController.save

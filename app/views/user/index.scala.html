@@ -6,6 +6,18 @@
 
 
 @main("View Users"){
+@if(flash.containsKey("error")){
+     <div class="alert alert-info alert-dismissible" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <strong>Sorry!</strong> @flash.get("error")
+     </div>
+ }
+@if(flash.containsKey("success")){
+     <div class="alert alert-success alert-dismissible" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <strong>Success!</strong> @flash.get("success")
+     </div>
+ }
 <div class="row">
   <div class="col-md-offset-1 col-md-10">
     <h1 class="sub-header">
@@ -15,7 +27,8 @@
             </div>
         </div>
     </h1>
-
+  </div>
+    <div class="col-lg-8 col-md-offset-2 col-md-8 table-responsive">
         <table id="data-table-user" class="table table-hover" cellspacing="0" width="100%">
           <thead>
             <tr>

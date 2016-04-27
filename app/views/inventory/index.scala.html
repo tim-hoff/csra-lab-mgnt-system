@@ -1,9 +1,21 @@
 @*
-* show tickets
+* show items
 *@
 @import helper._
 @import helpers.BootstrapHelper._
 @main("View Items"){
+@if(flash.containsKey("error")){
+     <div class="alert alert-info alert-dismissible" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <strong>Sorry!</strong> @flash.get("error")
+     </div>
+ }
+@if(flash.containsKey("success")){
+     <div class="alert alert-success alert-dismissible" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <strong>Success!</strong> @flash.get("success")
+     </div>
+ }
 <div class="row">
   <div class="col-md-offset-1 col-md-10 table-responsive">
     <h1 class="sub-header">Inventory</h1>
@@ -11,7 +23,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-offset-1 col-md-10">
+    <div class="col-md-offset-1 col-md-10 table-responsive">
         <table id="data-table-item" class="table table-hover" cellspacing="0" width="100%">
       <thead>
         <tr>
@@ -25,6 +37,8 @@
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
+          <th>Last Notified</th>
+          <th class="action">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -70,6 +84,16 @@
           </td>
           <td>
             @item.return_date
+          </td>
+          <td>
+            @item.last_notified
+          </td>
+          <td>
+            <div class="btn-group btn-sm">
+            @form(routes.InventoryController.edit(item.item_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+            }
+            </div>
           </td>
         </tr>
         }

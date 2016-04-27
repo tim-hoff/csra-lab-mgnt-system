@@ -10,57 +10,74 @@ import play.data.format.*;
 import play.data.validation.*;
 import play.db.jpa.*;
 
+import java.util.stream.Collectors;
+
 @Entity 
 public class User {
-    @Id
-    @Column(name="user_id", nullable=false)
-    public String user_id;
-    
-    @Column(nullable=false)
-    public String first_name;
-    
-    @Column(nullable=false)
-    public String last_name;
+	@Id
+	@Column(name="user_id", nullable=false)
+	public String user_id;
 
-    public String email;
+	@Column(nullable=false)
+	public String first_name;
 
-    public String note;
+	@Column(nullable=false)
+	public String last_name;
 
-    public boolean active;
+	public String email;
 
-    @Column(name="role", columnDefinition="ENUM('Admin', 'Student', 'SuperAdmin')")
-    @Enumerated(EnumType.STRING)
-    public Role role;
+	public String note;
 
-    public static enum Role {
-        Admin,
-        Student,
-        SuperAdmin
-    }
+	public boolean active;
 
-    public static User findById(String id) {
-        return JPA.em().find(User.class, id);
-    }
+	@Column(name="role", columnDefinition="ENUM('Admin', 'Student', 'SuperAdmin')")
+	@Enumerated(EnumType.STRING)
+	public Role role;
 
-    public void delete() {
-        JPA.em().remove(this);
-    }
+	public static enum Role {
+		Admin,
+		Student,
+		SuperAdmin
+	}
 
-    public void save() {
-        JPA.em().persist(this);
-    }
+	public static User findById(String id) {
+		return JPA.em().find(User.class, id);
+	}
 
-    public void update(String id) {
-        this.user_id = id;
-        JPA.em().merge(this);
-    }
+	public void delete() {
+		JPA.em().remove(this);
+	}
 
-    public static List<User> users(){
-      List<User> data = JPA.em()
-      .createQuery("SELECT c FROM User c", User.class)
-      .getResultList();
-      return data;
-  }
+	public void save() {
+		JPA.em().persist(this);
+	}
+
+	public void update(String id) {
+		this.user_id = id;
+		JPA.em().merge(this);
+	}
+
+	public static List<User> users(){
+		List<User> data = JPA.em()
+				.createQuery("SELECT c FROM User c", User.class)
+				.getResultList();
+		return data;
+	}
+
+
+	public static List<User> admins(){
+		List<User> data = users().stream().filter(user -> (user.role == Role.Admin || user.role == Role.SuperAdmin) && user.active == true).collect(Collectors.toList());
+		return data;
+	}
+
+	public List<Ticket> getTickets(){
+		List<Ticket> data = Ticket.tickets().stream().filter(ticket -> ticket.assigned_to.compareTo(user_id) == 0).collect(Collectors.toList());
+		return data;
+	}
+
+	public int priorityCount(Ticket.Priority p, int months, Ticket.State state ){
+		long count = getTickets().stream().filter(t -> t.priority == p && t.inRange(months) && t.state.compareTo(state) == 0).count();
+		return (int) count;
+	}
+
 }
-
-
