@@ -111,8 +111,15 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		item.rented_by = null;
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
-		
+		//so two updates need to occur, one to fire off the history table trigger
 		invForm.get().update(id);
+		//second to null both the return date and taken date.
+		item.return_date = null;
+		item.taken_date = null;
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		invForm.get().update(id);
+		
 		flash("success", "Inventory item has been returned");
 
 		return ok(index.render(getUserProfile().getId()));
