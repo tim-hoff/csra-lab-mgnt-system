@@ -106,7 +106,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	@Transactional
 	public Result checkout(Integer item_id) {
 
-		Inventory item = Inventory.findById(id);
+		Inventory item = Inventory.findById(item_id);
 		User usr = User.findById(getUserProfile().getId()); 
 		DateTime rd = new DateTime().plusWeeks(1);
 
@@ -126,7 +126,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	@Transactional
 	public Result checkin(Integer item_id) {
 
-		Inventory item = Inventory.findById(id);
+		Inventory item = Inventory.findById(item_id);
 		User usr = User.findById(getUserProfile().getId()); 
 
 		if !(item.rented_by.user_id == usr.user_id && (checkPrivileges() || checkPrivilegesAdmin()))
@@ -172,9 +172,14 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}		
 	}
 	
-	public CommonProfile userProfile()
-	{
-		return getUserProfile();
+	public boolean rentedByUser(String item_id) {
+		Inventory item = Inventory.findById(item_id);
+		User usr = User.findById(getUserProfile().getId()); 
+
+		if (item.rented_by.user_id == usr.user_id) { return true; }
+		else
+			return false;
+		}
 	}
 
 	//This function returns false if current user does not possess any roles
