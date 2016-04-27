@@ -23,6 +23,8 @@
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
+          <th>Last Notified</th>
+          <th class="action">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -68,6 +70,16 @@
           </td>
           <td>
             @item.return_date
+          </td>
+          <td>
+            @item.last_notified
+          </td>
+          <td>
+            <div class="btn-group btn-sm">
+            @form(routes.InventoryController.edit(item.item_id)){
+              <button type="submit" class="btn btn-warning">Edit</button>
+            }
+            </div>
           </td>
         </tr>
         }

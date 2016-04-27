@@ -65,6 +65,10 @@ public class Inventory {
     @Formats.DateTime(pattern="yyyy-MM-dd")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime return_date;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime last_notified;
     
     public static List<Inventory> items() {
         List<Inventory> data = JPA.em()

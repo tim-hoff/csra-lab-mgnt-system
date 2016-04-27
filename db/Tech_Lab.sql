@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `item_rented_by` VARCHAR(20) DEFAULT NULL,
     `taken_date` DATETIME DEFAULT NULL,
     `return_date` DATETIME DEFAULT NULL,
+    `last_notified` DATETIME DEFAULT NULL,
     PRIMARY KEY (`item_id`),
     CONSTRAINT `fk_Inventory_User` FOREIGN KEY (`item_rented_by`)
         REFERENCES `LCLSA_tech_lab_management_system`.`User` (`user_id`)
@@ -185,10 +186,12 @@ BEFORE Update on `LCLSA_tech_lab_management_system`.`Inventory`
 for each row
 begin
 	if (NEW.item_rented_by is null and OLD.item_rented_by is not null) then
+		set NEW.last_notified = null;
 		update History as H set H.return_date = current_timestamp where (H.item_id = new.item_id) AND (H.return_date is null);
 	end if;
 	
 	if (NEW.item_rented_by is not null and OLD.item_rented_by is null) then
+		set NEW.last_notified = NEW.return_date;
 		insert into History(`item_id`,`taken_date`) values (new.item_id, current_timestamp);
 	end if;	
 	

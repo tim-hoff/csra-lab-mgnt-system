@@ -1,10 +1,17 @@
 package controllers;
 
+import java.util.*;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
+import org.apache.commons.mail.EmailAttachment;
+import play.Play;
+import play.libs.mailer.MailerClient;
+import play.libs.mailer.Email;
+import javax.inject.Inject;
+import java.io.File;
 
 
 import views.html.inventory.*;
@@ -14,6 +21,13 @@ import models.*;
 import org.pac4j.play.java.RequiresAuthentication;
 
 public class InventoryController extends Controller {
+
+    private final MailerClient mailer;
+
+    @Inject
+    public InventoryController(MailerClient mailer) {
+    this.mailer = mailer;
+    }
 	
 
 	@Transactional
