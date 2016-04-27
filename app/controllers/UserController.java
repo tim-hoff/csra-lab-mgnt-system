@@ -9,28 +9,56 @@ import views.html.user.*;
 
 import models.*;
 
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.java.UserProfileController;
 
-public class UserController extends Controller {
+
+public class UserController extends UserProfileController<CommonProfile> {
+	
+	@RequiresAuthentication(clientName = "CasClient") 
 	@Transactional
-	//@RequiresAuthentication(clientName = "CasClient")
 	public Result index() {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
 		return ok(index.render());
 	}
 
 	@Transactional
 	public Result show(String id) {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
 		return ok(show.render(User.findById(id)));
 	}
 
 	@Transactional
 	public Result create() {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
 		Form<User> userForm = form(User.class);
 		return ok(create.render(userForm));
 	}
 
 	@Transactional
 	public Result delete(String id) {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
 		User.findById(id).delete();
 		flash("success", "User item has been deleted");
 		return ok(index.render());
@@ -49,6 +77,15 @@ public class UserController extends Controller {
 
 	@Transactional(readOnly=true)
 	public Result edit(String id) {
+		//Admins cannot edit other admins or SuperAdmins account, must be super admin, checked here
+		if(!checkPrivilegesAdmin() || 
+				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.Admin) ||
+				(User.findById(getUserProfile().getId()).role == User.Role.Admin && User.findById(id).role == User.Role.SuperAdmin))
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/users");
+		}
+		
 		Form<User> userForm = form(User.class).fill(
 			User.findById(id));
 		return ok(edit.render(id, userForm));
@@ -56,6 +93,12 @@ public class UserController extends Controller {
 
 	@Transactional
 	public Result update(String id) {
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
 		Form<User> userForm = form(User.class).bindFromRequest();
 		if(userForm.hasErrors()) {
 			return badRequest(edit.render(id, userForm));
@@ -64,5 +107,28 @@ public class UserController extends Controller {
 			flash("success", "User " + id + " has been updated");
 			return ok(show.render(User.findById(id)));
 		}
+	}
+	
+	//This function returns false if current user does not possess any roles
+	public boolean checkPrivileges()
+	{
+		CommonProfile profile = getUserProfile();
+		//if you don't have admin role then redirect back to dashboard
+		if((User.findById(profile.getId()).role == null))
+		{
+			return false;
+		}
+		return true;
+	}
+	//This function returns false if current user does not possess the role Admin or SuperAdmin
+	public boolean checkPrivilegesAdmin()
+	{
+		CommonProfile profile = getUserProfile();
+		//if you don't have admin role then redirect back to dashboard
+		if(User.findById(profile.getId()).role == User.Role.Admin ||  User.findById(profile.getId()).role == User.Role.SuperAdmin)
+		{
+			return true;
+		}
+		return false;
 	}
 }

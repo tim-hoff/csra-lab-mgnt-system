@@ -1,6 +1,7 @@
 package controllers;
 
 import play.*;
+import play.db.jpa.Transactional;
 import play.mvc.*;
 import org.pac4j.play.java.RequiresAuthentication;
 
@@ -11,7 +12,6 @@ import views.html.*;
  * to the application's home page.
  */
  
-//@RequiresAuthentication(clientName = "CasClient")
 public class DashboardController extends Controller {
 
     /**
@@ -20,6 +20,8 @@ public class DashboardController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
+	@RequiresAuthentication(clientName = "CasClient")
+	@Transactional
     public Result index() {
         return ok(dashboard.render());
     }

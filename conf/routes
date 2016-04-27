@@ -9,7 +9,9 @@ GET     /														controllers.Application.casIndex()
 GET     /dashboard									controllers.DashboardController.index
 GET 		/noscript										controllers.ExampleController.noscript
 GET 		/script											controllers.ExampleController.script
+
 GET         /home                  controllers.HomeController.index
+
 GET         /callback                         @org.pac4j.play.CallbackController.callback()
 POST        /callback                         @org.pac4j.play.CallbackController.callback()
 GET         /casProxyCallback                 @org.pac4j.play.CallbackController.callback()

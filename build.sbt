@@ -31,4 +31,3 @@ resolvers ++= Seq( Resolver.mavenLocal,
 
 
 routesGenerator := InjectedRoutesGenerator
-
