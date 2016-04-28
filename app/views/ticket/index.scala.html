@@ -46,7 +46,7 @@
         <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
           <h4 class="panel-title ">
                   <ul class="list-inline">
-                      <li ><span class="label label-danger">@ticket.priority</span></li>   
+                      <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
                       <li>@ticket.ticket_id: @ticket.name</li>
                   </ul>
                   

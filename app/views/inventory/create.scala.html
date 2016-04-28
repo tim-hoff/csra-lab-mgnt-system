@@ -10,7 +10,7 @@
       @inputText(invForm("item_id"), '_label -> "item id")
       @inputText(invForm("model_number"), '_label -> "model number")
       @inputText(invForm("serial_number"), '_label -> "serial number")
-      @inputText(invForm("item_type"), '_label -> "item type")
+      @select(invForm("item_type"), options(Seq("iphone","macbook")),'_label -> "Item type")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
       @checkbox(invForm("retired"), '_label -> "retired")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
      
     </div>
