@@ -48,7 +48,7 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		}
 		
 		Form<Ticket> ticketForm = form(Ticket.class);
-		return ok(create.render(User.findById(getUserProfile(), ticketForm));
+		return ok(create.render(ticketForm));
 	}
 
 	@Transactional
