@@ -11,7 +11,7 @@
       <h1 class="sub-header">Create Ticket</h1>
       @inputText(ticketForm("name"), '_label -> "name")
       @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
-      @inputText(ticketForm("created_for"), '_label -> @userProfile.user_id)      
+      @inputText(ticketForm("created_for"), '_label -> userProfile.user_id)      
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
       @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
         '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)  
