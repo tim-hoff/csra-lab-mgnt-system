@@ -39,7 +39,7 @@
             Create New Ticket
              </a>
            </div>
-          <div class="col-md-3 col-md-offset-2 custom-search-input">
+          <div class="col-md-3 col-md-offset-4 custom-search-input">
               Search: <input type="text" id="filter">
           </div>
          </div> 
@@ -47,6 +47,8 @@
 
 </div>
   
+ <div class="row">
+ <div class="col-md-offset-1 col-md-10"> 
    
 <div class="panel-group" id="accordion">
      @for(ticket <- Ticket.tickets) {
@@ -117,7 +119,8 @@
       </div>
 </div>
 
-
+</div>
+</div>
 
 
 <div class="col-md-12 text-center">
