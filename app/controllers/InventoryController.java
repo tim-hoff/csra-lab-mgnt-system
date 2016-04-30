@@ -88,10 +88,10 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		item.taken_date = new DateTime();
 		item.rented_by = User.findById(getUserProfile().getId());
-		item.return_date = new DateTime().plusWeeks(1);
+		//item.return_date = new DateTime().plusWeeks(1);
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
-		return ok(checkout.render(invForm));
+		return ok(checkout.render(item));
 		//invForm.get().update(id);
 		//flash("success", "Inventory item has been checked out");
 
