@@ -109,7 +109,8 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			return badRequest(create.render(ticketForm));
 		}
 		ticketForm.get().save();
-		flash("success", "Ticket " + ticketForm.get().name + " has been created");
+		flash("success", "Ticket " + ticketForm.get().name + " has been created
+				and assigned to admin " + ticketForm.get().assigned_to);
 		return ok(index.render(User.findById(getUserProfile().getId())));
 	}
 

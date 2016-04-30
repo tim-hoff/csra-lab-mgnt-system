@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
     `note` VARCHAR(50),
     `active` BOOLEAN NOT NULL DEFAULT TRUE,
     `role` ENUM('Admin', 'Student', 'SuperAdmin') NOT NULL DEFAULT 'Student',
+	`admin_assignment_no` INT DEFAULT 0,
     PRIMARY KEY (`user_id`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
 
@@ -42,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
-    `item_type` ENUM('macbook', 'iphone') NOT NULL,
+    `item_type` VARCHAR(20) NOT NULL,
     `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_rented_by` VARCHAR(20) DEFAULT NULL,
     `taken_date` DATETIME DEFAULT NULL,
@@ -50,8 +51,17 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `last_notified` DATETIME DEFAULT NULL,
     PRIMARY KEY (`item_id`),
     CONSTRAINT `fk_Inventory_User` FOREIGN KEY (`item_rented_by`)
-        REFERENCES `LCLSA_tech_lab_management_system`.`User` (`user_id`)
+        REFERENCES `LCLSA_tech_lab_management_system`.`User` (`user_id`),
+	CONSTRAINT `fk_Item_Type` FOREIGN KEY (`item_type`)
+		REFERENCES `LCLSA_tech_lab_management_system`.`Types` (`type_name`)
 )  ENGINE=INNODB AUTO_INCREMENT=2005 DEFAULT CHARACTER SET=LATIN1;
+
+
+CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Types` (
+	`type_name` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`type_name`)
+)  ENGINE=INNODB AUTO_INCREMENT=2005 DEFAULT CHARACTER SET=LATIN1;
+
 
 
 -- -----------------------------------------------------
@@ -67,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Ticket` (
     `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`category` ENUM('damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous' ) NOT NULL DEFAULT 'miscellaneous',
 
-    `state` ENUM('Pending', 'Resolved') NOT NULL,
+    `state` ENUM('Pending', 'Resolved') NOT NULL DEFAULT 'Pending',
     `priority` ENUM('Low', 'Normal', 'High') NOT NULL,
     PRIMARY KEY (`ticketID`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
@@ -88,15 +98,60 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+Delimiter //
+Create Trigger update_inventory_trigger 
+BEFORE Update on `LCLSA_tech_lab_management_system`.`Inventory`
+for each row
+begin
+	if (NEW.item_rented_by is null and OLD.item_rented_by is not null) then
+		set NEW.last_notified = null;
+		update History as H set H.return_date = current_timestamp where (H.item_id = new.item_id) AND (H.return_date is null);
+	end if;
+	
+	if (NEW.item_rented_by is not null and OLD.item_rented_by is null) then
+		set NEW.last_notified = NEW.return_date;
+		insert into History(`item_id`,`taken_date`) values (new.item_id, current_timestamp);
+	end if;	
+	
+	if (NEW.taken_date is null and NEW.item_rented_by is not null) then
+		set NEW.taken_date = current_timestamp;
+	end if;
+end;//
+
+Create Trigger admin_assign_trigger 
+BEFORE Insert on `LCLSA_tech_lab_management_system`.`Ticket`
+for each row
+begin
+
+	set @usr_id = (
+		Select user_id 
+		from User 
+		where role = 'Admin' order by admin_assignment_no asc  limit 1);
+
+	update User
+	set admin_assignment_no = admin_assignment_no + 1
+	where user_id = @usr_id;
+
+	set NEW.assigned_to = (
+		Select user_id 
+		from User 
+		where user_id = @usr_id);
+
+end;//
+Delimiter ;
+
+
 INSERT INTO `User` 	(`user_id`, `first_name`, 	`last_name`, 	`email`, 				`note`, 			`active`, `role`) VALUES
 					("box",    'Dr.',			'Box',			'box@latech.edu', 		'likes birds', 		True, 'Admin'),
 					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'SuperAdmin'),
 					("cmh073", 'Carlos',		'Harris', 		'cmh073@latech.edu',	'very carlos', 		True, 'SuperAdmin'),
 					("yab003", 'Yorel',			'Baker', 		'yab003@latech.edu',	'is yorel', 		True, 'SuperAdmin'),
 					("bjs049", 'Brandon',		'Serpas', 		'bjs049@latech.edu', 	'tech lab worker',	True, 'Admin'),
-					("pdd009", 'Paul',			'Donaubauer', 	'pdd009@latech.edu', 	'system developer',	True, 'Student'),
+					("pdd009", 'Paul',			'Donaubauer', 	'pdd009@latech.edu', 	'system developer',	True, 'Admin'),
 					("old003", 'Former',		'User', 		'inactive@jeeves.com', 	'not active', 		False, 'Student'),
-					("oldadm", 'Former', 		'Admin', 		'formerA@jenkins.com', 	'ask me anything', 	False, 'Admin');
+					("oldadm", 'Former', 		'Admin', 		'formerA@jenkins.com', 	'ask me anything', 	False, 'Admin'),
+					("mwe016", 'menglan',		'wen',			'mwe016@latech.edu',		null,			True,	'SuperAdmin'),
+					("nnw003", 'Nicole',		'Nwoha',		null,						null,			True,	'SuperAdmin');
 
 INSERT INTO `Ticket` 	(`name`, `assigned_to`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
 						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
@@ -166,43 +221,24 @@ INSERT INTO `Ticket` 	(`name`, `assigned_to`, `created_for`, `description`, `dat
 						('Ticket', "bjs049", "pdd009", 'Sample Description', '2016-03-13 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Normal', 'tours'),
 						('Ticket', "tch031", "pdd009", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'High', 'vm_setup');
 
+INSERT INTO `Types` (`type_name`) VALUES
+						('iPhone'),
+						('Macbook');
+
 INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
-						(null, False, 'MDN00001', 'SN00001', 'iphone'),
-						(null, False, 'MDN00002', 'SN00002', 'iphone'),
-						(null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
-						(null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'macbook');
+						(null, False, 'MDN00001', 'SN00001', 'iPhone'),
+						(null, False, 'MDN00002', 'SN00002', 'iPhone'),
+						(null, False, 'MDN00003', 'SN00003', 'Macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'Macbook'),
+						(null, False, 'MDN00003', 'SN00003', 'Macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'Macbook'),
+                        (null, False, 'MDN00003', 'SN00003', 'Macbook');
 						
 INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-						("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-						("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+						("bjs049", 1, 'MDN00004', 'SN00004', 'Macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+						("tch031", 0, 'MDN00005', 'SN00005', 'iPhone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
 ​
-Delimiter //
-Create Trigger update_inventory_trigger 
-BEFORE Update on `LCLSA_tech_lab_management_system`.`Inventory`
-for each row
-begin
-	if (NEW.item_rented_by is null and OLD.item_rented_by is not null) then
-		set NEW.last_notified = null;
-		update History as H set H.return_date = current_timestamp where (H.item_id = new.item_id) AND (H.return_date is null);
-	end if;
-	
-	if (NEW.item_rented_by is not null and OLD.item_rented_by is null) then
-		set NEW.last_notified = NEW.return_date;
-		insert into History(`item_id`,`taken_date`) values (new.item_id, current_timestamp);
-	end if;	
-	
-	if (NEW.taken_date is null and NEW.item_rented_by is not null) then
-		set NEW.taken_date = current_timestamp;
-	end if;
-end;//
-Delimiter ;
-
-
-
 
 SET @my_id = (SELECT item_id FROM LCLSA_tech_lab_management_system.Inventory LIMIT 1);
 
