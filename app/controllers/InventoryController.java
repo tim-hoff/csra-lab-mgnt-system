@@ -91,11 +91,11 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		item.return_date = new DateTime().plusWeeks(1);
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
-		
-		invForm.get().update(id);
-		flash("success", "Inventory item has been checked out");
+		return ok(checkout.render(invForm));
+		//invForm.get().update(id);
+		//flash("success", "Inventory item has been checked out");
 
-		return ok(index.render(getUserProfile().getId()));
+		//return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result checkin(Integer id) {
