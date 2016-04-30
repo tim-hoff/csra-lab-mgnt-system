@@ -154,10 +154,9 @@ form.action {
     text-align: left;
 }
 
-#custom-search-input {
-        margin:0;
-        margin-top: 10px;
-        padding: 0;
+.custom-search-input {
+        
+        border-radius: 3px;
     }
  
     #custom-search-input .search-query {
