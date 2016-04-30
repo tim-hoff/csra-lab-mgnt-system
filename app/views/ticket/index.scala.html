@@ -35,7 +35,7 @@
     
   
     <div class= "row">
-      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
+      <a href="@routes.TicketController.create()" class="btn btn-default pull-left">
         Create New Ticket
       <div class="col-md-4 col-md-offset-8">
           <div class="custom-search-input">
@@ -96,7 +96,7 @@
               </div>
               <div>
                   @form(routes.TicketController.edit(ticket.ticket_id)){
-                  <button type="submit" class="btn btn-default btn-sm btn-block pull-right">
+                  <button type="submit" class="btn btn-default btn-sm pull-right">
                       Edit Ticket
                   </button>
                   }
