@@ -1,14 +1,9 @@
 @(item: Inventory)
-@*
-* This template is called from the `index` template. This template
-* handles the rendering of the page header and body tags. It takes
-* two arguments, a `String` for the title of the page and an `Html`
-* object to insert into the body of the page.
-*@
-@main("View Item"){
+ 
+@main("Checkout Item"){
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
-    <h1 class="sub-header">Item Details</h1>
+    <h1 class="sub-header">Checkout Details</h1>
     <h4>Item ID: @item.item_id</h4>
     <h4>Model No.: @item.model_number</h4>
     <h4>Serial No.: @item.serial_number</h4>
