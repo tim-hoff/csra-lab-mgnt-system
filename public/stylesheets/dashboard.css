@@ -33,6 +33,16 @@ body {
 .navbar-inverse .navbar-brand {
     color: #FFFFFF;
 }
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: red;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: red;
+  background-color: transparent;
+}
 .navbar-inverse .navbar-nav > li > a {
     color: #FFFFFF;
 }
