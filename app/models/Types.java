@@ -15,6 +15,13 @@ public class Types {
 	@Id
 	public String type_name;
 
+	public static List<Types> all_types(){
+		List<Types> data = JPA.em()
+		.createQuery("SELECT c FROM Types c", Types.class)
+		.getResultList();
+		return data;
+	}
+
 
     public void save() {
         JPA.em().persist(this);
