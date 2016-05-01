@@ -136,7 +136,7 @@ form.action {
 
 
 /*custom Styling*/
-.text-ellipse {
+div .text-ellipse {
     width: 100px;
     white-space: nowrap;
     overflow: hidden;
