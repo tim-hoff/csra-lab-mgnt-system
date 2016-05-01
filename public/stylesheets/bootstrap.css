@@ -1588,6 +1588,13 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+/*custom Styling*/
+.text-ellipse {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .container {
   margin-right: auto;
   margin-left: auto;
