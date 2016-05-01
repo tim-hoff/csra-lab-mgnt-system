@@ -12,6 +12,16 @@
      @*****************************************
      
      
+     <div class="input-group date" data-provide="datepicker">
+        <input type="text" class="form-control">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+     
+     
+     
+     
      component here!!
      
      "item.return_date" needs to be filled in format yyyy-MM-dd
@@ -25,10 +35,16 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-2 pull-right">
           <a href="@routes.InventoryController.index()" class="btn btn-default">Back</a>
-          <a href="@routes.InventoryController.edit(item.item_id)" class="btn btn-primary">Checkout(Edit)</a>
+          <a href="@routes.InventoryController.edit(item.item_id)" class="btn btn-default">Checkout(Edit)</a>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        
+    });
+</script>
 },
 
