@@ -21,6 +21,7 @@ GET     /logout                     @org.pac4j.play.ApplicationLogoutController.
 GET     /email                      controllers.EmailController.index
 POST    /email/send                 controllers.EmailController.sendMail
 
+GET     /items/:itemType            controllers.InventoryController.filtered(itemType:String)
 GET     /items                      controllers.InventoryController.index
 GET     /items/new                  controllers.InventoryController.create
 POST    /items/save                 controllers.InventoryController.save

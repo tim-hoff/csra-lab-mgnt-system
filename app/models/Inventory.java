@@ -10,6 +10,7 @@ import play.db.jpa.*;
 import org.hibernate.annotations.Type;
 import org.joda.time.*;
 import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
+import java.util.stream.Collectors;
 
 @Entity 
 public class Inventory {
@@ -27,7 +28,8 @@ public class Inventory {
     public boolean retired;
 
     @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad')")
-    public String item_type;
+    @Enumerated(EnumType.STRING)
+    public ItemType item_type;
 
     public static enum ItemType {
         macbook,
@@ -81,6 +83,11 @@ public class Inventory {
         .createQuery("SELECT c FROM Inventory c", Inventory.class)
         .getResultList();
         return data;
+    }
+
+    public static List<Inventory> filteredItems(String itemType) {
+        List<Inventory> inv = items().stream().filter(item -> item.item_type.compareTo(ItemType.valueOf(itemType)) == 0).collect(Collectors.toList());
+        return inv;
     }
 
 }

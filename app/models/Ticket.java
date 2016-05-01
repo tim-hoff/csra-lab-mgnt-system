@@ -57,11 +57,6 @@ public class Ticket {
 	@Enumerated(EnumType.STRING)
 	public State state;
 
-	/*@Column(name = "admin", columnDefinition = "ENUM(VARCHAR(40))")
-	@Enumerated(EnumType.STRING)
-	public State admin;*/
-
-
 	public static enum Priority {
 		Low, Normal, High
 	}

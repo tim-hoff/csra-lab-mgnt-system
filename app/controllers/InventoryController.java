@@ -53,6 +53,12 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	}
 
 	@Transactional
+	public Result filtered(String type) {
+		return index();
+	}
+
+
+	@Transactional
 	public Result show(Integer id) {
 		if(!checkPrivilegesAdmin())
 		{
@@ -97,6 +103,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 
 		return ok(index.render(getUserProfile().getId()));
 	}
+
 	@Transactional
 	public Result checkin(Integer id) {
 		Inventory item = Inventory.findById(id);
