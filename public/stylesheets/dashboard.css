@@ -131,11 +131,13 @@ form.action {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+
 }
 
 
 /*custom Styling*/
 .text-ellipse {
+    width: 100px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
