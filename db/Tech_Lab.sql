@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Ticket` (
     `name` VARCHAR(45) NOT NULL,
     `assigned_to` VARCHAR(20) DEFAULT NULL,
     `created_for` VARCHAR(20) DEFAULT NULL,
-    `description` VARCHAR(200),
+    `description` VARCHAR(1000),
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `category` ENUM('damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous' ) NOT NULL DEFAULT 'miscellaneous',
@@ -114,6 +114,7 @@ INSERT INTO `Ticket`  (`name`, `assigned_to`, `created_for`, `description`, `dat
             ('Dell KACE Training',          "bjs049", "box",    'Schedule a training session for Monday at noon',                                                 DATE_SUB(NOW(), INTERVAL 27 day), DATE_SUB(NOW(), INTERVAL 27 day), 'Pending',  'Low',    'training'),
             ('Bad news',                    "asr020", "box",    'The hook wasnt strong enough and your picture fell.',                                           '2016-04-01 08:47:18',            '2016-04-01 12:17:18',             'Resolved', 'Low',    'damaged_item'),
             ('Order hooks',                 "bjs049", "box",    'Order hooks from amazon for picutres',                                                          '2016-04-01 10:47:18',            '2016-04-04 14:24:54',             'Resolved', 'Low',    'miscellaneous'),
+            ('Governer Visit',              "asr020", "box",    'I want you to get the lab ready by this evening. Bring back the table and make the lab looks good. The president will bring the new Governer to the lab around 2pm. I want one of you guys to talk about the lab. I will come to see you guys around 1:30. You guy have to prepare to say about the lab like Cloud, the lab capability including all device not only IOT specific. For IOT, I may ask JD to speak a bit if he is available since  he works extensively with me.',   '2016-04-02 10:47:18',            '2016-04-02 11:24:54',    'Resolved', 'High',    'tours'),
             ('DreamSpark information ',     "bjs049", "box",    'Please get detailed info and how to get it subscribed for us',                                  '2016-03-31 10:47:18',            '2016-04-04 14:24:54',             'Resolved', 'Low',    'miscellaneous');
 
 INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
