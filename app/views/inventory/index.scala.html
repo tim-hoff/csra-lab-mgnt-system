@@ -38,7 +38,6 @@
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
-          <th>Last Notified</th>
           <th class="action">Actions</th>
         </tr>
       </thead>
@@ -85,9 +84,6 @@
           </td>
           <td>
             @item.return_date
-          </td>
-          <td>
-            @item.last_notified
           </td>
           <td>
             @if(item.available()){

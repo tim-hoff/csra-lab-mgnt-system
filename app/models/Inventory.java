@@ -24,13 +24,8 @@ public class Inventory {
 
     public boolean retired;
 
-    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone')")
+    @Constraints.Required
     public String item_type;
-
-    public static enum ItemType {
-        macbook,
-        iphone
-    }
     
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);

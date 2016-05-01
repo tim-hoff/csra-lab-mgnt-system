@@ -21,6 +21,10 @@ GET         /logout                           @org.pac4j.play.ApplicationLogoutC
 GET 		/email							controllers.EmailController.index
 POST 		/email/send							controllers.EmailController.sendMail
 
+GET 		/types/edit								controllers.TypeController.edit
+POST		/types/save								controllers.TypeController.save
+POST		/types/delete							controllers.TypeController.delete
+
 GET 		/items											controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
 POST 		/items/save									controllers.InventoryController.save
@@ -30,6 +34,7 @@ POST		/items/:id/update 					controllers.InventoryController.update(id:Integer)
 GET 		/items/:id/checkout							controllers.InventoryController.checkout(id:Integer)
 GET 		/items/:id/checkin							controllers.InventoryController.checkin(id:Integer)
 GET 		/items/:id/delete						controllers.InventoryController.delete(id:Integer)
+
 
 POST 		/ticket/save								controllers.TicketController.save
 GET 		/tickets/new								controllers.TicketController.create
