@@ -26,12 +26,15 @@ public class Inventory {
 
     public boolean retired;
 
-    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone')")
+    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone', 'raspberryPi', 'dell-laptop', 'android-phone')")
     public String item_type;
 
     public static enum ItemType {
         macbook,
-        iphone
+        iphone,
+        raspberryPi,
+        dell-laptop,
+        android-phone
     }
     
     public static Inventory findById(Integer id) {
