@@ -3,55 +3,55 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /														controllers.Application.casIndex()
+GET     /                           controllers.Application.casIndex()
 
 # Dashboard page, getting some base styling out of the way
-GET     /dashboard									controllers.DashboardController.index
-GET 		/noscript										controllers.ExampleController.noscript
-GET 		/script											controllers.ExampleController.script
+GET     /dashboard                  controllers.DashboardController.index
+GET     /noscript                   controllers.ExampleController.noscript
+GET     /script                     controllers.ExampleController.script
 
-GET         /home                  controllers.HomeController.index
+GET     /home                       controllers.HomeController.index
 
-GET         /callback                         @org.pac4j.play.CallbackController.callback()
-POST        /callback                         @org.pac4j.play.CallbackController.callback()
-GET         /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
-POST        /casProxyCallback                 @org.pac4j.play.CallbackController.callback()
-GET         /logout                           @org.pac4j.play.ApplicationLogoutController.logout
+GET     /callback                   @org.pac4j.play.CallbackController.callback()
+POST    /callback                   @org.pac4j.play.CallbackController.callback()
+GET     /casProxyCallback           @org.pac4j.play.CallbackController.callback()
+POST    /casProxyCallback           @org.pac4j.play.CallbackController.callback()
+GET     /logout                     @org.pac4j.play.ApplicationLogoutController.logout
 
-GET 		/email							controllers.EmailController.index
-POST 		/email/send							controllers.EmailController.sendMail
+GET     /email                      controllers.EmailController.index
+POST    /email/send                 controllers.EmailController.sendMail
 
-GET 		/items											controllers.InventoryController.index
-GET 		/items/new									controllers.InventoryController.create
-POST 		/items/save									controllers.InventoryController.save
-GET 		/items/:id									controllers.InventoryController.show(id:Integer)
-GET 		/items/:id/edit							controllers.InventoryController.edit(id:Integer)
-POST		/items/:id/update 					controllers.InventoryController.update(id:Integer)
-GET 		/items/:id/checkout							controllers.InventoryController.checkout(id:Integer)
-GET 		/items/:id/checkin							controllers.InventoryController.checkin(id:Integer)
-GET 		/items/:id/delete						controllers.InventoryController.delete(id:Integer)
+GET     /items                      controllers.InventoryController.index
+GET     /items/new                  controllers.InventoryController.create
+POST    /items/save                 controllers.InventoryController.save
+GET     /items/:id/show             controllers.InventoryController.show(id:Integer)
+GET     /items/:id/edit             controllers.InventoryController.edit(id:Integer)
+POST    /items/:id/update           controllers.InventoryController.update(id:Integer)
+GET     /items/:id/checkout         controllers.InventoryController.checkout(id:Integer)
+GET     /items/:id/checkin          controllers.InventoryController.checkin(id:Integer)
+GET     /items/:id/delete           controllers.InventoryController.delete(id:Integer)
 
-POST 		/ticket/save								controllers.TicketController.save
-GET 		/tickets/new								controllers.TicketController.create
-GET 		/tickets										controllers.TicketController.index
-GET 		/tickets/:id								controllers.TicketController.show(id:Integer)
-GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
-POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
-GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
-GET 		/tickets/reports/1/:id			controllers.TicketController.report_1(id:Integer)
-GET 		/tickets/reports/2/:id 			controllers.TicketController.report_2(id:Integer)
+POST    /ticket/save                controllers.TicketController.save
+GET     /tickets/new                controllers.TicketController.create
+GET     /tickets                    controllers.TicketController.index
+GET     /tickets/:id                controllers.TicketController.show(id:Integer)
+GET     /tickets/:id/edit           controllers.TicketController.edit(id:Integer)
+POST    /tickets/:id/update         controllers.TicketController.update(id:Integer)
+GET     /tickets/:id/delete         controllers.TicketController.delete(id:Integer)
+GET     /tickets/reports/1/:id      controllers.TicketController.report_1(id:Integer)
+GET     /tickets/reports/2/:id      controllers.TicketController.report_2(id:Integer)
 
 
-POST 		/user/save								controllers.UserController.save
-GET 		/users/new								controllers.UserController.create
-GET 		/users										controllers.UserController.index
-GET 		/users/:id								controllers.UserController.show(id:String)
-GET 		/users/:id/edit						controllers.UserController.edit(id:String)
-POST		/users/:id/update 				controllers.UserController.update(id:String)
-GET 		/users/:id/delete					controllers.UserController.delete(id:String)
+POST    /user/save                  controllers.UserController.save
+GET     /users/new                  controllers.UserController.create
+GET     /users                      controllers.UserController.index
+GET     /users/:id                  controllers.UserController.show(id:String)
+GET     /users/:id/edit             controllers.UserController.edit(id:String)
+POST    /users/:id/update           controllers.UserController.update(id:String)
+GET     /users/:id/delete           controllers.UserController.delete(id:String)
 
-GET 		/history										controllers.HistoryController.index
-GET 		/history/:id								controllers.HistoryController.show(id:Integer)
+GET     /history                    controllers.HistoryController.index
+GET     /history/:id                controllers.HistoryController.show(id:Integer)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file								controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
