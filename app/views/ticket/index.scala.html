@@ -6,8 +6,15 @@
 @import helpers.BootstrapHelper._
 @import models.User;
 
-
-
+<style>
+/*custom Styling*/
+.text-ellipse {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
 @main("View Tickets"){
 @if(flash.containsKey("error")){
      <div class="alert alert-info alert-dismissible" role="alert">
