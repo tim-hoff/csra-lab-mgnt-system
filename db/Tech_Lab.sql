@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`User` (
     `note` VARCHAR(50),
     `active` BOOLEAN NOT NULL DEFAULT TRUE,
     `role` ENUM('Admin', 'Student', 'SuperAdmin') NOT NULL DEFAULT 'Student',
-	`admin_assignment_no` INT DEFAULT 0,
+	`admin_assigned_last` DATETIME DEFAULT NULL,
     PRIMARY KEY (`user_id`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Ticket` (
     `name` VARCHAR(45) NOT NULL,
     `assigned_to` VARCHAR(20) DEFAULT NULL,
     `created_for` VARCHAR(20) DEFAULT NULL,
-    `description` VARCHAR(200),
+    `description` VARCHAR(1000),
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`category` ENUM('damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous' ) NOT NULL DEFAULT 'miscellaneous',
@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`History` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 Delimiter //
 Create Trigger update_inventory_trigger 
@@ -126,10 +127,10 @@ begin
 	set @usr_id = (
 		Select user_id 
 		from User 
-		where role = 'Admin' order by admin_assignment_no asc  limit 1);
+		where role = 'Admin' order by admin_assigned_last asc  limit 1);
 
 	update User
-	set admin_assignment_no = admin_assignment_no + 1
+	set admin_assigned_last = current_timestamp
 	where user_id = @usr_id;
 
 	set NEW.assigned_to = (
@@ -141,104 +142,55 @@ end;//
 Delimiter ;
 
 
-INSERT INTO `User` 	(`user_id`, `first_name`, 	`last_name`, 	`email`, 				`note`, 			`active`, `role`) VALUES
-					("box",    'Dr.',			'Box',			'box@latech.edu', 		'likes birds', 		True, 'Admin'),
-					("tch031", 'Tim',			'Hoff', 		'tch031@latech.edu',	'an awesome user', 	True, 'SuperAdmin'),
-					("cmh073", 'Carlos',		'Harris', 		'cmh073@latech.edu',	'very carlos', 		True, 'SuperAdmin'),
-					("yab003", 'Yorel',			'Baker', 		'yab003@latech.edu',	'is yorel', 		True, 'SuperAdmin'),
-					("bjs049", 'Brandon',		'Serpas', 		'bjs049@latech.edu', 	'tech lab worker',	True, 'Admin'),
-					("pdd009", 'Paul',			'Donaubauer', 	'pdd009@latech.edu', 	'system developer',	True, 'Admin'),
-					("old003", 'Former',		'User', 		'inactive@jeeves.com', 	'not active', 		False, 'Student'),
-					("oldadm", 'Former', 		'Admin', 		'formerA@jenkins.com', 	'ask me anything', 	False, 'Admin'),
-					("mwe016", 'menglan',		'wen',			'mwe016@latech.edu',		null,			True,	'SuperAdmin'),
-					("nnw003", 'Nicole',		'Nwoha',		null,						null,			True,	'SuperAdmin');
+INSERT INTO `User`  (`user_id`,   `first_name`, `last_name`,    `email`,                `note`,                 `active`, `role`) VALUES
+                    ('asr020',    'Abhaya',     'Rawal',        'asr020@latech.edu',    'tech lab worker',      True,     'Admin'),
+                    ("bjs049",    'Brandon',    'Serpas',       'bjs049@latech.edu',    'tech lab worker',      True,     'Admin'),
+                    ("swk006",    'Skyler',     'King',         'swk006@latech.edu',    'csra lab worker',      True,     'Admin'),
+                    ("tch031",    'Timothy',    'Hoff',         'tch031@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ('mwe016',    'Menglan',    'Wen',          'mwe016@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("cmh073",    'Carlos',     'Harris',       'cmh073@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("yab003",    'Yorel',      'Baker',        'yab003@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("jkh031",    'John',       'Hawley',       'jkh031@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("nnw003",    'Nicole',     'Nwoha',        'nnw003@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("pdd009",    'Paul',       'Donaubauer',   'pdd009@latech.edu',    'system developer',     True,     'SuperAdmin'),
+                    ("box",       'Dr.',        'Box',          'box@latech.edu',       'likes birds',          True,     'Admin');
 
-INSERT INTO `Ticket` 	(`name`, `assigned_to`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 40 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 50 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 60 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 70 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 80 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 110 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'vm_upgrade'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 120 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 140 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 150 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Normal', 'vm_upgrade'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 200 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 210 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),			('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 40 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 50 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 60 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 70 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 80 day), '2016-03-21 22:47:18', 'Pending', 'High', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 110 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'vm_upgrade'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 120 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 130 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'tours'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1310 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1140 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'damaged_item'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1150 day), '2016-03-21 22:47:18', 'Resolved', 'High', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),			('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 30 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 410 day), '2016-03-21 22:47:18', 'Pending', 'Normal', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 510 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'training'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 610 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 710 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'miscellaneous'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 810 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'tours'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 910 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1110 day), '2016-03-21 22:47:18', 'Resolved', 'Normal', 'vm_upgrade'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1120 day), '2016-03-21 22:47:18', 'Resolved', 'Normal', 'tours'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'tours'),
-						('Ticket', "box", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1130 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1140 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1150 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'training'),						('Ticket 1', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 90 day), '2016-03-21 22:47:18', 'Pending', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1160 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'damaged_item'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1170 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1180 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 1190 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_upgrade'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2100 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description',  DATE_SUB(NOW(), INTERVAL 2110 day), '2016-03-21 22:47:18', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "tch031", 'Sample Description', '2016-03-17 22:48:19', '2016-03-21 22:48:19', 'Pending', 'Normal', 'vm_setup'),
-						('Ticket', "tch031", "tch031", 'Sample Description', '2016-03-11 22:48:19', '2016-03-21 22:48:19', 'Pending', 'High', 'lost_item'),
-						('Ticket', "bjs049", "bjs049", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Low', 'vm_setup'),
-						('Ticket', "bjs049", "pdd009", 'Sample Description', '2016-03-13 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'Normal', 'tours'),
-						('Ticket', "tch031", "pdd009", 'Sample Description', '2016-03-15 22:48:19', '2016-03-21 22:48:19', 'Resolved', 'High', 'vm_setup');
+#  `category` ENUM('damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous' ) NOT NULL DEFAULT 'miscellaneous',
+#  `state` ENUM('Pending', 'Resolved') NOT NULL,
+#  `priority` ENUM('Low', 'Normal', 'High') NOT NULL,
+
+INSERT INTO `Ticket`  (`name`, `assigned_to`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
+            ('Microsoft IOT Workshop',      "bjs049", "box",    'Can you arrange the lab for 25 seats for the Microsoft IOT training?',                           '2016-04-25 08:30:18',            '2016-04-26 08:03:18',            'Resolved', 'Normal', 'tours'),
+            ('CSRA Lab Planning Meeting',   "asr020", "box",    'Planing meeting for upcoming year CSRA Lab usage',                                               '2016-04-20 11:19:18',            '2016-04-22 12:05:18',            'Resolved', 'High',   'tours'),
+            ('Setup OS VMs',                "swk006", "box",    'Setup VMs for my operating systems class, see email.',                                           '2016-03-18 16:43:18',            DATE_SUB(NOW(), INTERVAL 11 day), 'Resolved', 'High',   'vm_setup'),
+            ('Setup AppWorks™ VMs',         "swk006", "box",    'I need 6 AppWorks™ VMs and a tenate space for the senior capstone class, call me for details.',  DATE_SUB(NOW(), INTERVAL 60 day), DATE_SUB(NOW(), INTERVAL 60 day), 'Resolved', 'High',   'vm_setup'),
+            ('Need a VM',                   "swk006", "tch031", 'I need an ubuntu box to deploy a sbt play app',                                                  DATE_SUB(NOW(), INTERVAL 20 day), DATE_SUB(NOW(), INTERVAL 14 day), 'Resolved', 'Normal', 'vm_setup'),
+            ('Need sudo',                   "swk006", "tch031", 'I need to be added to the sudoers list on my vm please.',                                        DATE_SUB(NOW(), INTERVAL 14 day), DATE_SUB(NOW(), INTERVAL 13 day), 'Resolved', 'Normal', 'vm_upgrade'),
+            ('Dell KACE Training',          "bjs049", "box",    'Schedule a training session for Monday at noon',                                                 DATE_SUB(NOW(), INTERVAL 27 day), DATE_SUB(NOW(), INTERVAL 27 day), 'Pending',  'Low',    'training'),
+            ('Bad news',                    "asr020", "box",    'The hook wasnt strong enough and your picture fell.',                                           '2016-04-01 08:47:18',            '2016-04-01 12:17:18',             'Resolved', 'Low',    'damaged_item'),
+            ('Order hooks',                 "bjs049", "box",    'Order hooks from amazon for picutres',                                                          '2016-04-01 10:47:18',            '2016-04-04 14:24:54',             'Resolved', 'Low',    'miscellaneous'),
+            ('Governer Visit',              "asr020", "box",    'I want you to get the lab ready by this evening. Bring back the table and make the lab looks good. The president will bring the new Governer to the lab around 2pm. I want one of you guys to talk about the lab. I will come to see you guys around 1:30. You guy have to prepare to say about the lab like Cloud, the lab capability including all device not only IOT specific. For IOT, I may ask JD to speak a bit if he is available since  he works extensively with me.',   '2016-04-02 10:47:18',            '2016-04-02 11:24:54',    'Resolved', 'High',    'tours'),
+            ('DreamSpark information ',     "bjs049", "box",    'Please get detailed info and how to get it subscribed for us',                                  '2016-03-31 10:47:18',            '2016-04-04 14:24:54',             'Resolved', 'Low',    'miscellaneous');
+
 
 INSERT INTO `Types` (`type_name`) VALUES
-						('iPhone'),
-						('Macbook');
+						('iphone'),
+						('macbook');
 
 INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
-						(null, False, 'MDN00001', 'SN00001', 'iPhone'),
-						(null, False, 'MDN00002', 'SN00002', 'iPhone'),
-						(null, False, 'MDN00003', 'SN00003', 'Macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'Macbook'),
-						(null, False, 'MDN00003', 'SN00003', 'Macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'Macbook'),
-                        (null, False, 'MDN00003', 'SN00003', 'Macbook');
-						
+            (null, False, 'MDN00001', 'SN00001', 'iphone'),
+            (null, False, 'MDN00002', 'SN00002', 'iphone'),
+            (null, False, 'MDN00003', 'SN00003', 'macbook'),
+            (null, False, 'MDN00003', 'SN00003', 'macbook'),
+            (null, False, 'MDN00003', 'SN00003', 'macbook'),
+            (null, False, 'MDN00003', 'SN00003', 'macbook'),
+            (null, False, 'MDN00003', 'SN00003', 'macbook');
+            
 INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-						("bjs049", 1, 'MDN00004', 'SN00004', 'Macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-						("tch031", 0, 'MDN00005', 'SN00005', 'iPhone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+            ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+            ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
-​
+
 
 SET @my_id = (SELECT item_id FROM LCLSA_tech_lab_management_system.Inventory LIMIT 1);
 

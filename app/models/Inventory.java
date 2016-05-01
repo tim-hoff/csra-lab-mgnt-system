@@ -14,6 +14,8 @@ import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
 @Entity 
 public class Inventory {
     @Id
+    @Column(name = "item_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer item_id;
     
     @Constraints.Required
