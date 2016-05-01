@@ -31,3 +31,6 @@ resolvers ++= Seq( Resolver.mavenLocal,
 
 
 routesGenerator := InjectedRoutesGenerator
+
+
+fork in run := true

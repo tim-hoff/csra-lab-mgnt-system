@@ -1,5 +1,7 @@
-@(ticketForm:Form[Ticket])
+@(ticketForm:Form[Ticket],userProfile: User)
 @import helper._
+@import models.User;
+
 @import helpers.BootstrapHelper._
 @main("Create Ticket"){
 @form(routes.TicketController.save()){
@@ -8,7 +10,10 @@
     <div class="col-md-offset-2 col-md-8">
       <h1 class="sub-header">Create Ticket</h1>
       @inputText(ticketForm("name"), '_label -> "name")
-      @inputText(ticketForm("created_for"), '_label -> "created for")
+
+      @select(ticketForm("created_for"),  options(Seq(userProfile.user_id)), 
+        '_label -> "created for")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
       @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
         '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)  
