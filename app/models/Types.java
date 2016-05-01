@@ -9,6 +9,14 @@ import play.data.validation.*;
 import play.db.jpa.*;
 import org.hibernate.annotations.Type;
 
+import scala.collection.JavaConversions.*;
+import scala.collection.JavaConverters.*;
+import scala.collection.convert.*;
+import scala.collection.mutable.Buffer;
+import scala.collection.mutable.Seq;
+
+import scalaj.collection.*;
+
 @Entity
 public class Types {
 
@@ -17,7 +25,7 @@ public class Types {
 
 	public static List<Types> all_types(){
 		List<Types> data = JPA.em()
-		.createQuery("SELECT c FROM Types c", Types.class)
+		.createQuery("SELECT t.type_name FROM Types t", Types.class)
 		.getResultList();
 		return data;
 	}
