@@ -33,12 +33,10 @@
           <th>Model No.</th>
           <th>Serial No.</th>
           <th>Available</th>
-          <th>Retired</th>
           <th>Type</th>
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
-          <th>Last Notified</th>
           <th class="action">Actions</th>
         </tr>
       </thead>
@@ -68,9 +66,6 @@
             @item.available
           </td>
           <td>
-            @item.retired
-          </td>
-          <td>
             @item.item_type
           </td>
           <td>
@@ -85,9 +80,6 @@
           </td>
           <td>
             @item.return_date
-          </td>
-          <td>
-            @item.last_notified
           </td>
           <td>
             @if(item.available()){
