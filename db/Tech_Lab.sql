@@ -272,27 +272,17 @@ INSERT INTO `Inventory` (`model_number`,`serial_number`,`item_type`) VALUES
                         ("BQUM66190AL","TXJO52001XL","raspberryPi"),
                         ("XFOL14987XE","PGVC33305TA","iPhone");
             
-INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-            ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-            ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
-
+-- INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
+--             ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+--             ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+-- 
+​
 
 SET @my_id = (SELECT item_id FROM LCLSA_tech_lab_management_system.Inventory LIMIT 1);
 
-UPDATE Inventory 
-SET 
-    item_rented_by = 'box'
-WHERE
-    `item_id` = @my_id;
-UPDATE Inventory 
-SET 
-    item_rented_by = NULL
-WHERE
-    `item_id` = @my_id;
+UPDATE Inventory SET item_rented_by = 'box' WHERE`item_id` = @my_id;
 
-UPDATE Inventory 
-SET 
-    item_rented_by = 'tch031'
-WHERE
-    `item_id` = @my_id;
+UPDATE Inventory SET item_rented_by = NULL WHERE `item_id` = @my_id;
+
+UPDATE Inventory SET item_rented_by = 'tch031' WHERE `item_id` = @my_id;
