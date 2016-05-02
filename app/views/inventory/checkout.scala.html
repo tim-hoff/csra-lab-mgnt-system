@@ -1,60 +1,26 @@
-@(item: Inventory)
- 
-@main("Checkout Item"){
-<div class="row">
-  <div class="col-md-offset-2 col-md-8">
-    <h1 class="sub-header">Checkout Details</h1>
-    <h4>Item ID: @item.item_id</h4>
-    <h4>Model No.: @item.model_number</h4>
-    <h4>Serial No.: @item.serial_number</h4>
-    <h4>Type: @item.item_type</h4>
-
-     
-     
-    
-         <div class="input-append date">
-          <input type="text" id="returnDate"class="span2"><span class="add-on"><i class="icon-th"></i></span>
-         </div>
-     
-     
-     
-     
-     
-    
-    <h4>
+@(id: Integer, invForm:Form[Inventory])
+@import helper._
+@import helpers.BootstrapHelper._
+@main("Edit Item"){
+@form(routes.InventoryController.update(id)){
+<fieldset>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <h1 class="sub-header">Edit Item</h1>
+      
+      @inputText(invForm("return_date"), '_label -> "return date")
+      
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-10">
-    <div class="row">
-      <div class="col-md-2 col-md-offset-2 pull-right">
-          <a href="@routes.InventoryController.edit(item.item_id)" class="btn btn-default">Checkout(Edit)</a>
-          <a href="@routes.InventoryController.index()" class="btn btn-default">Back</a>
+  </fieldset>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2 pull-right">
+          <a href="@routes.InventoryController.show(id)" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<script>
-    $(document).ready(function() {
-        
-        $('#datepicker').datepicker({
-            startDate: "today",
-            maxViewMode: 1,
-            autoclose: true,
-            todayHighlight: true
-            format: "yyyy-MM-dd",
-        }),
-        
-        
-        
-        
-    });
-    
-    function othername() {
-            var input = document.getElementById("returnDate").value;
-            alert(input);
-        }
-</script>
-},
-
+}}
