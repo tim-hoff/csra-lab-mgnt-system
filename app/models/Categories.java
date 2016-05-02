@@ -30,4 +30,12 @@ public class Categories {
         JPA.em().remove(this);
     }
 
+	public static Categories findById(String id) {
+		return JPA.em().find(Categories.class, id);
+	}
+
+	public static List<Categories> categories() {
+		List<Categories> data = JPA.em().createQuery("SELECT c FROM Categories c", Categories.class).getResultList();
+		return data;
+	}
 }

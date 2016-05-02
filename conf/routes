@@ -57,7 +57,7 @@ GET     /history/:id                controllers.HistoryController.show(id:Intege
 
 GET 		/cats/edit								controllers.CategoryController.edit
 POST		/cats/save								controllers.CategoryController.save
-POST		/cats/delete							controllers.CategoryController.delete
+GET		/cats/:id/delete							controllers.CategoryController.delete(id:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

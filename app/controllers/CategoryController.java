@@ -49,23 +49,21 @@ public class CategoryController extends UserProfileController<CommonProfile> {
 			return badRequest(edit.render(categoriesForm));
 		}
 		categoriesForm.get().save();
-		flash("success", "Category " + categoriesForm.get().category_name + " has been created");
+		flash("success", "  The category " + categoriesForm.get().category_name + " has been created.");
 		return ok(edit.render(categoriesForm));
 	}
 	@Transactional
-	public Result delete() {
+	public Result delete(String id) {
 		if(!checkPrivilegesAdmin())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
-		Form<Categories> categoriesForm = form(Categories.class).bindFromRequest();
 
-		if(categoriesForm.hasErrors()) {
-			return badRequest(edit.render(categoriesForm));
-		}
-		categoriesForm.get().delete();
-		flash("success", "Category has been deleted");
+		Categories.findById(id).delete();
+		flash("success", "  The category has been deleted.");
+
+		Form<Categories> categoriesForm = form(Categories.class);
 		return ok(edit.render(categoriesForm));
 	}
 	@Transactional
