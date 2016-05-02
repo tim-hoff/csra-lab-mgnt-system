@@ -42,7 +42,7 @@
 <div class="panel-group" id="accordion">
      @for(ticket <- Ticket.tickets) {
      @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
-     @if(ticket.state == "Pending"){
+     @if(ticket.state == "Resolved"){
       <div class="panel panel-default">
         <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
           <h4 class="panel-title ">
