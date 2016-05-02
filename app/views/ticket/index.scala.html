@@ -119,8 +119,8 @@
   </div>
   
   
-  <div id="pendingPanels" class="tab-pane fade in active">   
-    <div class="panel-group" id="accordion">
+  <div id="pendingPanels" class="tab-pane fade">   
+    <div class="panel-group" id="accordion1">
          @for(ticket <- Ticket.tickets) {
          @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
          @if(ticket.state == Ticket.State.Pending){
@@ -193,8 +193,8 @@
   </div>
   
   
-  <div id="resolvedPanels" class="tab-pane fade in active">   
-    <div class="panel-group" id="accordion">
+  <div id="resolvedPanels" class="tab-pane fade">   
+    <div class="panel-group" id="accordion2">
          @for(ticket <- Ticket.tickets) {
          @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
          @if(ticket.state == Ticket.State.Resolved){
