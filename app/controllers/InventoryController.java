@@ -87,7 +87,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		
 		item.taken_date = new DateTime();
-		item.rented_by = getUserProfile().getId();
+		//item.rented_by = getUserProfile().getId();
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
 		//so two updates need to occur, one to fire off the history table trigger
