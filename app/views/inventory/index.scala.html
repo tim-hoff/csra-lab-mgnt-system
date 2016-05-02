@@ -1,4 +1,4 @@
-@(currentUserID :String)
+@(currentUserID :String, itemType :String)
 @*
 * show items
 *@
@@ -33,17 +33,15 @@
           <th>Model No.</th>
           <th>Serial No.</th>
           <th>Available</th>
-          <th>Retired</th>
           <th>Type</th>
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
-          <th>Last Notified</th>
           <th class="action">Actions</th>
         </tr>
       </thead>
       <tbody>
-        @for(item <- Inventory.items) {
+        @for(item <- Inventory.filteredItems(itemType)) {
         <tr>
           <td>
             <div class="btn-group btn-sm">
@@ -68,9 +66,6 @@
             @item.available
           </td>
           <td>
-            @item.retired
-          </td>
-          <td>
             @item.item_type
           </td>
           <td>
@@ -85,9 +80,6 @@
           </td>
           <td>
             @item.return_date
-          </td>
-          <td>
-            @item.last_notified
           </td>
           <td>
             @if(item.available()){
@@ -108,14 +100,4 @@
     </div>
 </div>
 
-
-<div class="row">
-  <div class="col-md-10">
-    <div class="row">
-      <div class="col-md-2 col-md-offset-2 pull-right">
-          <a href="@routes.InventoryController.create()" class="btn btn-primary btn-lg btn-block">New Item</a>
-      </div>
-    </div>
-  </div>
-</div>
 },

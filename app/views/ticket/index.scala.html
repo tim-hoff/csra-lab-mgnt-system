@@ -6,6 +6,15 @@
 @import helpers.BootstrapHelper._
 @import models.User;
 
+<style>
+/*custom Styling*/
+.text-ellipse {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
 @main("View Tickets"){
 @if(flash.containsKey("error")){
      <div class="alert alert-info alert-dismissible" role="alert">
@@ -19,12 +28,14 @@
          <strong>Success!</strong> @flash.get("success")
      </div>
  }
+ <div class="container-fluid">
 <div class="row">
   <div class="col-md-offset-1 col-md-10">
-  <h1 class="sub-header">
-   <div class="row">
-    <div class="col-md-4">
+    <h1 class="sub-header">
+      <div class="row">
+        <div class="col-md-4">
         Ticket Board
+<<<<<<< HEAD
     </div>
     </div>
   </h1>
@@ -88,6 +99,48 @@
                   <div class="row">
                       <div class="col-sm-3">
                           Category: @ticket.category
+=======
+        </div>
+      </div>
+    </h1>
+ </div>
+</div>
+
+  <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+           <div class="col-md-3">
+             <a href="@routes.TicketController.create()" class="btn btn-default">
+            Create New Ticket
+             </a>
+           </div>
+          <div class="col-md-4 col-md-offset-5 pull-right">
+               Search: <input class="custom-search-input input-sm" type="search" id="filter">
+          </div>
+         </div> 
+       </div>
+
+</div>
+
+<p>  </p>
+ 
+ <div class="row">
+ <div class="col-md-offset-1 col-md-10">   
+<div class="panel-group" id="accordion">
+     @for(ticket <- Ticket.tickets) {
+     @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
+      <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
+          <h4 class="panel-title ">
+                  <ul class="list-inline">
+                      <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
+                      <li>@ticket.ticket_id: @ticket.name</li>
+                  </ul>
+                  
+                  <div class="row">
+                      <div class="col-md-6 text-ellipse">
+                          @ticket.description
+>>>>>>> 6f35c80f90f9a4bbc37c4d031a7c7870c9887288
                       </div>
                       <div class="col-sm-3">
                           Assigned To: @ticket.assigned_to
@@ -191,9 +244,20 @@
                      
                   </div>
               </div>
+<<<<<<< HEAD
               
             </div>
             
+=======
+              <div>
+                  @form(routes.TicketController.edit(ticket.ticket_id)){
+                  <button type="submit" class="btn btn-default btn-sm pull-right">
+                      Edit Ticket
+                  </button>
+                  }
+                 
+              </div>
+>>>>>>> 6f35c80f90f9a4bbc37c4d031a7c7870c9887288
           </div>
           }}}
       </div>
@@ -205,6 +269,7 @@
             <ul id="myPager1" class="pagination"></ul>
       </div>
   </div>
+<<<<<<< HEAD
   
   
   <div id="resolvedPanels" class="tab-pane fade">   
@@ -284,13 +349,31 @@
       
       <div class="col-md-12 text-center">
             <ul id="myPager2" class="pagination"></ul>
+=======
+ 
+ 
+        </a>
+ 
+>>>>>>> 6f35c80f90f9a4bbc37c4d031a7c7870c9887288
       </div>
   </div>
   
 </div>  
 </div>
+<<<<<<< HEAD
 </div>
 
+=======
+
+</div>
+</div>
+
+
+<div class="col-md-12 text-center">
+            <ul id="myPager" class="pagination"></ul>
+</div>
+</div>
+>>>>>>> 6f35c80f90f9a4bbc37c4d031a7c7870c9887288
 },
     <script>
 
