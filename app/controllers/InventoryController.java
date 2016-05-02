@@ -99,9 +99,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		invForm = form(Inventory.class).fill(item);
 		invForm.get().update(id);
 		
-		flash("success", "Inventory item has been returned");
-
-		return ok(index.render(getUserProfile().getId()));
+		return ok(checkout.render(Inventory.findById(id)));
 	}
 	@Transactional
 	public Result checkin(Integer id) {
