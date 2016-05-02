@@ -46,22 +46,22 @@
         <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
           <h4 class="panel-title ">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                       <ul class="list-inline">
                           <li ><span class="label label-danger">@ticket.priority</span></li>   
                           <li>@ticket.ticket_id: @ticket.name</li>
                       </ul>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-2 col-md-offset-4 pull-right">
                           <p class="text-uppercase text-right">@ticket.state</p>
                       </div>
                 </div>
                   
                   <div class="row">
-                      <div class="col-md-2">
-                          <p class="text-ellipse">@ticket.description</p>
-                      </div>
                       <div class="col-md-6">
+                          <p class="text-ellipse text-nowrap">@ticket.description</p>
+                      </div>
+                      <div class="col-md-6 pull-right">
                           <ul class="list-inline text-right">
                            <li>Category: @ticket.category</li>
                           </ul>
