@@ -78,20 +78,30 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	
 	@Transactional
 	public Result checkout(Integer id) {
-		if(!checkPrivileges())
+		Inventory item = Inventory.findById(id);
+		
+		if(item.rented_by = null && !checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
 		
-		Form<Inventory> invForm = form(Inventory.class).bindFromRequest();
-		if(invForm.hasErrors()) {
-			return badRequest(edit.render(id, invForm));
-		} else {
-			invForm.get().update(id);
-			flash("success", "Item " + id + " has been updated");
-			return ok(show.render(Inventory.findById(id)));
-		}		
+		item.taken_date = new DateTime();
+		item.rented_by = getUserProfile().getId();
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		//so two updates need to occur, one to fire off the history table trigger
+		invForm.get().update(id);
+		//second to null both the return date and taken date.
+		//item.return_date = null;
+		//item.taken_date = null;
+		
+		invForm = form(Inventory.class).fill(item);
+		invForm.get().update(id);
+		
+		flash("success", "Inventory item has been returned");
+
+		return ok(index.render(getUserProfile().getId()));
 	}
 	@Transactional
 	public Result checkin(Integer id) {
