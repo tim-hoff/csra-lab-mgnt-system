@@ -135,6 +135,18 @@ public class TicketController extends UserProfileController<CommonProfile> {
 		return ok(report_2.render(id));
 	}
 
+
+	@Transactional
+	public Result report_3(Integer id){
+		if(!checkPrivilegesAdmin())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
+		return ok(report_3.render(id));
+	}
+
 	//@Transactional
 	//public Result getReport(Integer time) {
 		// test

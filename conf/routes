@@ -40,6 +40,8 @@ POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
 GET 		/tickets/:id/delete					controllers.TicketController.delete(id:Integer)
 GET 		/tickets/reports/1/:id			controllers.TicketController.report_1(id:Integer)
 GET 		/tickets/reports/2/:id 			controllers.TicketController.report_2(id:Integer)
+GET 		/tickets/reports/3/:id 			controllers.TicketController.report_3(id:Integer)
+
 
 
 POST 		/user/save								controllers.UserController.save
