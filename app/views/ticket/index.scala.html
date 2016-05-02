@@ -42,14 +42,20 @@
 <div class="panel-group" id="accordion">
      @for(ticket <- Ticket.tickets) {
      @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
-     @if(ticket.state == "Resolved"){
       <div class="panel panel-default">
         <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
           <h4 class="panel-title ">
-                  <ul class="list-inline">
-                      <li ><span class="label label-danger">@ticket.priority</span></li>   
-                      <li>@ticket.ticket_id: @ticket.name</li>
-                  </ul>
+                <div calss="row">
+                    <div calss="col-md-2">
+                      <ul class="list-inline">
+                          <li ><span class="label label-danger">@ticket.priority</span></li>   
+                          <li>@ticket.ticket_id: @ticket.name</li>
+                      </ul>
+                      </div>
+                      <div class="col-md-6">
+                          <p classs="text-uppercase">@tciket.state</p>
+                      </div>
+                </div>
                   
                   <div class="row">
                       <div class="col-md-2">
@@ -100,7 +106,7 @@
         </div>
         
       </div>
-      }}}
+      }}
   </div>
  
  <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
