@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
-    `item_type` ENUM('macbook', 'iphone') NOT NULL,
+    `item_type` ENUM('macbook', 'iphone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad') NOT NULL,
     `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_rented_by` VARCHAR(20) DEFAULT NULL,
     `taken_date` DATETIME DEFAULT NULL,
@@ -117,19 +117,76 @@ INSERT INTO `Ticket`  (`name`, `assigned_to`, `created_for`, `description`, `dat
             ('Governer Visit',              "asr020", "box",    'I want you to get the lab ready by this evening. Bring back the table and make the lab looks good. The president will bring the new Governer to the lab around 2pm. I want one of you guys to talk about the lab. I will come to see you guys around 1:30. You guy have to prepare to say about the lab like Cloud, the lab capability including all device not only IOT specific. For IOT, I may ask JD to speak a bit if he is available since  he works extensively with me.',   '2016-04-02 10:47:18',            '2016-04-02 11:24:54',    'Resolved', 'High',    'tours'),
             ('DreamSpark information ',     "bjs049", "box",    'Please get detailed info and how to get it subscribed for us',                                  '2016-03-31 10:47:18',            '2016-04-04 14:24:54',             'Resolved', 'Low',    'miscellaneous');
 
-INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`) VALUES
-            (null, False, 'MDN00001', 'SN00001', 'iphone'),
-            (null, False, 'MDN00002', 'SN00002', 'iphone'),
-            (null, False, 'MDN00003', 'SN00003', 'macbook'),
-            (null, False, 'MDN00003', 'SN00003', 'macbook'),
-            (null, False, 'MDN00003', 'SN00003', 'macbook'),
-            (null, False, 'MDN00003', 'SN00003', 'macbook'),
-            (null, False, 'MDN00003', 'SN00003', 'macbook');
+INSERT INTO `Inventory` (`model_number`,`serial_number`,`item_type`) VALUES 
+                        ("RLGU36919GX","EMHB28756DR","macbook"),
+                        ("ZQYQ94999HE","LOJX71312PQ","raspberryPi"),
+                        ("QTOW07220RU","ZRAV40591GR","android_phone"),
+                        ("KHFS18421QV","XYHK36411GM","iPad"),
+                        ("XUIA31484HN","ILKR76916SU","raspberryPi"),
+                        ("PEKZ75791ZE","OQHU71441XB","iPad"),
+                        ("YXYC69309BG","JCDK39273JC","iPad"),
+                        ("TOUP36417JB","VBBP09040TN","macbook"),
+                        ("HSBO63870EO","UBSU51006NF","android_phone"),
+                        ("HGPF57961QI","BBDK92523FM","macbook"),
+                        ("ZKBT51236ZJ","UOWU26224SF","iPad"),
+                        ("KLGQ13546CL","WICQ65898VT","macbook"),
+                        ("TXNA23533EA","BGHS19843JQ","android_phone"),
+                        ("UONA25308PI","CBZU90054NL","android_phone"),
+                        ("ADTJ35297LU","FHGZ51227BN","macbook"),
+                        ("WPSI04210HA","HWXW66623MY","dell_laptop"),
+                        ("UMGI98797OG","ETVE00964DA","dell_laptop"),
+                        ("DBNB32845RA","MIRT98933BG","raspberryPi"),
+                        ("KANA17887BF","ASRN21622AN","macbook"),
+                        ("FMKB59609AF","NVSJ89554TT","iPad"),
+                        ("QYQA24090EZ","OVIE38381BY","raspberryPi"),
+                        ("NVJY86616HE","XOWB14667UK","android_phone"),
+                        ("ZNBM04874YD","QWER45513DE","raspberryPi"),
+                        ("GFUL39526HQ","WXUJ53376KJ","dell_laptop"),
+                        ("LELP97177DB","EERR92209IP","iPhone"),
+                        ("GNUR07350GI","SMET18822IM","macbook"),
+                        ("VDMD17961SX","XCAF19505CQ","iPhone"),
+                        ("USHL19317LU","SFGW94110AV","macbook"),
+                        ("HHWV13260SC","OAHA91599MR","dell_laptop"),
+                        ("OTQT72275LO","IVSM42356JF","android_phone"),
+                        ("MUTE02022YH","HFNB55723OO","iPad"),
+                        ("RFDG38708FH","QXTP23304BO","raspberryPi"),
+                        ("VLQB16869QH","FREE14863IA","iPad"),
+                        ("GPKG98940FE","XRGV83655HS","android_phone"),
+                        ("KIFL53190VV","NAPY58037XN","iPhone"),
+                        ("IDZP78149CZ","ZLMV05680SO","android_phone"),
+                        ("NUJY02325PV","RVEQ55724VH","macbook"),
+                        ("ETCL94867SW","RQII97742EU","raspberryPi"),
+                        ("ZGDD39524JM","RXDL73973OO","iPad"),
+                        ("KBUY20223IL","SWTZ99943EM","raspberryPi"),
+                        ("RWCA52611JE","KEBY49055CF","macbook"),
+                        ("ZXSR71583FM","IHRC50418PI","raspberryPi"),
+                        ("OBWQ94486PB","WPIK20442OR","iPad"),
+                        ("SYKG59790RB","FESF05800EO","macbook"),
+                        ("KMIA59643VL","MKPM33059LU","macbook"),
+                        ("WHYZ69928SG","RFSU00725HY","iPhone"),
+                        ("YJIU43092SS","BWYW05214DK","macbook"),
+                        ("NBXM19932QA","LMXZ59707VP","macbook"),
+                        ("GLKU62517VI","GJMG76774DE","raspberryPi"),
+                        ("MWCV51974VL","VPAF45365LT","iPhone"),
+                        ("HZKA77176ND","HAYV91752FF","iPhone"),
+                        ("EILV55232GP","IZNW95850GH","iPhone"),
+                        ("RCUX28924YY","FROL63828BI","android_phone"),
+                        ("MRYP98139HF","LJGO70903BC","dell_laptop"),
+                        ("PDNH21628RT","HISL68494YL","macbook"),
+                        ("LFMW29833UA","PGOI77889WX","macbook"),
+                        ("FKJT47448TK","HBIT79075VJ","raspberryPi"),
+                        ("QBMD87551KG","HQKD69576YU","iPad"),
+                        ("DBSA02445GB","YXLE49011NE","android_phone"),
+                        ("ISQP01760OS","LVZC46517OL","macbook"),
+                        ("ALSA96933OW","HTWV78388YD","dell_laptop"),
+                        ("IIBQ82534LV","SVYY73727YS","dell_laptop"),
+                        ("BQUM66190AL","TXJO52001XL","raspberryPi"),
+                        ("XFOL14987XE","PGVC33305TA","iPhone");
             
-INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
-            ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
-            ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
-
+-- INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
+--             ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+--             ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
+-- 
 ​
 Delimiter //
 Create Trigger update_inventory_trigger 
@@ -157,19 +214,8 @@ Delimiter ;
 
 SET @my_id = (SELECT item_id FROM LCLSA_tech_lab_management_system.Inventory LIMIT 1);
 
-UPDATE Inventory 
-SET 
-    item_rented_by = 'box'
-WHERE
-    `item_id` = @my_id;
-UPDATE Inventory 
-SET 
-    item_rented_by = NULL
-WHERE
-    `item_id` = @my_id;
+UPDATE Inventory SET item_rented_by = 'box' WHERE`item_id` = @my_id;
 
-UPDATE Inventory 
-SET 
-    item_rented_by = 'tch031'
-WHERE
-    `item_id` = @my_id;
+UPDATE Inventory SET item_rented_by = NULL WHERE `item_id` = @my_id;
+
+UPDATE Inventory SET item_rented_by = 'tch031' WHERE `item_id` = @my_id;
