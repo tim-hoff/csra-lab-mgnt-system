@@ -10,6 +10,7 @@ import play.db.jpa.*;
 import org.hibernate.annotations.Type;
 import org.joda.time.*;
 import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
+import java.util.stream.Collectors;
 
 @Entity 
 @Table(name = "Inventory")
@@ -27,18 +28,28 @@ public class Inventory {
 
     public boolean retired;
 
-    @Column(name = "item_type", columnDefinition = "ENUM('iPhone', 'macbook', 'raspberryPi', 'android_phone', 'iPad', 'dell_laptop', 'galaxy_tablet')")
+    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iPhone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad','android_tablet')")
+
     @Enumerated(EnumType.STRING)
     public ItemType item_type;
 
     public static enum ItemType {
-        iPhone, 
-        macbook, 
-        raspberryPi, 
-        android_phone, 
-        iPad, 
-        dell_laptop, 
-        galaxy_tablet;
+        macbook,
+        iPhone,
+        raspberryPi,
+        dell_laptop,
+        android_phone,
+        iPad,
+        android_tablet;
+
+        public static boolean contains(String test) {
+            for (ItemType c : ItemType.values()) {
+                if (c.name().equals(test)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
     
     public static Inventory findById(Integer id) {
@@ -84,6 +95,15 @@ public class Inventory {
         .createQuery("SELECT c FROM Inventory c", Inventory.class)
         .getResultList();
         return data;
+    }
+
+    public static List<Inventory> filteredItems(String itemType) {
+        if(itemType == "All" || !ItemType.contains(itemType)){
+            return items();
+        }
+
+        List<Inventory> inv = items().stream().filter(item -> item.item_type.compareTo(ItemType.valueOf(itemType)) == 0).collect(Collectors.toList());
+        return inv;
     }
 
 }

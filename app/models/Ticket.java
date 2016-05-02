@@ -58,11 +58,6 @@ public class Ticket {
 	@Enumerated(EnumType.STRING)
 	public State state;
 
-	/*@Column(name = "admin", columnDefinition = "ENUM(VARCHAR(40))")
-	@Enumerated(EnumType.STRING)
-	public State admin;*/
-
-
 	public static enum Priority {
 		Low, Normal, High
 	}
@@ -71,12 +66,6 @@ public class Ticket {
 	public static enum State {
 		Pending, Resolved
 	}
-
-	/*public static enum Admin {
-		
-		admin1, admin2, admin3, admin4
-		//User."user_id";
-	}*/
 
 	public void update(Integer id) {
 		this.ticket_id = id;
