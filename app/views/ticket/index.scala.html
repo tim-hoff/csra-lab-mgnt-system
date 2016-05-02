@@ -116,6 +116,13 @@
           </div>
           }}
       </div>
+      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
+        Create New Ticket
+      </a>
+      
+      <div class="col-md-12 text-center">
+            <ul id="myPager" class="pagination"></ul>
+      </div>
   </div>
   
   
@@ -189,6 +196,13 @@
             
           </div>
           }}}
+      </div>
+      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
+        Create New Ticket
+      </a>
+      
+      <div class="col-md-12 text-center">
+            <ul id="myPager1" class="pagination"></ul>
       </div>
   </div>
   
@@ -264,23 +278,19 @@
           </div>
           }}}
       </div>
+      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
+        Create New Ticket
+      </a>
+      
+      <div class="col-md-12 text-center">
+            <ul id="myPager2" class="pagination"></ul>
+      </div>
   </div>
   
 </div>  
- 
- <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
-        Create New Ticket
-        </a>
- 
-      </div>
+</div>
 </div>
 
-
-
-
-<div class="col-md-12 text-center">
-            <ul id="myPager" class="pagination"></ul>
-</div>
 },
     <script>
 
@@ -416,8 +426,8 @@ $('#filter').on('keyup', function() {
 $(document).ready(function(){
     
   $('#accordion').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
-  $('#accordion1').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
-  $('#accordion2').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+  $('#accordion1').pageMe({pagerSelector:'#myPager1',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+  $('#accordion2').pageMe({pagerSelector:'#myPager2',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
     
 });
 
