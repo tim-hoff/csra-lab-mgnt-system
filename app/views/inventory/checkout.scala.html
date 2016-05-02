@@ -11,9 +11,11 @@
 
      
      
-     <div class="input-append date">
-      Date of Return: <input type="text" class="span2"><span class="add-on"><i class="icon-th"></i></span>
-    </div>
+     <h4>Return Date:
+         <div class="input-append date">
+          <input type="text" class="span2"><span class="add-on"><i class="icon-th"></i></span>
+         </div>
+    </h4>
      
      
      
@@ -42,7 +44,14 @@
             maxViewMode: 1,
             autoclose: true,
             todayHighlight: true
+            format: "yyyy-MM-dd",
+        }),
+        
+        .on(changeDate, function(e) {
+            @item.item_returnDate = $('.datepicker').datepicker('getDate');
         });
+        
+        
         
     });
 </script>
