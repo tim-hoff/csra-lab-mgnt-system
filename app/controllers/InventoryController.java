@@ -80,7 +80,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result checkout(Integer id) {
 		Inventory item = Inventory.findById(id);
 		
-		if(item.rented_by = null && !checkPrivileges())
+		if(item.rented_by == null && !checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
