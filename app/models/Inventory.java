@@ -33,7 +33,7 @@ public class Inventory {
 
     public static enum ItemType {
         macbook,
-        iphone,
+        iPhone,
         raspberryPi,
         dell_laptop,
         android_phone,

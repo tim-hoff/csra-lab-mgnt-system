@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
-    `item_type` ENUM('macbook', 'iphone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad', 'android_tablet') NOT NULL,
+    `item_type` ENUM('macbook', 'iPhone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad', 'android_tablet') NOT NULL,
     `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_rented_by` VARCHAR(20) DEFAULT NULL,
     `taken_date` DATETIME DEFAULT NULL,
