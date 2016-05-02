@@ -27,7 +27,7 @@ public class Inventory {
 
     public boolean retired;
 
-    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iphone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad')")
+    @Column(name="item_type", columnDefinition="ENUM('macbook', 'iPhone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad','android_tablet')")
     @Enumerated(EnumType.STRING)
     public ItemType item_type;
 
@@ -37,7 +37,8 @@ public class Inventory {
         raspberryPi,
         dell_laptop,
         android_phone,
-        iPad;
+        iPad,
+        android_tablet;
 
         public static boolean contains(String test) {
             for (ItemType c : ItemType.values()) {
