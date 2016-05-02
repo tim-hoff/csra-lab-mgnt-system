@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(item <- Inventory.items) {
+        @for(item <- Inventory.filteredItems(itemType)) {
         <tr>
           <td>
             <div class="btn-group btn-sm">
