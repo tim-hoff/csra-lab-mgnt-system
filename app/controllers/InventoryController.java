@@ -99,7 +99,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		invForm = form(Inventory.class).fill(item);
 		invForm.get().update(id);
 		
-		return ok(checkout.render(Inventory.findById(id)));
+		return ok(checkout.render(item));
 	}
 	@Transactional
 	public Result checkin(Integer id) {
