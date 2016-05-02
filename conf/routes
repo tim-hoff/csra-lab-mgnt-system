@@ -21,11 +21,7 @@ GET         /logout                           @org.pac4j.play.ApplicationLogoutC
 GET 		/email							controllers.EmailController.index
 POST 		/email/send							controllers.EmailController.sendMail
 
-GET 		/types/edit								controllers.TypeController.edit
-POST		/types/save								controllers.TypeController.save
-POST		/types/delete							controllers.TypeController.delete
-
-GET 		/items											controllers.InventoryController.index
+GET 		/items										controllers.InventoryController.index
 GET 		/items/new									controllers.InventoryController.create
 POST 		/items/save									controllers.InventoryController.save
 GET 		/items/:id									controllers.InventoryController.show(id:Integer)
@@ -38,7 +34,7 @@ GET 		/items/:id/delete						controllers.InventoryController.delete(id:Integer)
 
 POST 		/ticket/save								controllers.TicketController.save
 GET 		/tickets/new								controllers.TicketController.create
-GET 		/tickets										controllers.TicketController.index
+GET 		/tickets									controllers.TicketController.index
 GET 		/tickets/:id								controllers.TicketController.show(id:Integer)
 GET 		/tickets/:id/edit						controllers.TicketController.edit(id:Integer)
 POST		/tickets/:id/update 				controllers.TicketController.update(id:Integer)
@@ -52,11 +48,15 @@ GET 		/users/new								controllers.UserController.create
 GET 		/users										controllers.UserController.index
 GET 		/users/:id								controllers.UserController.show(id:String)
 GET 		/users/:id/edit						controllers.UserController.edit(id:String)
-POST		/users/:id/update 				controllers.UserController.update(id:String)
+POST		/users/:id/update 					controllers.UserController.update(id:String)
 GET 		/users/:id/delete					controllers.UserController.delete(id:String)
 
 GET 		/history										controllers.HistoryController.index
 GET 		/history/:id								controllers.HistoryController.show(id:Integer)
+
+GET 		/cats/edit								controllers.CategoryController.edit
+POST		/cats/save								controllers.CategoryController.save
+POST		/cats/delete							controllers.CategoryController.delete
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file								controllers.Assets.versioned(path="/public", file: Asset)

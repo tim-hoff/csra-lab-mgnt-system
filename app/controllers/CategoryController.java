@@ -15,14 +15,14 @@ import org.pac4j.play.PlayWebContext;
 import org.pac4j.core.credentials.Credentials;
 import org.pac4j.core.client.Client;
 
-import views.html.types.*;
+import views.html.categories.*;
 
 import models.*;
 import models.User;
 
 import org.pac4j.play.java.RequiresAuthentication;
 
-public class TypeController extends UserProfileController<CommonProfile> {
+public class CategoryController extends UserProfileController<CommonProfile> {
 
 	@Transactional(readOnly=true)
 	public Result edit() {
@@ -32,8 +32,8 @@ public class TypeController extends UserProfileController<CommonProfile> {
 			return redirect("/items");
 		}
 		
-		Form<Types> typesForm = form(Types.class);
-		return ok(edit.render(typesForm));
+		Form<Categories> categoriesForm = form(Categories.class);
+		return ok(edit.render(categoriesForm));
 	}
 	@Transactional
 	public Result save() {
@@ -43,14 +43,14 @@ public class TypeController extends UserProfileController<CommonProfile> {
 			return redirect("/items");
 		}
 		
-		Form<Types> typesForm = form(Types.class).bindFromRequest();
+		Form<Categories> categoriesForm = form(Categories.class).bindFromRequest();
 
-		if(typesForm.hasErrors()) {
-			return badRequest(edit.render(typesForm));
+		if(categoriesForm.hasErrors()) {
+			return badRequest(edit.render(categoriesForm));
 		}
-		typesForm.get().save();
-		flash("success", "Type " + typesForm.get().type_name + " has been created");
-		return ok(edit.render(typesForm));
+		categoriesForm.get().save();
+		flash("success", "Category " + categoriesForm.get().category_name + " has been created");
+		return ok(edit.render(categoriesForm));
 	}
 	@Transactional
 	public Result delete() {
@@ -59,15 +59,29 @@ public class TypeController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
-		Form<Types> typesForm = form(Types.class).bindFromRequest();
+		Form<Categories> categoriesForm = form(Categories.class).bindFromRequest();
 
-		if(typesForm.hasErrors()) {
-			return badRequest(edit.render(typesForm));
+		if(categoriesForm.hasErrors()) {
+			return badRequest(edit.render(categoriesForm));
 		}
-		typesForm.get().delete();
-		flash("success", "Type has been deleted");
-		return ok(edit.render(typesForm));
+		categoriesForm.get().delete();
+		flash("success", "Category has been deleted");
+		return ok(edit.render(categoriesForm));
 	}
+	@Transactional
+	public static List<String> catList() {
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
+		return data;
+	}
+
+	@Override
+	 public CommonProfile getUserProfile(){
+	 		CommonProfile com = new CommonProfile();
+	 		com.setId("box");
+	 		return com;
+	 }
 
 	//This function returns false if current user does not possess any roles
 	public boolean checkPrivileges()

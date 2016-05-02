@@ -1,6 +1,6 @@
 @import helper._
 @import helpers.BootstrapHelper._
-@(months: Integer)
+@(months: Integer, csh: HashMap[String,Integer])
 
 @includes = {
 	<script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
@@ -34,7 +34,7 @@
 
 		var c_data = [];
 
-		@for(chash <- Ticket.categoryHash(months)){
+		@for(chash <- csh){
 			var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
 			c_data.push({value: @chash._2, color: randomColor, highlight: ColorLuminance(randomColor, 0.2), label: "@chash._1"});
 		}
@@ -81,7 +81,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@for(chash <- Ticket.categoryHash(months)) {
+				@for(chash <- csh) {
 				<tr>
 					<td>
 						@chash._1

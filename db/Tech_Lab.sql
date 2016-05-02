@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `retired` BOOLEAN NOT NULL DEFAULT FALSE,
     `model_number` VARCHAR(70) NOT NULL,
     `serial_number` VARCHAR(70) NOT NULL,
-    `item_type` VARCHAR(20) NOT NULL,
+    `item_type` ENUM('iPhone', 'macbook', 'raspberryPi', 'android_phone', 'iPad', 'dell_laptop', 'galaxy_tablet') NOT NULL,
     `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_rented_by` VARCHAR(20) DEFAULT NULL,
     `taken_date` DATETIME DEFAULT NULL,
@@ -51,15 +51,13 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
     `last_notified` TIMESTAMP DEFAULT NULL,
     PRIMARY KEY (`item_id`),
     CONSTRAINT `fk_Inventory_User` FOREIGN KEY (`item_rented_by`)
-        REFERENCES `LCLSA_tech_lab_management_system`.`User` (`user_id`),
-	CONSTRAINT `fk_Item_Type` FOREIGN KEY (`item_type`)
-		REFERENCES `LCLSA_tech_lab_management_system`.`Types` (`type_name`)
+        REFERENCES `LCLSA_tech_lab_management_system`.`User` (`user_id`)
 )  ENGINE=INNODB AUTO_INCREMENT=2005 DEFAULT CHARACTER SET=LATIN1;
 
 
-CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Types` (
-	`type_name` VARCHAR(20) NOT NULL,
-	PRIMARY KEY (`type_name`)
+CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Categories` (
+	`category_name` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`category_name`)
 )  ENGINE=INNODB AUTO_INCREMENT=2005 DEFAULT CHARACTER SET=LATIN1;
 
 
@@ -75,11 +73,12 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Ticket` (
     `description` VARCHAR(1000),
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`category` ENUM('damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous' ) NOT NULL DEFAULT 'miscellaneous',
-
+	`category` VARCHAR(20) DEFAULT 'miscellaneous',
     `state` ENUM('Pending', 'Resolved') NOT NULL DEFAULT 'Pending',
     `priority` ENUM('Low', 'Normal', 'High') NOT NULL,
-    PRIMARY KEY (`ticketID`)
+    PRIMARY KEY (`ticketID`),
+	CONSTRAINT `fk_Ticket_Categories` FOREIGN KEY (`category`)
+		REFERENCES `LCLSA_tech_lab_management_system`.`Categories` (`category_name`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=LATIN1;
 
 -- -----------------------------------------------------
@@ -163,6 +162,15 @@ INSERT INTO `User`  (`user_id`,   `first_name`, `last_name`,    `email`,        
 #  `state` ENUM('Pending', 'Resolved') NOT NULL,
 #  `priority` ENUM('Low', 'Normal', 'High') NOT NULL,
 
+INSERT INTO `Categories`  (`category_name`) VALUES
+			('damaged_item'),
+			('lost_item'),
+			('vm_setup'),
+			('vm_upgrade'),
+			('tours'),
+			('training'),
+			('miscellaneous');
+
 INSERT INTO `Ticket`  (`name`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
             ('Microsoft IOT Workshop',      "box",    'Can you arrange the lab for 25 seats for the Microsoft IOT training?',                           '2016-04-25 08:30:18',            '2016-04-26 08:03:18',            'Resolved', 'Normal', 'tours');
 
@@ -196,15 +204,6 @@ INSERT INTO `Ticket`  (`name`, `created_for`, `description`, `date_created`, `la
 INSERT INTO `Ticket`  (`name`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
             ('Need sudo',                   "tch031", 'I need to be added to the sudoers list on my vm please.',                                        DATE_SUB(NOW(), INTERVAL 14 day), DATE_SUB(NOW(), INTERVAL 13 day), 'Resolved', 'Normal', 'vm_upgrade');
 
-
-INSERT INTO `Types` (`type_name`) VALUES
-						("iPhone"),
-						("macbook"),
-                        ("raspberryPi"),
-                        ("android_phone"),
-                        ("iPad"),
-                        ("dell_laptop"),
-						("galaxy_tablet");
 
 INSERT INTO `Inventory` (`model_number`,`serial_number`,`item_type`) VALUES 
                         ("RLGU36919GX","EMHB28756DR","macbook"),
@@ -272,17 +271,27 @@ INSERT INTO `Inventory` (`model_number`,`serial_number`,`item_type`) VALUES
                         ("BQUM66190AL","TXJO52001XL","raspberryPi"),
                         ("XFOL14987XE","PGVC33305TA","iPhone");
             
+INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
+            ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
+            ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
 
--- INSERT INTO `Inventory` (`item_rented_by`, `retired`, `model_number`, `serial_number`, `item_type`, `taken_date`, `return_date`) VALUES
---             ("bjs049", 1, 'MDN00004', 'SN00004', 'macbook', '2016-03-18 11:32:09', '2016-04-21 12:00:00'),
---             ("tch031", 0, 'MDN00005', 'SN00005', 'iphone',  '2016-03-19 12:43:20', '2016-03-21 12:00:00');
--- 
-​
+
 
 SET @my_id = (SELECT item_id FROM LCLSA_tech_lab_management_system.Inventory LIMIT 1);
 
-UPDATE Inventory SET item_rented_by = 'box' WHERE`item_id` = @my_id;
+UPDATE Inventory 
+SET 
+    item_rented_by = 'box'
+WHERE
+    `item_id` = @my_id;
+UPDATE Inventory 
+SET 
+    item_rented_by = NULL
+WHERE
+    `item_id` = @my_id;
 
-UPDATE Inventory SET item_rented_by = NULL WHERE `item_id` = @my_id;
-
-UPDATE Inventory SET item_rented_by = 'tch031' WHERE `item_id` = @my_id;
+UPDATE Inventory 
+SET 
+    item_rented_by = 'tch031'
+WHERE
+    `item_id` = @my_id;

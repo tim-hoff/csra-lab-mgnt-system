@@ -12,6 +12,7 @@ import org.joda.time.*;
 import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
 
 @Entity 
+@Table(name = "Inventory")
 public class Inventory {
     @Id
     @Column(name = "item_id", nullable = false)
@@ -26,8 +27,19 @@ public class Inventory {
 
     public boolean retired;
 
-    @Constraints.Required
-    public String item_type;
+    @Column(name = "item_type", columnDefinition = "ENUM('iPhone', 'macbook', 'raspberryPi', 'android_phone', 'iPad', 'dell_laptop', 'galaxy_tablet')")
+    @Enumerated(EnumType.STRING)
+    public ItemType item_type;
+
+    public static enum ItemType {
+        iPhone, 
+        macbook, 
+        raspberryPi, 
+        android_phone, 
+        iPad, 
+        dell_laptop, 
+        galaxy_tablet;
+    }
     
     public static Inventory findById(Integer id) {
         return JPA.em().find(Inventory.class, id);
