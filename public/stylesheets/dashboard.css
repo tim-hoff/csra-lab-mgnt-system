@@ -12,7 +12,20 @@ body {
   -webkit-filter: sepia() saturate(10000%) hue-rotate(259deg) grayscale(100%)
 }
 
-
+.img-thumbnail {
+    width: 300px;
+}
+.bigdiv {
+  border: 1px solid #dddddd;
+  width: 300px;
+  margin:1px;
+}
+.select-img {
+  padding-top: 10px;
+  width: 200px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
 /*
  * Global add-ons
  */
