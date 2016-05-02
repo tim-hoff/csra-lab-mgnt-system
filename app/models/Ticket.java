@@ -69,12 +69,6 @@ public class Ticket {
 		Pending, Resolved
 	}
 
-	/*public static enum Admin {
-		
-		admin1, admin2, admin3, admin4
-		//User."user_id";
-	}*/
-
 	public void update(Integer id) {
 		this.ticket_id = id;
 		JPA.em().merge(this);

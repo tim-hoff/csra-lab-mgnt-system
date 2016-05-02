@@ -49,12 +49,18 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			return redirect("/home");
 		}
 		
-		return ok(index.render(getUserProfile().getId()));
+		return ok(index.render(getUserProfile().getId(), "All"));
 	}
 
 	@Transactional
 	public Result filtered(String type) {
-		return index();
+		if(!checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/home");
+		}
+		
+		return ok(index.render(getUserProfile().getId(), type));
 	}
 
 
@@ -101,7 +107,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		invForm.get().update(id);
 		flash("success", "Inventory item has been checked out");
 
-		return ok(index.render(getUserProfile().getId()));
+		return index();
 	}
 
 	@Transactional
@@ -129,7 +135,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		flash("success", "Inventory item has been returned");
 
-		return ok(index.render(getUserProfile().getId()));
+		return index();
 	}
 	
 	@Transactional(readOnly=true)
@@ -158,7 +164,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		invForm.get().save();
 		flash("success", "Inventory " + invForm.get().item_id + " has been created");
-		return ok(index.render(getUserProfile().getId()));
+		return index();
 	}
 	@Transactional
 	public Result delete(Integer id) {
@@ -170,7 +176,7 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		Inventory.findById(id).delete();
 		flash("success", "Inventory item has been deleted");
-		return ok(index.render(getUserProfile().getId()));
+		return index();
 	}
 	@Transactional
 	public Result update(Integer id) {
