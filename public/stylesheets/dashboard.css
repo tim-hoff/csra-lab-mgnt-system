@@ -12,7 +12,20 @@ body {
   -webkit-filter: sepia() saturate(10000%) hue-rotate(259deg) grayscale(100%)
 }
 
-
+.img-thumbnail {
+    width: 300px;
+}
+.bigdiv {
+  border: 1px solid #dddddd;
+  width: 300px;
+  margin:1px;
+}
+.select-img {
+  padding-top: 10px;
+  width: 200px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
 /*
  * Global add-ons
  */
@@ -32,6 +45,16 @@ body {
 
 .navbar-inverse .navbar-brand {
     color: #FFFFFF;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: red;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: red;
+  background-color: transparent;
 }
 .navbar-inverse .navbar-nav > li > a {
     color: #FFFFFF;
@@ -121,4 +144,66 @@ form.action {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+
 }
+
+
+/*custom Styling*/
+.text-ellipse {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.create-user {
+    float:left;
+}
+
+.create-item {
+    float:left;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+}
+
+.custom-search-input {
+        
+        border-radius: 3px;
+    }
+ 
+    #custom-search-input .search-query {
+        padding-right: 3px;
+        padding-right: 4px \9;
+        padding-left: 3px;
+        padding-left: 4px \9;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+ 
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    #custom-search-input button {
+        border: 0;
+        background: none;
+        /** belows styles are working good */
+        padding: 2px 5px;
+        margin-top: 2px;
+        position: relative;
+        left: -28px;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        color:#D9230F;
+    }
+ 
+    .search-query:focus + button {
+        z-index: 3;   
+    }
+

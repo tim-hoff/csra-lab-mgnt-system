@@ -11,6 +11,9 @@ import play.data.validation.Constraints.Required;
 
 import play.db.jpa.*;
 
+import play.Logger;
+
+
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Index;
@@ -49,36 +52,20 @@ public class Ticket {
 	@Enumerated(EnumType.STRING)
 	public Priority priority;
 
-	@Column(name = "category", columnDefinition = "ENUM(damaged_item', 'lost_item', 'vm_setup', 'vm_upgrade', 'tours', 'training', 'miscellaneous') ")
-	@Enumerated(EnumType.STRING)
-	public Category category;
+	public String category;
 
 	@Column(name = "state", columnDefinition = "ENUM('Pending', 'Resolved')")
 	@Enumerated(EnumType.STRING)
 	public State state;
 
-	/*@Column(name = "admin", columnDefinition = "ENUM(VARCHAR(40))")
-	@Enumerated(EnumType.STRING)
-	public State admin;*/
-
-
 	public static enum Priority {
 		Low, Normal, High
 	}
 
-	public static enum Category {
-		damaged_item, lost_item, vm_setup, vm_upgrade, tours, training, miscellaneous
-	}
 
 	public static enum State {
 		Pending, Resolved
 	}
-
-	/*public static enum Admin {
-		
-		admin1, admin2, admin3, admin4
-		//User."user_id";
-	}*/
 
 	public void update(Integer id) {
 		this.ticket_id = id;
@@ -102,14 +89,14 @@ public class Ticket {
 		return data;
 	}
 
-	private static int categoryCount(Category category, Integer months) {
-		long list = tickets().stream().filter(c -> c.category == category && isInMonthRange(months, c.date_created))
+	public static int categoryCount(String cat, Integer months) {
+		long list = tickets().stream().filter(c -> (isInMonthRange(months, c.date_created)) && c.category.equals(cat))
 		.count();
 
 		return (int) list;
 	}
 
-	private static boolean isInMonthRange(Integer months, DateTime date){
+	public static boolean isInMonthRange(Integer months, DateTime date){
 		DateTime today = new DateTime();
 		DateTime beginDate = today.minusMonths(months);
 
@@ -123,20 +110,7 @@ public class Ticket {
 		return date_created.isAfter(beginDate);
 	}
 
-	public static HashMap<Category, Integer> categoryHash(Integer months) {
-		HashMap<Category, Integer> hmap = new HashMap<Category, Integer>();
-
-		for (Category category : Category.values()) {
-			hmap.put(category, categoryCount(category, months));
-		}
-		
-		return hmap;
-	}
-
 	
-	
-
-
 	//get user ticket assignment count
 
 

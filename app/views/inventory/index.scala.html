@@ -1,4 +1,4 @@
-@(currentUserID :String)
+@(currentUserID :String, itemType :String)
 @*
 * show items
 *@
@@ -18,12 +18,14 @@
      </div>
  }
 <div class="row">
-  <div class="col-md-offset-2 col-md-8 table-responsive">
-    <h1 class="sub-header">Items</h1>
+  <div class="col-md-offset-1 col-md-10">
+    <h1 class="sub-header">Inventory</h1>
   </div>
-  <div class="col-md-offset-2 col-md-8 table-responsive">
+</div>
 
-    <table id="data-table" class="table table-hover" cellspacing="0" width="100%">
+<div class="row">
+    <div class="col-md-offset-1 col-md-10 table-responsive">
+        <table id="data-table-item" class="table table-hover" cellspacing="0" width="100%">
       <thead>
         <tr>
           <th class="action"></th>
@@ -31,17 +33,15 @@
           <th>Model No.</th>
           <th>Serial No.</th>
           <th>Available</th>
-          <th>Retired</th>
           <th>Type</th>
           <th>Rented By</th>
           <th>Date Checked Out</th>
           <th>Date Due</th>
-          <th>Last Notified</th>
           <th class="action">Actions</th>
         </tr>
       </thead>
       <tbody>
-        @for(item <- Inventory.items) {
+        @for(item <- Inventory.filteredItems(itemType)) {
         <tr>
           <td>
             <div class="btn-group btn-sm">
@@ -52,10 +52,10 @@
             }
             </div>
           </td>
-          <td>
+         <td>
             <!-- TODO: add a method to get a formatted id to the inventory model -->
             <a href="@routes.InventoryController.show(item.item_id)">00@item.item_id</a>
-          </td>
+          </td> 
           <td>
             @item.model_number
           </td>
@@ -66,10 +66,7 @@
             @item.available
           </td>
           <td>
-            @item.retired
-          </td>
-          <td>
-            @item.item_type
+            @item.item_type  
           </td>
           <td>
             @if(item.rented_by != null) {
@@ -77,16 +74,13 @@
               @item.rented_by.user_id
             </a>
             }
-          </td>
+          </td> 
           <td>
             @item.taken_date
           </td>
           <td>
             @item.return_date
-          </td>
-          <td>
-            @item.last_notified
-          </td>
+          </td> 
           <td>
             @if(item.available()){
               @form(routes.InventoryController.checkout(item.item_id)){
@@ -103,15 +97,7 @@
         }
       </tbody>
     </table>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-10">
-    <div class="row">
-      <div class="col-md-2 col-md-offset-2 pull-right">
-          <a href="@routes.InventoryController.create()" class="btn btn-primary btn-lg btn-block">New Item</a>
-      </div>
     </div>
-  </div>
 </div>
+
 },
