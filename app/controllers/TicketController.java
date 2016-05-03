@@ -148,7 +148,6 @@ public class TicketController extends UserProfileController<CommonProfile> {
 
 		for (String cat : data) {
 			hmap.put(cat, models.Ticket.categoryCount(cat, id));
-			Logger.info(cat);
 		}
 		
 		return ok(report_1.render(id, hmap));

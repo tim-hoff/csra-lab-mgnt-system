@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Inventory` (
 
 CREATE TABLE IF NOT EXISTS `LCLSA_tech_lab_management_system`.`Categories` (
 	`category_name` VARCHAR(20) NOT NULL,
+	`category_color` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`category_name`)
 )  ENGINE=INNODB AUTO_INCREMENT=2005 DEFAULT CHARACTER SET=LATIN1;
 
@@ -162,14 +163,14 @@ INSERT INTO `User`  (`user_id`,   `first_name`, `last_name`,    `email`,        
 #  `state` ENUM('Pending', 'Resolved') NOT NULL,
 #  `priority` ENUM('Low', 'Normal', 'High') NOT NULL,
 
-INSERT INTO `Categories`  (`category_name`) VALUES
-			('damaged_item'),
-			('lost_item'),
-			('vm_setup'),
-			('vm_upgrade'),
-			('tours'),
-			('training'),
-			('miscellaneous');
+INSERT INTO `Categories` VALUES
+			('damaged_item', 'red'),
+			('lost_item', 'orange'),
+			('vm_setup', 'yellow'),
+			('vm_upgrade', 'green'),
+			('tours', 'blue'),
+			('training', 'indigo'),
+			('miscellaneous', 'violet');
 
 INSERT INTO `Ticket`  (`name`, `created_for`, `description`, `date_created`, `last_updated`, `state`, `priority`, `category`) VALUES
             ('Microsoft IOT Workshop',      "box",    'Can you arrange the lab for 25 seats for the Microsoft IOT training?',                           '2016-04-25 08:30:18',            '2016-04-26 08:03:18',            'Resolved', 'Normal', 'tours');

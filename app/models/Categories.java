@@ -22,6 +22,8 @@ public class Categories {
 	@Id
 	public String category_name;
 
+	public String category_color;
+
     public void save() {
         JPA.em().persist(this);
     }
