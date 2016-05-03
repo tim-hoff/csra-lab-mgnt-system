@@ -1,4 +1,4 @@
-@(ticketForm:Form[Ticket],userProfile: User)
+@(ticketForm:Form[Ticket],userProfile: User,categories : List[String])
 @import helper._
 @import models.User;
 
@@ -13,8 +13,9 @@
       @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
       @select(ticketForm("created_for"),  options(Seq(userProfile.user_id)), 
         '_label -> "created for")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-      @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
+      @select(ticketForm("category"), options(categories),
         '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)  
       @select(ticketForm("state"),  options(Seq("Pending","Resolved")), 
         '_label -> "State")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)

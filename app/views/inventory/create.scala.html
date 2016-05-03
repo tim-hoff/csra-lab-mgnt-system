@@ -9,7 +9,7 @@
       <h1 class="sub-header">Create Item</h1>
       @inputText(invForm("model_number"), '_label -> "model number")
       @inputText(invForm("serial_number"), '_label -> "serial number")
-      @select(invForm("item_type"), options(Seq("iphone","macbook", "raspberryPi", "dell_laptop", "android_phone", "iPad")),'_label -> "Item type")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
+      @select(invForm("item_type"), options(Seq("iPhone","macbook", "raspberryPi", "android_phone", "iPad", "dell_laptop", "galaxy_tablet")),'_label -> "Item type")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
       @checkbox(invForm("retired"), '_label -> "retired")(FieldConstructor(views.html.helper.bootstrapCheckbox.f), null)
      
     </div>

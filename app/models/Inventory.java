@@ -13,6 +13,7 @@ import org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime;
 import java.util.stream.Collectors;
 
 @Entity 
+@Table(name = "Inventory")
 public class Inventory {
     @Id
     @Column(name = "item_id", nullable = false)
@@ -28,6 +29,7 @@ public class Inventory {
     public boolean retired;
 
     @Column(name="item_type", columnDefinition="ENUM('macbook', 'iPhone', 'raspberryPi', 'dell_laptop', 'android_phone', 'iPad','android_tablet')")
+
     @Enumerated(EnumType.STRING)
     public ItemType item_type;
 
