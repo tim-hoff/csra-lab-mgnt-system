@@ -36,7 +36,7 @@
 
 		@for(chash <- csh){
 			var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-			c_data.push({value: @chash._2, color: randomColor, highlight: ColorLuminance(randomColor, 0.2), label: "@chash._1"});
+			c_data.push({value: @chash._2, color: "@Categories.getCategoryColor(chash._1)", highlight: ColorLuminance(randomColor, 0.2), label: "@chash._1"});
 		}
 
 		var options = {

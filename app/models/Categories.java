@@ -40,4 +40,8 @@ public class Categories {
 		List<Categories> data = JPA.em().createQuery("SELECT c FROM Categories c", Categories.class).getResultList();
 		return data;
 	}
+
+	public static String getCategoryColor(String name){
+		return findById(name).category_color;
+	}
 }
