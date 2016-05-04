@@ -144,6 +144,28 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		return ok(checkout.render(item));
 	}
+	
+	@Transactional
+	public Result test(Inventory item) {
+		return testdate(item);
+	}
+	
+	@Transactional
+	public Result saveItem(Inventory item) {
+		
+		if(item.available() && !checkPrivileges())
+		{
+			flash("error", "Insufficient Privileges");
+			return redirect("/items");
+		}
+		
+		Form<Inventory> invForm = form(Inventory.class).fill(item);
+		
+		invForm.get().update(id);
+		flash("success", "Inventory item has been checked out");
+		
+		return select();
+	}
 
 	@Transactional
 	public Result checkin(Integer id) {
