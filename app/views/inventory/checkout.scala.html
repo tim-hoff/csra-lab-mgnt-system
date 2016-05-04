@@ -36,14 +36,14 @@
             startDate: 0,
             maxViewMode: 1,
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true;
+        })
+        .on('changeDate', function(e) {
+            yourDate = document.getElementById("dateValue").value;
+            alert(yourDate);
         });
     });
     
-    function getDateInput() {
-        yourDate = document.getElementById("dateValue").value;
-        alert(yourDate);
-        
-        }
+    
 </script>
 },
