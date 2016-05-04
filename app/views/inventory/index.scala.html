@@ -1,4 +1,4 @@
-@(currentUserID :String)
+@(currentUserID :String, itemType :String)
 @*
 * show items
 *@
@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(item <- Inventory.items) {
+        @for(item <- Inventory.filteredItems(itemType)) {
         <tr>
           <td>
             <div class="btn-group btn-sm">
@@ -52,10 +52,10 @@
             }
             </div>
           </td>
-          <td>
+         <td>
             <!-- TODO: add a method to get a formatted id to the inventory model -->
             <a href="@routes.InventoryController.show(item.item_id)">00@item.item_id</a>
-          </td>
+          </td> 
           <td>
             @item.model_number
           </td>
@@ -66,7 +66,7 @@
             @item.available
           </td>
           <td>
-            @item.item_type
+            @item.item_type  
           </td>
           <td>
             @if(item.rented_by != null) {
@@ -74,13 +74,13 @@
               @item.rented_by.user_id
             </a>
             }
-          </td>
+          </td> 
           <td>
             @item.taken_date
           </td>
           <td>
             @item.return_date
-          </td>
+          </td> 
           <td>
             @if(item.available()){
               @form(routes.InventoryController.checkout(item.item_id)){

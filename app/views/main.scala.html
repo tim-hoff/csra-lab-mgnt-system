@@ -54,15 +54,21 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/tickets">Tickets</a></li>
-                        <li><a href="@routes.UserController.index()">Users</a></li>
-                        <li><a href="@routes.InventoryController.index()">Items</a></li>
-                        <li><a href="@routes.HistoryController.index()">History</a></li>
+                        <li><a href="@routes.InventoryController.select()">Items</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="@routes.TicketController.report_1(3)">Ticket Reports</a></li>
                                 <li><a href="@routes.TicketController.report_2(3)">User Reports</a></li>
                                 <li><a href="#">Inventory Reports</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@routes.CategoryController.edit()">Edit Categories</a></li>
+                                <li><a href="@routes.UserController.index()">Manage Users</a></li>
+                                <li><a href="@routes.HistoryController.index()">View History</a></li>
                             </ul>
                         </li>
                         <li><a href="/logout?url=">Logout</a></li>

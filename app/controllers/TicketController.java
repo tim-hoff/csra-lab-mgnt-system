@@ -1,13 +1,19 @@
 package controllers;
 
+import play.Logger;
+
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
+import java.util.*;
+
 import views.html.ticket.*;
 import views.html.ticket.reports.*;
 import models.*;
+
+import scala.collection.JavaConverters;
 
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.RequiresAuthentication;
@@ -46,9 +52,13 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/tickets");
 		}
+
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class);
-		return ok(create.render(ticketForm,User.findById(getUserProfile().getId())));
+		return ok(create.render(ticketForm,User.findById(getUserProfile().getId()), data));
 	}
 
 	@Transactional
@@ -71,10 +81,14 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
+
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class).fill(
 			Ticket.findById(id));
-		return ok(edit.render(id, ticketForm));
+		return ok(edit.render(id, ticketForm, data));
 	}
 
 	@Transactional
@@ -84,10 +98,14 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/tickets");
 		}
+
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
 		if(ticketForm.hasErrors()) {
-			return badRequest(edit.render(id, ticketForm));
+			return badRequest(edit.render(id, ticketForm, data));
 		} else {
 			ticketForm.get().update(id);
 			flash("success", "Item " + id + " has been updated");
@@ -102,16 +120,26 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/tickets");
 		}
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
 
 		if(ticketForm.hasErrors()) {
-			return badRequest(create.render(ticketForm,User.findById(getUserProfile().getId())));
+			return badRequest(create.render(ticketForm,User.findById(getUserProfile().getId()), data));
 		}
+
 		ticketForm.get().save();
-		flash("success", "Ticket " + ticketForm.get().name + " has been created");
+		if(ticketForm.get().assigned_to != null){
+		flash("success", "Ticket " + ticketForm.get().name + " has been created and assigned to admin " + ticketForm.get().assigned_to);
+		}
+		else{
+		flash("success", "Ticket " + ticketForm.get().name + " has been created and assigned to an admin.");
+		}
 		return ok(index.render(User.findById(getUserProfile().getId())));
 	}
+
 
 	@Transactional
 	public Result report_1(Integer id) {
@@ -120,8 +148,17 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
+		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+	
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
+
+		for (String cat : data) {
+			hmap.put(cat, models.Ticket.categoryCount(cat, id));
+		}
 		
-		return ok(report_1.render(id));
+		return ok(report_1.render(id, hmap));
 	}
 
 	@Transactional
