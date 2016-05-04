@@ -1,4 +1,4 @@
-@(id: Integer, ticketForm:Form[Ticket])
+@(id: Integer, ticketForm:Form[Ticket],categories : List[String])
 @import helper._
 @import helpers.BootstrapHelper._
 @main("Edit Ticket"){
@@ -11,7 +11,7 @@
       @inputText(ticketForm("assigned_to"), '_label -> "assigned to")
       @inputText(ticketForm("created_for"), '_label -> "created for")
       @textarea(ticketForm("description"), '_label -> "description")(FieldConstructor(views.html.helper.bootstrapTextarea.f), null)
-      @select(ticketForm("category"), options(Seq("vm_setup","lost_item","tours","damaged_item","vm_upgrade","training","miscellaneous")),
+      @select(ticketForm("category"), options(categories),
         '_label -> "Category")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)
       @select(ticketForm("state"), options(Seq("Pending","Resolved")),
         '_label -> "State")(FieldConstructor(views.html.helper.inputFieldConstructor.f), null)

@@ -81,10 +81,14 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/home");
 		}
+
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class).fill(
 			Ticket.findById(id));
-		return ok(edit.render(id, ticketForm));
+		return ok(edit.render(id, ticketForm, data));
 	}
 
 	@Transactional
@@ -94,10 +98,14 @@ public class TicketController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/tickets");
 		}
+
+		List<String> data = JPA.em()
+		.createQuery("Select t.category_name From Categories t")
+		.getResultList();
 		
 		Form<Ticket> ticketForm = form(Ticket.class).bindFromRequest();
 		if(ticketForm.hasErrors()) {
-			return badRequest(edit.render(id, ticketForm));
+			return badRequest(edit.render(id, ticketForm, data));
 		} else {
 			ticketForm.get().update(id);
 			flash("success", "Item " + id + " has been updated");
