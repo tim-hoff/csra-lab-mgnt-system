@@ -71,26 +71,6 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		
 		return ok(index.render(getUserProfile().getId(), type));
 	}
-	@Transactional
-	public Result select(){
-		if(!checkPrivileges())
-		{
-			flash("error", "Insufficient Privileges");
-			return redirect("/home");
-		}
-		
-		return ok(categoryIndex.render(getUserProfile().getId()));
-	}
-	@Transactional
-	public Result filtered(String type) {
-		if(!checkPrivileges())
-		{
-			flash("error", "Insufficient Privileges");
-			return redirect("/home");
-		}
-		
-		return ok(index.render(getUserProfile().getId(), type));
-	}
 
 
 
@@ -127,37 +107,30 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
-		
-		item.taken_date = new DateTime();
-		//item.rented_by = getUserProfile().getId();
-		
-		Form<Inventory> invForm = form(Inventory.class).fill(item);
-
-		//so two updates need to occur, one to fire off the history table trigger
-		invForm.get().update(id);
-		//second to null both the return date and taken date.
-		//item.return_date = null;
-		//item.taken_date = null;
-		
-		invForm = form(Inventory.class).fill(item);
-		invForm.get().update(id);
+		//This variable won't be saved, it's just a placeholder for the view
+		item.rented_by = User.findById(getUserProfile().getId());
 		
 		return ok(checkout.render(item));
 	}
 	
 	@Transactional
-	public Result test(Inventory item) {
-		return testdate(item);
+	public Result test(String date) {
+		return ok(testdate.render(date));
 	}
 	
 	@Transactional
-	public Result saveItem(Inventory item) {
+	public Result saveItem(String return_date, int id) {
+		Inventory item = Inventory.findById(id);
 		
 		if(item.available() && !checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
+		
+		//item.return_date = return_date;
+		item.taken_date = new DateTime();
+		item.rented_by = User.findById(getUserProfile().getId());
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
 		
