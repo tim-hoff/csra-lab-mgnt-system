@@ -50,8 +50,6 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		
 		return ok(index.render(getUserProfile().getId(), "All"));
-<<<<<<< HEAD
-=======
 	}
 	@Transactional
 	public Result select(){
@@ -72,7 +70,6 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		}
 		
 		return ok(index.render(getUserProfile().getId(), type));
->>>>>>> 4453f22c312530d97d290e617c9ee1b2d8fee93e
 	}
 	@Transactional
 	public Result select(){
@@ -136,9 +133,8 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 		//item.return_date = new DateTime().plusWeeks(1);
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
-<<<<<<< HEAD
+		
 		return ok(checkout.render(item));
->>>>>>> 4453f22c312530d97d290e617c9ee1b2d8fee93e
 	}
 
 	@Transactional
