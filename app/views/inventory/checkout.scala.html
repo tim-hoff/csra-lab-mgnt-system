@@ -9,26 +9,41 @@
     <h4>Serial No.: @item.serial_number</h4>
     <h4>Type: @item.item_type</h4>
 
-     @*****************************************
-     
-     
-     component here!!
-     
-     "item.return_date" needs to be filled in format yyyy-MM-dd
-     *****************************************@
+         <div class="input-group date" id="dateInput">
+          <input type="text" class="form-control" placeholder="yyyy-mm-dd"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+        
+        <button onclick="getDateInput()">Submit</button>
+        @item.return_date
     
-    <h4>
   </div>
 </div>
 <div class="row">
   <div class="col-md-10">
     <div class="row">
       <div class="col-md-2 col-md-offset-2 pull-right">
+          <a href="@routes.InventoryController.edit(item.item_id)" class="btn btn-default">Checkout(Edit)</a>
           <a href="@routes.InventoryController.index()" class="btn btn-default">Back</a>
-          <a href="@routes.InventoryController.edit(item.item_id)" class="btn btn-primary">Checkout(Edit)</a>
       </div>
     </div>
   </div>
 </div>
-},
 
+<script>
+    $(document).ready(function() {
+       $('#dateInput').datepicker({
+            format: "yyyy-mm-dd",
+            startDate: 0,
+            maxViewMode: 1,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+    
+    function getDateInput() {
+        @item.return_date = document.getElementById("dateInput").value;
+        alert(@item.return_date);
+        
+        }
+</script>
+},

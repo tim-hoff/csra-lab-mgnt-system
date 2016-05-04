@@ -122,17 +122,25 @@ public class InventoryController extends UserProfileController<CommonProfile> {
 	public Result checkout(Integer id) {
 		Inventory item = Inventory.findById(id);
 		
-		if(item.available() && !checkPrivileges())
+		if(item.rented_by == null && !checkPrivileges())
 		{
 			flash("error", "Insufficient Privileges");
 			return redirect("/items");
 		}
 		
 		item.taken_date = new DateTime();
-		item.rented_by = User.findById(getUserProfile().getId());
-		//item.return_date = new DateTime().plusWeeks(1);
+		//item.rented_by = getUserProfile().getId();
 		
 		Form<Inventory> invForm = form(Inventory.class).fill(item);
+
+		//so two updates need to occur, one to fire off the history table trigger
+		invForm.get().update(id);
+		//second to null both the return date and taken date.
+		//item.return_date = null;
+		//item.taken_date = null;
+		
+		invForm = form(Inventory.class).fill(item);
+		invForm.get().update(id);
 		
 		return ok(checkout.render(item));
 	}
