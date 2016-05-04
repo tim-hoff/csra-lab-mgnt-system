@@ -10,6 +10,7 @@
 /*custom Styling*/
 .text-ellipse {
     width: 100px;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -47,11 +48,21 @@
           <li><a data-toggle="tab" href="#resolvedPanels">Resolved</a></li>
         </ul>
     </div>
-      <div class="col-md-4 col-md-offset-2">
-          <div class="custom-search-input">
-              Search: <input type="text" id="filter">
+      <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+           <div class="col-md-3">
+             <a href="@routes.TicketController.create()" class="btn btn-default">
+            Create New Ticket
+             </a>
+           </div>
+          <div class="col-md-4 col-md-offset-5 pull-right">
+               Search: <input class="custom-search-input input-sm" type="search" id="filter">
           </div>
-      </div>
+         </div> 
+       </div>
+
+</div>
   </div>
   
   
@@ -76,10 +87,10 @@
                     </div>
                       
                       <div class="row">
-                          <div class="col-md-6">
-                              <p class="text-ellipse text-nowrap">@ticket.description</p>
+                          <div class="col-sm-6 text-ellipse">
+                              @ticket.description
                           </div>
-                          <div class="col-md-6 pull-right">
+                          <div class="col-sm-6 pull-right">
                               <ul class="list-inline text-right">
                                <li>Category: @ticket.category</li>
                               </ul>
@@ -113,7 +124,7 @@
                   </div>
                   <div>
                       @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm btn-block pull-right">
+                      <button type="submit" class="btn btn-default btn-sm pull-right">
                           Edit Ticket
                       </button>
                       }
@@ -126,9 +137,7 @@
           </div>
           }}
       </div>
-      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
-        Create New Ticket
-      </a>
+      
       
       <div class="col-md-12 text-center">
             <ul id="myPager" class="pagination"></ul>
@@ -194,7 +203,7 @@
                   </div>
                   <div>
                       @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm btn-block pull-right">
+                      <button type="submit" class="btn btn-default btn-sm pull-right">
                           Edit Ticket
                       </button>
                       }
@@ -207,9 +216,7 @@
           </div>
           }}}
       </div>
-      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
-        Create New Ticket
-      </a>
+      
       
       <div class="col-md-12 text-center">
             <ul id="myPager1" class="pagination"></ul>
@@ -275,7 +282,7 @@
                   </div>
                   <div>
                       @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm btn-block pull-right">
+                      <button type="submit" class="btn btn-default btn-sm pull-right">
                           Edit Ticket
                       </button>
                       }
@@ -288,9 +295,7 @@
           </div>
           }}}
       </div>
-      <a href="@routes.TicketController.create()" class="btn btn-default btn-block">
-        Create New Ticket
-      </a>
+     
       
       <div class="col-md-12 text-center">
             <ul id="myPager2" class="pagination"></ul>
