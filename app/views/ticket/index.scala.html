@@ -5,448 +5,398 @@
 @import helper._
 @import helpers.BootstrapHelper._
 @import models.User;
-
 <style>
 /*custom Styling*/
 .text-ellipse {
-    width: 100px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+width: 55%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 </style>
 @main("View Tickets"){
 @if(flash.containsKey("error")){
-     <div class="alert alert-info alert-dismissible" role="alert">
-     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-         <strong>Sorry!</strong> @flash.get("error")
-     </div>
- }
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Sorry!</strong> @flash.get("error")
+</div>
+}
 @if(flash.containsKey("success")){
-     <div class="alert alert-success alert-dismissible" role="alert">
-     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-         <strong>Success!</strong> @flash.get("success")
-     </div>
- }
- <div class="container-fluid">
-<div class="row">
-  <div class="col-md-offset-1 col-md-10">
-    <h1 class="sub-header">
+<div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Success!</strong> @flash.get("success")
+</div>
+}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+      <h1 class="sub-header">
       <div class="row">
         <div class="col-md-4">
-        Ticket Board
-    </div>
-    </div>
-  </h1>
-  
-<div class= "row">
-    <div class="col-md-6">
-        <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#allPanels">All</a></li>
-          <li><a data-toggle="tab" href="#pendingPanels">Pending</a></li>
-          <li><a data-toggle="tab" href="#resolvedPanels">Resolved</a></li>
-        </ul>
-    </div>
-      <div class="row">
-      <div class="col-md-offset-1 col-md-10">
-        <div class="row">
-           <div class="col-md-3">
-             <a href="@routes.TicketController.create()" class="btn btn-default">
-            Create New Ticket
-             </a>
-           </div>
-          <div class="col-md-4 col-md-offset-5 pull-right">
-               Search: <input class="custom-search-input input-sm" type="search" id="filter">
-          </div>
-         </div> 
-       </div>
-
-</div>
-  </div>
-  
-  
-<div class="tab-content">  
-  <div id="allPanels" class="tab-pane fade in active">   
-    <div class="panel-group" id="accordion">
-         @for(ticket <- Ticket.tickets) {
-         @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
-          <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
-              <h4 class="panel-title ">
-                    <div class="row">
-                        <div class="col-md-4">
-                          <ul class="list-inline">
-                              <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
-                              <li>@ticket.ticket_id: @ticket.name</li>
-                          </ul>
-                          </div>
-                          <div class="col-md-2 col-md-offset-4 pull-right">
-                              <p class="text-uppercase text-right">@ticket.state</p>
-                          </div>
-                    </div>
-                      
-                      <div class="row">
-                          <div class="col-sm-6 text-ellipse">
-                              @ticket.description
-                          </div>
-                          <div class="col-sm-6 pull-right">
-                              <ul class="list-inline text-right">
-                               <li>Category: @ticket.category</li>
-                              </ul>
-                          </div>
-                      </div>
-               </h4>
+          Ticket Board
+        </div>
+      </div>
+      </h1>
+      
+      <div class= "row">
+        <div class="col-md-5">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#allPanels">All</a></li>
+            <li><a data-toggle="tab" href="#pendingPanels">Pending</a></li>
+            <li><a data-toggle="tab" href="#resolvedPanels">Resolved</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 pull-right">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="@routes.TicketController.create()" class="btn btn-default">
+                Create New Ticket
+              </a>
             </div>
-            
-            <div id=@("collapse_"+ticket.ticket_id) class="panel-collapse collapse">
-              <div class="panel-body">
+            <div class="col-md-6">
+              <input class="custom-search-input input-sm" placeholder="Search" type="search" id="filter">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content">
+        <div id="allPanels" class="tab-pane fade in active">
+          <div class="panel-group" id="accordion">
+            @for(ticket <- Ticket.tickets) {
+            @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href=@("#collapse_"+ticket.ticket_id)>
+                <h4 class="panel-title ">
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    <ul class="list-inline">
+                      <li ><span class=@(ticket.priority)>@ticket.priority</span>&nbsp; @ticket.ticket_id: @ticket.name</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-3 pull-right">
+                    <p class="text-uppercase text-right">@ticket.state</p>
+                  </div>
+                </div>
+                
+                 <div class="row">
+                  <div class="col-md-9 text-ellipse">
+                    @ticket.description
+                  </div>
+                  <div class="col-md-3 pull-right">
+                    <p class="text-right">Category: @ticket.category</p>
+                  </div>
+                </div>
+                </h4>
+              </div>
+              
+              <div id=@("collapse_"+ticket.ticket_id) class="panel-collapse collapse">
+                <div class="panel-body">
                   <dl>
-                      <dt class="text-uppercase">@ticket.state</dt>    
-                      <dt>Description:</dt>
-                      <dd>@ticket.description</dd>
+                    <dt class="text-uppercase">@ticket.state</dt>
+                    <dt>Description:</dt>
+                    <dd>@ticket.description</dd>
                   </dl>
                   <div class="row">
-                      <div class="col-sm-3">
-                          Category: @ticket.category
-                      </div>
-                      <div class="col-sm-3">
-                          Assigned To: @ticket.assigned_to
-                      </div>
-    
-                      <div class="col-sm-3">
-                          Last Updated: @ticket.last_updated
-                      </div>
-                      <div class="col-sm-3">
-                         Created: @ticket.date_created
+                    <div class="col-sm-3">
+                      Category: @ticket.category
+                    </div>
+                    <div class="col-sm-3">
+                      Assigned To: @ticket.assigned_to
+                    </div>
+                    
+                    <div class="col-sm-3">
+                      Last Updated: @ticket.last_updated
+                    </div>
+                    <div class="col-sm-3">
+                      Created: @ticket.date_created
                       
-                      </div>
+                    </div>
                   </div>
                   <div>
-                      @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm pull-right">
-                          Edit Ticket
-                      </button>
-                      }
-                     
+                    @form(routes.TicketController.edit(ticket.ticket_id)){
+                    <button type="submit" class="btn btn-default btn-sm pull-right">
+                    Edit Ticket
+                    </button>
+                    }
+                    
                   </div>
+                </div>
+                
               </div>
               
             </div>
-            
+            }}
           </div>
-          }}
+          
+          
+          <div class="col-md-12 text-center">
+          <ul id="myPager" class="pagination"></ul>
+        </div>
       </div>
       
       
-      <div class="col-md-12 text-center">
-            <ul id="myPager" class="pagination"></ul>
-      </div>
-  </div>
-  
-  
-  <div id="pendingPanels" class="tab-pane fade">   
-    <div class="panel-group" id="accordion1">
-         @for(ticket <- Ticket.tickets) {
-         @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
-         @if(ticket.state == Ticket.State.Pending){
+      <div id="pendingPanels" class="tab-pane fade">
+        <div class="panel-group" id="accordion1">
+          @for(ticket <- Ticket.tickets) {
+          @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
+          @if(ticket.state == Ticket.State.Pending){
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" href=@("#pending_collapse_"+ticket.ticket_id)>
               <h4 class="panel-title ">
-                    <div class="row">
-                        <div class="col-md-4">
-                          <ul class="list-inline">
-                              <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
-                              <li>@ticket.ticket_id: @ticket.name</li>
-                          </ul>
-                          </div>
-                          <div class="col-md-2 col-md-offset-4 pull-right">
-                              <p class="text-uppercase text-right">@ticket.state</p>
-                          </div>
-                    </div>
-                      
-                      <div class="row">
-                          <div class="col-md-6">
-                              <p class="text-ellipse text-nowrap">@ticket.description</p>
-                          </div>
-                          <div class="col-md-6 pull-right">
-                              <ul class="list-inline text-right">
-                               <li>Category: @ticket.category</li>
-                              </ul>
-                          </div>
-                      </div>
-               </h4>
+              <div class="row">
+                <div class="col-md-4">
+                  <ul class="list-inline">
+                    <li ><span class=@(ticket.priority)>@ticket.priority</span>&nbsp; @ticket.ticket_id: @ticket.name</li>
+                  </ul>
+                </div>
+                <div class="col-md-2 col-md-offset-4 pull-right">
+                  <p class="text-uppercase text-right">@ticket.state</p>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col-md-9 text-ellipse">
+                    @ticket.description
+                  </div>
+                  <div class="col-md-3 pull-right">
+                    <p class="text-right">Category: @ticket.category</p>
+                  </div>
+                </div>
+              </h4>
             </div>
             
             <div id=@("pending_collapse_"+ticket.ticket_id) class="panel-collapse collapse">
               <div class="panel-body">
-                  <dl>
-                      <dt class="text-uppercase">@ticket.state</dt>    
-                      <dt>Description:</dt>
-                      <dd>@ticket.description</dd>
-                  </dl>
-                  <div class="row">
-                      <div class="col-sm-3">
-                          Category: @ticket.category
-                      </div>
-                      <div class="col-sm-3">
-                          Assigned To: @ticket.assigned_to
-                      </div>
-    
-                      <div class="col-sm-3">
-                          Last Updated: @ticket.last_updated
-                      </div>
-                      <div class="col-sm-3">
-                         Created: @ticket.date_created
-                      
-                      </div>
+                <dl>
+                  <dt class="text-uppercase">@ticket.state</dt>
+                  <dt>Description:</dt>
+                  <dd>@ticket.description</dd>
+                </dl>
+                <div class="row">
+                  <div class="col-sm-3">
+                    Category: @ticket.category
                   </div>
-                  <div>
-                      @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm pull-right">
-                          Edit Ticket
-                      </button>
-                      }
-                     
+                  <div class="col-sm-3">
+                    Assigned To: @ticket.assigned_to
                   </div>
+                  
+                  <div class="col-sm-3">
+                    Last Updated: @ticket.last_updated
+                  </div>
+                  <div class="col-sm-3">
+                    Created: @ticket.date_created
+                    
+                  </div>
+                </div>
+                <div>
+                  @form(routes.TicketController.edit(ticket.ticket_id)){
+                  <button type="submit" class="btn btn-default btn-sm pull-right">
+                  Edit Ticket
+                  </button>
+                  }
+                  
+                </div>
               </div>
               
             </div>
             
           </div>
           }}}
+        </div>
+        
+        
+        <div class="col-md-12 text-center">
+        <ul id="myPager1" class="pagination"></ul>
       </div>
-      
-      
-      <div class="col-md-12 text-center">
-            <ul id="myPager1" class="pagination"></ul>
-      </div>
-  </div>
-  
-  
-  <div id="resolvedPanels" class="tab-pane fade">   
-    <div class="panel-group" id="accordion2">
-         @for(ticket <- Ticket.tickets) {
-         @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
-         @if(ticket.state == Ticket.State.Resolved){
-          <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" href=@("#resolved_collapse_"+ticket.ticket_id)>
-              <h4 class="panel-title ">
-                    <div class="row">
-                        <div class="col-md-4">
-                          <ul class="list-inline">
-                              <li ><span class=@(ticket.priority)>@ticket.priority</span></li>   
-                              <li>@ticket.ticket_id: @ticket.name</li>
-                          </ul>
-                          </div>
-                          <div class="col-md-2 col-md-offset-4 pull-right">
-                              <p class="text-uppercase text-right">@ticket.state</p>
-                          </div>
-                    </div>
-                      
-                      <div class="row">
-                          <div class="col-md-6">
-                              <p class="text-ellipse text-nowrap">@ticket.description</p>
-                          </div>
-                          <div class="col-md-6 pull-right">
-                              <ul class="list-inline text-right">
-                               <li>Category: @ticket.category</li>
-                              </ul>
-                          </div>
-                      </div>
-               </h4>
+    </div>
+    
+    
+    <div id="resolvedPanels" class="tab-pane fade">
+      <div class="panel-group" id="accordion2">
+        @for(ticket <- Ticket.tickets) {
+        @if((userProfile.role == User.Role.Admin || userProfile.role == User.Role.SuperAdmin) || userProfile.user_id == ticket.created_for){
+        @if(ticket.state == Ticket.State.Resolved){
+        <div class="panel panel-default">
+          <div class="panel-heading" data-toggle="collapse" href=@("#resolved_collapse_"+ticket.ticket_id)>
+            <h4 class="panel-title ">
+            <div class="row">
+              <div class="col-md-4">
+                <ul class="list-inline">
+                  <li ><span class=@(ticket.priority)>@ticket.priority</span>&nbsp; @ticket.ticket_id: @ticket.name</li>
+                </ul>
+              </div>
+              <div class="col-md-2 col-md-offset-4 pull-right">
+                <p class="text-uppercase text-right">@ticket.state</p>
+              </div>
             </div>
             
-            <div id=@("resolved_collapse_"+ticket.ticket_id) class="panel-collapse collapse">
-              <div class="panel-body">
-                  <dl>
-                      <dt class="text-uppercase">@ticket.state</dt>    
-                      <dt>Description:</dt>
-                      <dd>@ticket.description</dd>
-                  </dl>
-                  <div class="row">
-                      <div class="col-sm-3">
-                          Category: @ticket.category
-                      </div>
-                      <div class="col-sm-3">
-                          Assigned To: @ticket.assigned_to
-                      </div>
-    
-                      <div class="col-sm-3">
-                          Last Updated: @ticket.last_updated
-                      </div>
-                      <div class="col-sm-3">
-                         Created: @ticket.date_created
-                      
-                      </div>
+         <div class="row">
+                  <div class="col-md-9 text-ellipse">
+                    @ticket.description
                   </div>
-                  <div>
-                      @form(routes.TicketController.edit(ticket.ticket_id)){
-                      <button type="submit" class="btn btn-default btn-sm pull-right">
-                          Edit Ticket
-                      </button>
-                      }
-                     
+                  <div class="col-md-3 pull-right">
+                    <p class="text-right">Category: @ticket.category</p>
                   </div>
+                </div>
+            </h4>
+          </div>
+          
+          <div id=@("resolved_collapse_"+ticket.ticket_id) class="panel-collapse collapse">
+            <div class="panel-body">
+              <dl>
+                <dt class="text-uppercase">@ticket.state</dt>
+                <dt>Description:</dt>
+                <dd>@ticket.description</dd>
+              </dl>
+              <div class="row">
+                <div class="col-sm-3">
+                  Category: @ticket.category
+                </div>
+                <div class="col-sm-3">
+                  Assigned To: @ticket.assigned_to
+                </div>
+                
+                <div class="col-sm-3">
+                  Last Updated: @ticket.last_updated
+                </div>
+                <div class="col-sm-3">
+                  Created: @ticket.date_created
+                  
+                </div>
               </div>
-              
+              <div>
+                @form(routes.TicketController.edit(ticket.ticket_id)){
+                <button type="submit" class="btn btn-default btn-sm pull-right">
+                Edit Ticket
+                </button>
+                }
+                
+              </div>
             </div>
             
           </div>
-          }}}
+          
+        </div>
+        }}}
       </div>
-     
+      
       
       <div class="col-md-12 text-center">
-            <ul id="myPager2" class="pagination"></ul>
-      </div>
+      <ul id="myPager2" class="pagination"></ul>
+    </div>
   </div>
   
-</div>  
 </div>
 </div>
-
+</div>
 },
-
 <script>
-
 /* pagination plugin */
 $.fn.pageMe = function(opts){
-    var $this = this,
-        defaults = {
-            perPage: 5,
-            showPrevNext: false,
-            numbersPerPage: 1,
-            hidePageNumbers: false
-        },
-        settings = $.extend(defaults, opts);
-    
-    var listElement = $this;
-    var perPage = settings.perPage; 
-    var children = listElement.children();
-    var pager = $('.pagination');
-    
-    if (typeof settings.childSelector!="undefined") {
-        children = listElement.find(settings.childSelector);
-    }
-    
-    if (typeof settings.pagerSelector!="undefined") {
-        pager = $(settings.pagerSelector);
-    }
-    
-    var numItems = children.size();
-    var numPages = Math.ceil(numItems/perPage);
-
-    var curr = 0;
-    pager.data("curr",curr);
-    
-    if (settings.showPrevNext){
-        $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
-    }
-    
-    while(numPages > curr && (settings.hidePageNumbers==false)){
-        $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
-        curr++;
-    }
-  
-    if (settings.numbersPerPage>1) {
-       $('.page_link').hide();
-       $('.page_link').slice(pager.data("curr"), settings.numbersPerPage).show();
-    }
-    
-    if (settings.showPrevNext){
-        $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
-    }
-    
-    pager.find('.page_link:first').addClass('active');
-    pager.find('.prev_link').hide();
-    if (numPages<=1) {
-        pager.find('.next_link').hide();
-    }
-    pager.children().eq(0).addClass("active");
-    
-    children.hide();
-    children.slice(0, perPage).show();
-    
-    pager.find('li .page_link').click(function(){
-        var clickedPage = $(this).html().valueOf()-1;
-        goTo(clickedPage,perPage);
-        return false;
-    });
-    pager.find('li .prev_link').click(function(){
-        previous();
-        return false;
-    });
-    pager.find('li .next_link').click(function(){
-        next();
-        return false;
-    });
-    
-    function previous(){
-        var goToPage = parseInt(pager.data("curr")) - 1;
-        goTo(goToPage);
-    }
-     
-    function next(){
-        goToPage = parseInt(pager.data("curr")) + 1;
-        goTo(goToPage);
-    }
-    
-    function goTo(page){
-        var startAt = page * perPage,
-            endOn = startAt + perPage;
-        
-        children.css('display','none').slice(startAt, endOn).show();
-        
-        if (page>=1) {
-            pager.find('.prev_link').show();
-        }
-        else {
-            pager.find('.prev_link').hide();
-        }
-        
-        if (page<(numPages-1)) {
-            pager.find('.next_link').show();
-        }
-        else {
-            pager.find('.next_link').hide();
-        }
-        
-        pager.data("curr",page);
-       
-        if (settings.numbersPerPage>1) {
-          $('.page_link').hide();
-          $('.page_link').slice(page, settings.numbersPerPage+page).show();
-      }
-      
-        pager.children().removeClass("active");
-        pager.children().eq(page+1).addClass("active");
-    
-    }
-    
+var $this = this,
+defaults = {
+perPage: 5,
+showPrevNext: false,
+numbersPerPage: 1,
+hidePageNumbers: false
+},
+settings = $.extend(defaults, opts);
+var listElement = $this;
+var perPage = settings.perPage;
+var children = listElement.children();
+var pager = $('.pagination');
+if (typeof settings.childSelector!="undefined") {
+children = listElement.find(settings.childSelector);
+}
+if (typeof settings.pagerSelector!="undefined") {
+pager = $(settings.pagerSelector);
+}
+var numItems = children.size();
+var numPages = Math.ceil(numItems/perPage);
+var curr = 0;
+pager.data("curr",curr);
+if (settings.showPrevNext){
+$('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+}
+while(numPages > curr && (settings.hidePageNumbers==false)){
+$('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
+curr++;
+}
+if (settings.numbersPerPage>1) {
+$('.page_link').hide();
+$('.page_link').slice(pager.data("curr"), settings.numbersPerPage).show();
+}
+if (settings.showPrevNext){
+$('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+}
+pager.find('.page_link:first').addClass('active');
+pager.find('.prev_link').hide();
+if (numPages<=1) {
+pager.find('.next_link').hide();
+}
+pager.children().eq(0).addClass("active");
+children.hide();
+children.slice(0, perPage).show();
+pager.find('li .page_link').click(function(){
+var clickedPage = $(this).html().valueOf()-1;
+goTo(clickedPage,perPage);
+return false;
+});
+pager.find('li .prev_link').click(function(){
+previous();
+return false;
+});
+pager.find('li .next_link').click(function(){
+next();
+return false;
+});
+function previous(){
+var goToPage = parseInt(pager.data("curr")) - 1;
+goTo(goToPage);
+}
+function next(){
+goToPage = parseInt(pager.data("curr")) + 1;
+goTo(goToPage);
+}
+function goTo(page){
+var startAt = page * perPage,
+endOn = startAt + perPage;
+children.css('display','none').slice(startAt, endOn).show();
+if (page>=1) {
+pager.find('.prev_link').show();
+}
+else {
+pager.find('.prev_link').hide();
+}
+if (page<(numPages-1)) {
+pager.find('.next_link').show();
+}
+else {
+pager.find('.next_link').hide();
+}
+pager.data("curr",page);
+if (settings.numbersPerPage>1) {
+$('.page_link').hide();
+$('.page_link').slice(page, settings.numbersPerPage+page).show();
+}
+pager.children().removeClass("active");
+pager.children().eq(page+1).addClass("active");
+}
 };
 /* end plugin */
-
-
 var $panels = $('.panel');
-
 $('#filter').on('keyup', function() {
-    var val = this.value.toLowerCase();
-
-    $panels.show().filter(function() {
-        var panelTitleText = $(this).find('.panel-title').text().toLowerCase();
-        return panelTitleText.indexOf(val) < 0;
-    }).hide();
+var val = this.value.toLowerCase();
+$panels.show().filter(function() {
+var panelTitleText = $(this).find('.panel-title').text().toLowerCase();
+return panelTitleText.indexOf(val) < 0;
+}).hide();
 });
-
 $(document).ready(function(){
-    
-  $('#accordion').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
-  $('#accordion1').pageMe({pagerSelector:'#myPager1',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
-  $('#accordion2').pageMe({pagerSelector:'#myPager2',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
-    
+$('#accordion').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+$('#accordion1').pageMe({pagerSelector:'#myPager1',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+$('#accordion2').pageMe({pagerSelector:'#myPager2',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
 });
-
- 
-
 </script>
